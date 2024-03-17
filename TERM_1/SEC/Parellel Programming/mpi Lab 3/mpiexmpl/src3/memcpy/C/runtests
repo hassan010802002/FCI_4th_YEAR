@@ -1,0 +1,52 @@
+#! /bin/sh
+#
+# Run the tests for the memcpy test
+#
+#MACH=anlsp2
+MACH=`uname -s`
+Show=eval
+OPT="-O"
+donopoll=1
+do_html=0
+#PATH=/usr/local/mpi/lib/rs6000/ch_mpl:$PATH
+#PATH=/home/MPI/mpich/lib/rs6000/ch_mpl:$PATH
+#export PATH
+do_base=0
+mpirunargs=""
+do_update=0
+#
+for arg in "$@" ; do
+    case $arg in 
+	-echo) set -x ;;
+        -np=*) NPLIST=`echo a$arg | sed "s/a-np=//"` ;;
+	-base) do_base=1 ;;
+	-show) Show=echo ;;
+	-nopoll) mpirunargs="-nopoll" ;;
+	-update) do_update=1 ;;
+	-html) do_html=1 ;;
+	-mach=*) MACH=`echo a$arg | sed "s/a-mach=//"` ;;
+        -logs) echo "No logfiles for memcpy" ; exit 0 ;;
+        *) echo "Unrecognized argument $arg" ; exit 1 ;;
+    esac
+done
+#
+if [ $do_base = 1 ] ; then 
+    if [ -s related.lst ] ; then 
+	dirs=". `cat related.lst`"
+    else
+	dirs="."
+    fi
+    for dir in $dirs ; do
+	( cd $dir ; \
+	if [ $do_html = 1 ] ; then \
+	    echo "<H2>`cat title.txt`</H2>" ; \
+	    echo "<PRE>" ; \
+	else cat title.txt ; fi ; \
+	$Show make memcpy ; \
+	 $Show mpirun $mpirunargs -np 1 -mvhome memcpy )
+	if [ $do_html = 1 ] ; then
+	    echo "</PRE>"
+	fi
+    done
+    exit 0
+fi

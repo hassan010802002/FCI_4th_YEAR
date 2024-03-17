@@ -1,0 +1,7 @@
+ALL: bcast3
+
+bcast3: bcast3.c
+	@MPICC@ -o bcast3 bcast3.c
+
+clean:
+	/bin/rm -f bcast3 *.o

@@ -1,0 +1,32 @@
+#! /bin/sh
+# 
+# Set the machine name
+machname=anlsp2
+#
+# Pick a good value for the maximum number of processes, and set has_no_poll
+has_no_poll=0
+case $machname in 
+    anlsp2) trial_max=80 ; has_no_poll=1 ;;
+    anlspx) trial_max=32 ; has_no_poll=1 ;;
+    sp2) trial_max=64 ; has_no_poll=1 ;;
+    t3d) trial_max=128 ;;
+    sgi) trial_max=8 ;;
+    *) trial_max=16 ;;
+esac
+# 
+# Use that value if one has not been set
+if [ -z "$MPIEXMPL_MAX_NP" ] ; then
+    MPIEXMPL_MAX_NP=$trial_max
+    export MPIEXMPL_MAX_NP
+fi
+#
+# Run the actual tests
+echo "Base version"
+./runtests -base -mach=$machname -html > runall.$machname.html 2>&1
+if [ $has_no_poll = 1 ] ; then
+    echo "No poll version"
+    ./runtests -base -nopoll -mach=$machname -html > \
+	    runall.$machname.nopoll.html 2>&1
+fi
+echo "Logfiles"
+./runtests -base -logs -mach=$machname -html > runall.$machname.log.html 2>&1

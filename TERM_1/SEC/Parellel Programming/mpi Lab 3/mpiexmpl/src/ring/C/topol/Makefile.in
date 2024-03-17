@@ -1,0 +1,7 @@
+ALL: cartring
+
+cartring: cartring.c
+	@MPICC@ -o cartring cartring.c
+
+clean:
+	/bin/rm -f cartring cartring.o

@@ -1,0 +1,4 @@
+Note the use of MPI_Address to get the values for the indices argument to
+MPI_Type_struct.  It is important <IT>not</IT> to use the C "address" operator
+<CODE>&</CODE>, because this provides a value that may be different from the
+value needed by MPI (for example, on some Cray systems).

@@ -1,0 +1,11 @@
+<TITLE>Comments on Benchmarking collective barrier</TITLE>
+<BODY BGCOLOR="FFFFFF">
+Systems which must use point-to-point communication for <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Barrier.html#MPI_Barrier">MPI_Barrier</A> (by
+exchanging zero-length messages) will probably display a log(p) behavior for
+the cost of an <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Barrier.html#MPI_Barrier">MPI_Barrier</A>.  Systems that can use either a special network or
+shared memory may have faster barriers with different scaling.
+<P>
+Some of these optimizations (in particular, special networks) apply only to
+MPI_COMM_WORLD or a communicator that contains the same processes as
+MPI_COMM_WORLD.  
+</BODY>

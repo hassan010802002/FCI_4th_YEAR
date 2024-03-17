@@ -1,0 +1,3 @@
+% mpicc -o jacobi jacobi.o cmdline.o setupmesh.o exchng.o -lm 
+% mpirun -np 4 jacobi
+130 iterations in 4.056421 secs (3.675516 MFlops); final diffnorm 0.332039

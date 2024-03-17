@@ -1,0 +1,6 @@
+This test can give some surprising results for the larger memory sizes.  
+Depending on the memory architecture, the requirement that the source and
+destination be "well separated" can affect the performance of the memory
+system.  On a Sparc 5, the unaligned tests had twice the asymptotic bandwidth
+of the simple aligned tests.  Rates for smaller sizes were lower than in the
+aligned case.

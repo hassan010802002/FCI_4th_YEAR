@@ -1,0 +1,3 @@
+% mpicc -o bad bad.c -mpilog
+% mpirun -np 2 bad
+% # see the profiles for the different behavior depending on short message size

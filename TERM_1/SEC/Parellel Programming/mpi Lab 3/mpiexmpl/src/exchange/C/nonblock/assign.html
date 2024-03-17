@@ -1,0 +1,12 @@
+<TITLE>Using nonblocking operations</TITLE>
+<BODY BGCOLOR="FFFFFF">
+In this exercise, use the non-blocking point-to-point routines instead of the
+blocking routines.  Replace the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A> and <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A> routines with <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>
+and <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>, and use <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wait.html#MPI_Wait">MPI_Wait</A> or <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitall.html#MPI_Waitall">MPI_Waitall</A> to test for completion of the
+nonblocking operations.
+<P>
+You may want to use these MPI routines in your solution:<BR>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitall.html#MPI_Waitall">MPI_Waitall</A>
+</BODY>

@@ -1,0 +1,10 @@
+In the ring example we assume that the "next" process is the one with rank one
+greater than our rank.  That is, process i sends to process i + 1.  This may
+not be the best choice of "next" process, particularly when using a
+communicator other than MPI_COMM_WORLD.
+
+MPI provides topology routines to find a good ordering of processes,
+particularly for simple linear orderings such as needed here.  The assignment
+is to replace the use of "rank+1" and "rank-1" (where rank refers to the rank
+in MPI_COMM_WORLD of the calling process) with values computed using
+MPI_Cart_shift. 

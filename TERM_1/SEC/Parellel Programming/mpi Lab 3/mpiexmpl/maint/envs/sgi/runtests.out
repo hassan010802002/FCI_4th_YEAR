@@ -1,0 +1,226 @@
+runtests in memcpy
+No logfiles for memcpy
+runtests in pingpong
+No logfiles for pingpong
+runtests in barrier
+No logfiles for barrier
+runtests in vector
+No logfiles for vector
+runtests in circulate
+Pipelining pitfalls
+	mpicc -o circulate.log -mpilog -O -DDO_LOG circulate.c -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+For n = 20000, m = 20000, T_comm = 0.028520, T_compute = 0.005382, sum = 0.033902, T_both = 0.005585
+Writing logfile.
+Finished writing logfile.
+For n = 500, m = 500, T_comm = 0.028481, T_compute = 0.000141, sum = 0.028622, T_both = 0.000217
+runtests in 3way
+Exploring the cost of synchronization delays
+	mpicc -c -O  bad.c
+	mpicc -o bad.log -mpilog -O \
+		bad.o    -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+[2] Litsize = 8, Time for first send = 0.000037, for second = 0.000026
+Writing logfile.
+Finished writing logfile.
+[2] Litsize = 9, Time for first send = 0.001650, for second = 0.000262
+Writing logfile.
+Finished writing logfile.
+[2] Litsize = 511, Time for first send = 0.001713, for second = 0.000261
+Writing logfile.
+Finished writing logfile.
+[2] Litsize = 512, Time for first send = 0.001675, for second = 0.000259
+Writing logfile.
+Finished writing logfile.
+[2] Litsize = 513, Time for first send = 0.001820, for second = 0.000289
+	mpicc -c -O  bounce.c
+	mpicc -o bounce.log -mpilog -O \
+		bounce.o    -lm
+Writing logfile.
+Finished writing logfile.
+runtests in jacobi
+Jacobi Iteration - Example Parallel Mesh
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+send/recv: 6 iterations in 0.000574 secs (0.731262 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+send/recv: 7 iterations in 0.019028 secs (21.096190 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+send/recv: 24 iterations in 0.005647 secs (1.190104 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+send/recv: 25 iterations in 0.161705 secs (35.462163 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Shift up and down
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+shift/sendrecv: 6 iterations in 0.000505 secs (0.831048 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+shift/sendrecv: 7 iterations in 0.018988 secs (21.140427 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+shift/sendrecv: 24 iterations in 0.005231 secs (1.284769 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+shift/sendrecv: 25 iterations in 0.233723 secs (24.534988 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Exchange head-to-head
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+head-to-head sendrecv: 6 iterations in 0.000508 secs (0.826584 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+head-to-head sendrecv: 7 iterations in 0.019078 secs (21.040597 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+head-to-head sendrecv: 24 iterations in 0.005486 secs (1.224890 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+head-to-head sendrecv: 25 iterations in 0.141407 secs (40.552440 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Nonblocking send/recv
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+irecv/isend: 6 iterations in 0.000789 secs (0.532155 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+irecv/isend: 7 iterations in 0.019093 secs (21.023471 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+irecv/isend: 24 iterations in 0.030655 secs (0.219211 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+irecv/isend: 25 iterations in 0.318294 secs (18.016021 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Nonblocking send/recv for receiver pull
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+isend/irecv: 6 iterations in 0.000627 secs (0.669456 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+isend/irecv: 7 iterations in 0.019109 secs (21.006421 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+isend/irecv: 24 iterations in 0.030354 secs (0.221389 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+isend/irecv: 25 iterations in 0.254551 secs (22.527489 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Synchronous send
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+ssend/irecv: 6 iterations in 0.000743 secs (0.565403 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+ssend/irecv: 7 iterations in 0.019340 secs (20.754861 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+ssend/irecv: 24 iterations in 0.035863 secs (0.187380 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+ssend/irecv: 25 iterations in 0.229912 secs (24.941759 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Overlapping communication
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+isend/overlap: 6 iterations in 0.000612 secs (0.686601 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+isend/overlap: 7 iterations in 0.019157 secs (20.953412 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+isend/overlap: 24 iterations in 0.006308 secs (1.065246 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+isend/overlap: 25 iterations in 0.337771 secs (16.977200 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Overlapping communication (sends first)
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+send first/overlap: 6 iterations in 0.000587 secs (0.715231 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+send first/overlap: 7 iterations in 0.019119 secs (20.995392 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+send first/overlap: 24 iterations in 0.006252 secs (1.074832 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+send first/overlap: 25 iterations in 0.285232 secs (20.104356 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Jacobi Iteration - Persistent send/recv
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any symbol.
+Writing logfile.
+Finished writing logfile.
+persistent send/recv: 6 iterations in 0.000343 secs (1.226241 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+persistent send/recv: 7 iterations in 0.018840 secs (21.306415 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+Writing logfile.
+Finished writing logfile.
+persistent send/recv: 24 iterations in 0.005383 secs (1.248439 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+Writing logfile.
+Finished writing logfile.
+persistent send/recv: 25 iterations in 0.187748 secs (30.543133 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+Created file /usr/people/lusk/mpiexmpl/src3/logs.tar containing alog files

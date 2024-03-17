@@ -1,0 +1,15 @@
+#! /bin/sh
+# List all of the files
+# Bad with convergence test
+ls bad.*.alog | sed -e \
+  's/bad\.\(.*\)-\([0-9]*\).alog/bad.\1-\2.alog \1 with short message of \2 doubles /g' | sed -e 's/ anlspx/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g' \
+ -e 's/ sgi / SGI /'
+echo "<BR>"
+ls bad-nopoll.*.alog 2>/dev/null | sed -e \
+  's/bad-nopoll\.\(.*\)-\([0-9]*\).alog/bad-nopoll.\1-\2.alog \1 n=\2/' | \
+    sed -e 's/ anlsp2/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g'
+# Bad without convergence test (like explicit iteration)
+echo "<BR>"
+ls bad-exp.*.alog 2>/dev/null | sed -e \
+  's/bad-exp\.\(.*\)-\([0-9]*\).alog/bad-exp.\1-\2.alog \1 n=\2/' | \
+    sed -e 's/ anlsp2/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g'

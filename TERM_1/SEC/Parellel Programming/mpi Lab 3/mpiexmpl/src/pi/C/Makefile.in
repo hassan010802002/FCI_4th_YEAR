@@ -1,0 +1,13 @@
+ALL: pi
+SHELL = /bin/sh
+DIRS = 
+pi: pi.c
+	@MPICC@ -o pi pi.c -lm 
+profile.alog: pi.c
+	@MPICC@ -o pi.log -mpilog pi.c -lm
+	mpirun -np 4 pi.log
+	/bin/mv pi.log_profile.log profile.alog
+clean:
+	/bin/rm -f pi pi.o pi.log
+	#for dir in $(DIRS) ; do \
+	#    ( cd $$dir ; make clean ) ; done

@@ -1,0 +1,10 @@
+Compare the performance of these vector sends and receives with contiguous
+data of the same size.  
+<P>
+Try different strides.  Compare large powers of two (like 4096) with slightly
+different strides (like 4095).  Depending on the system (particularly the
+memory/cache architecture) you may see very different performance.
+<P>
+The MPICH implementation and some others detect some kinds of vector datatypes
+and optimize for them.  The Type_struct form (using the MPI_UB) is less likely
+to be optimized.

@@ -1,0 +1,136 @@
+<TITLE>A Solution to Pipelining pitfalls</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+#include "mpi.h"
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+
+#ifdef DO_LOG
+/* We don't really need the mpe.h file, and if we are combining this with
+   -mpilog, we'll get the correct libraries */
+/* #include "mpe.h" */
+#else
+#define <A href="http://www.mcs.anl.gov/mpi/man/MPE_Log_event.html#MPE_Log_event">MPE_Log_event</A>( a, b, c )
+#define <A href="http://www.mcs.anl.gov/mpi/man/MPE_Describe_state.html#MPE_Describe_state">MPE_Describe_state</A>(a,b,c,d)
+#endif
+
+void Compute( cnt, size, databuf )
+int    cnt, size;
+double *databuf;
+{
+    int i,j;
+
+    <A href="http://www.mcs.anl.gov/mpi/man/MPE_Log_event.html#MPE_Log_event">MPE_Log_event</A>(1, 0, "");
+    for (j = 0; j &lt; cnt; j++) {
+	for (i = 0; i &lt; size; i++)
+	    databuf[i] = sqrt(sqrt(databuf[i]));
+    }
+    <A href="http://www.mcs.anl.gov/mpi/man/MPE_Log_event.html#MPE_Log_event">MPE_Log_event</A>(2, 0, "");
+}
+
+int main( argc, argv )
+int argc;
+char **argv;
+{
+    int         rank, size, left_nbr, right_nbr;
+    int         false = 0;
+    int         true = 1;
+    int         i, k, n, m, args[2];
+    double      *rbuf, *sbuf, *databuf;
+    MPI_Comm    comm;
+    MPI_Request r_recv, r_send, r[2];
+    MPI_Status  status, statuses[2];
+    double      t_comm, t_compute, t_both, t1;
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Init.html#MPI_Init">MPI_Init</A>( &amp;argc, &amp;argv );
+
+    /* Get n and m */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Comm_rank.html#MPI_Comm_rank">MPI_Comm_rank</A>( MPI_COMM_WORLD, &amp;rank );
+    if (rank == 0) {
+	/* Add a compute state */
+	<A href="http://www.mcs.anl.gov/mpi/man/MPE_Describe_state.html#MPE_Describe_state">MPE_Describe_state</A>(1, 2, "Compute", "purple:vlines3");
+	/* Set the defaults */
+	args[0] = 20000;
+	args[1] = 20000;
+	for (i=0; i&lt;argc; i++) {
+	    if (!argv[i]) continue;
+	    if (strcmp( argv[i], "-n" ) == 0) {
+		args[0] = atoi( argv[i+1] );
+		i++;
+	    }
+	    else if (strcmp( argv[i], "-m" ) == 0) {
+		args[1] = atoi( argv[i+1] );
+		i++;
+	    }
+	}
+    }
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Bcast.html#MPI_Bcast">MPI_Bcast</A>( args, 2, MPI_INT, 0, MPI_COMM_WORLD );
+    n = args[0];
+    m = args[1];
+	
+    /* Create a "good" communicator and get the neighbors (non-periodic) */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Comm_size.html#MPI_Comm_size">MPI_Comm_size</A>( MPI_COMM_WORLD, &amp;size );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Cart_create.html#MPI_Cart_create">MPI_Cart_create</A>( MPI_COMM_WORLD, 1, &amp;size, &amp;false, true, &amp;comm );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Cart_shift.html#MPI_Cart_shift">MPI_Cart_shift</A>( comm, 0, 1, &amp;left_nbr, &amp;right_nbr );
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Comm_size.html#MPI_Comm_size">MPI_Comm_size</A>( comm, &amp;size );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Comm_rank.html#MPI_Comm_rank">MPI_Comm_rank</A>( comm, &amp;rank );
+
+    /* Get the buffers */
+    rbuf = (double *) malloc( n * sizeof(double) );
+    sbuf = (double *) malloc( n * sizeof(double) );
+    databuf = (double *)malloc( m * sizeof(double) );
+    if (!rbuf || !sbuf) {
+	fprintf( stderr, "Unable to allocate buffers of size %n\n", n );
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Abort.html#MPI_Abort">MPI_Abort</A>( MPI_COMM_WORLD, 1 );
+    }
+    if (!databuf) {
+	fprintf( stderr, "Unable to allocate buffers of size %n\n", m );
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Abort.html#MPI_Abort">MPI_Abort</A>( MPI_COMM_WORLD, 1 );
+    }
+    for (k=0; k&lt;m; k++) {
+	databuf[k] = 1000.0;
+    }
+
+    /* Make sure that data has cycled through cache first */
+    Compute( 1, m, databuf );
+    t1 = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>();
+    Compute( 1, m, databuf );
+    t_compute= <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>() - t1;
+
+    /* For comparison, here's an Irecv/Isend/Wait without any computing */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Barrier.html#MPI_Barrier">MPI_Barrier</A>( comm );
+    t1 = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>();
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>( rbuf, n, MPI_DOUBLE, left_nbr, 5, comm, &amp;r[0] );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>( sbuf, n, MPI_DOUBLE, right_nbr, 5, comm, &amp;r[1] );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitall.html#MPI_Waitall">MPI_Waitall</A>( 2, r, statuses );
+    t_comm = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>() - t1;
+
+    /* Simulate the computation */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Barrier.html#MPI_Barrier">MPI_Barrier</A>( comm );
+    t1 = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>();
+    r_recv = MPI_REQUEST_NULL;
+    for (k=0;k&lt;3;k++) {
+	/* Wait on the previous recv */
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wait.html#MPI_Wait">MPI_Wait</A>( &amp;r_recv, &amp;status );
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>( rbuf, n, MPI_DOUBLE, left_nbr, k, comm, &amp;r_recv );
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>( sbuf, n, MPI_DOUBLE, right_nbr, k, comm, &amp;r_send );
+	Compute( 1, m, databuf );
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wait.html#MPI_Wait">MPI_Wait</A>( &amp;r_send, &amp;status );
+    }	
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wait.html#MPI_Wait">MPI_Wait</A>( &amp;r_recv, &amp;status );
+    t_both = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>() - t1;
+    t_both /= 3.0;
+
+    if (rank == 0) {
+	printf( 
+"For n = %d, m = %d, T_comm = %f, T_compute = %f, sum = %f, T_both = %f\n",
+		n, m, t_comm, t_compute, t_comm + t_compute, t_both );
+    }
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Finalize.html#MPI_Finalize">MPI_Finalize</A>( );
+    return 0;
+}
+</PRE>
+</BODY>

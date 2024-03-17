@@ -1,0 +1,6 @@
+This version uses nonblocking operations for both sending and receiving; 
+primarily, this is to handle the buffering issues.  In order to increase the
+efficiency, MPI persistent operations are used.
+<P>
+This is very similar to the simple nonblocking example.
+

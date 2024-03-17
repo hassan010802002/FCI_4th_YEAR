@@ -1,0 +1,7 @@
+MPI_Init
+MPI_Finalize
+MPI_Send
+MPI_Recv
+MPI_Allreduce
+MPI_Comm_size
+MPI_Comm_rank

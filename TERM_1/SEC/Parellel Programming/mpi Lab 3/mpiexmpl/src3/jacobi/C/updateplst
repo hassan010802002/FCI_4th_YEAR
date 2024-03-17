@@ -1,0 +1,8 @@
+#! /bin/sh
+for dir in * ; do
+    if [ -d $dir ] ; then
+        (cd $dir ; /bin/rm profile.lst ; ../createplst > profile.lst )
+    fi
+done
+/bin/rm -f profile.lst
+./createplst > profile.lst

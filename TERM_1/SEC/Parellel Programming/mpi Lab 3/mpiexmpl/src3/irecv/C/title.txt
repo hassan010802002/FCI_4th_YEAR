@@ -1,0 +1,1 @@
+Demonstration of poor performance caused by unnecessary synchronization

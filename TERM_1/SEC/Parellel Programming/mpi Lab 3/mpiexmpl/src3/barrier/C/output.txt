@@ -1,0 +1,7 @@
+% mpicc -o barrier barrier.c
+% runtests -base
+Kind    np      time (sec)
+Barrier 1       0.000001
+Barrier 2       0.002410
+Barrier 4       0.006840
+Barrier 8       0.018131

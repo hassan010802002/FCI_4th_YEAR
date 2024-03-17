@@ -1,0 +1,52 @@
+<TITLE>A Solution to Using MPI datatypes to share data</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+#include &lt;stdio.h&gt;
+#include "mpi.h"
+
+int main( argc, argv )
+int argc;
+char **argv;
+{
+    int          rank;
+    struct { int a; double b } value;
+    MPI_Datatype mystruct;
+    int          blocklens[2];
+    MPI_Aint     indices[2];
+    MPI_Datatype old_types[2];
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Init.html#MPI_Init">MPI_Init</A>( &amp;argc, &amp;argv );
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Comm_rank.html#MPI_Comm_rank">MPI_Comm_rank</A>( MPI_COMM_WORLD, &amp;rank );
+
+    /* One value of each type */
+    blocklens[0] = 1;
+    blocklens[1] = 1;
+    /* The base types */
+    old_types[0] = MPI_INT;
+    old_types[1] = MPI_DOUBLE;
+    /* The locations of each element */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Address.html#MPI_Address">MPI_Address</A>( &amp;value.a, &amp;indices[0] );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Address.html#MPI_Address">MPI_Address</A>( &amp;value.b, &amp;indices[1] );
+    /* Make relative */
+    indices[1] = indices[1] - indices[0];
+    indices[0] = 0;
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Type_struct.html#MPI_Type_struct">MPI_Type_struct</A>( 2, blocklens, indices, old_types, &amp;mystruct );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Type_commit.html#MPI_Type_commit">MPI_Type_commit</A>( &amp;mystruct );
+
+    do {
+	if (rank == 0) 
+	    scanf( "%d %lf", &amp;value.a, &amp;value.b );
+
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Bcast.html#MPI_Bcast">MPI_Bcast</A>( &amp;value, 1, mystruct, 0, MPI_COMM_WORLD );
+	
+	printf( "Process %d got %d and %lf\n", rank, value.a, value.b );
+    } while (value.a &gt;= 0);
+
+    /* Clean up the type */
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Type_free.html#MPI_Type_free">MPI_Type_free</A>( &amp;mystruct );
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Finalize.html#MPI_Finalize">MPI_Finalize</A>( );
+    return 0;
+}
+</PRE>
+</BODY>

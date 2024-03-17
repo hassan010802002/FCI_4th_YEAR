@@ -1,0 +1,5 @@
+We could have used exact knowledge of the amount of data on each process (the
+<CODE>lcnt</CODE> value in the solution) instead of using MPI_Gather to
+collect the values.  Using MPI_Gather, however, is simple and allows us to
+ensure that we are using the correct values.
+

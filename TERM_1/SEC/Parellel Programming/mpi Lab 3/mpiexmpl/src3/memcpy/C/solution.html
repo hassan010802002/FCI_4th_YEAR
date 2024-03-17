@@ -1,0 +1,48 @@
+<TITLE>A Solution to Determining delivered memory performance</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include "mpi.h"
+
+int main( argc, argv )
+int argc;
+char **argv;
+{
+    double t1, t2;
+    double tmin;
+    int    size, *in_data, *out_data;
+    int    j, nloop, k;
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Init.html#MPI_Init">MPI_Init</A>( &amp;argc, &amp;argv );
+
+    printf( "Size (bytes) Time (sec)\tRate (MB/sec)\n" );
+    for (size = 1; size &lt; 1000000; size *= 2 ) {
+	in_data = (int *)malloc( size * sizeof(int) );
+	out_data = (int *)malloc( size * sizeof(int) );
+	if (!in_data || !out_data) {
+	    fprintf( stderr, "Failed to allocate space for %d ints\n", size );
+	    break;
+	}
+	tmin = 1000.0;
+	nloop = 100000/size;
+	if (nloop == 0) nloop = 1;
+	for (k=0; k &lt; 10; k++) {
+	    t1 = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>();
+	    for (j=0; j&lt;nloop; j++) 
+		memcpy( out_data, in_data, size * sizeof(int) );
+	    t2 = (<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>() - t1) / nloop;
+	    
+	    if (t2 &lt; tmin) tmin = t2;
+	}
+	printf( "%d\t%f\t%f\n", size * sizeof(int), tmin, 
+		1.0e-6*size*sizeof(int)/tmin );
+	free( in_data );
+	free( out_data );
+    }
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Finalize.html#MPI_Finalize">MPI_Finalize</A>( );
+    return 0;
+}
+</PRE>
+</BODY>

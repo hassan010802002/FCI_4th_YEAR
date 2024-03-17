@@ -1,0 +1,59 @@
+<TITLE>A Solution to Determining delivered memory performance with unaligned data</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include "mpi.h"
+
+#define PAD 4096
+
+int main( argc, argv )
+int argc;
+char **argv;
+{
+    double t1, t2;
+    double tmin;
+    int    size;
+    char   *in_data, *out_data;
+    char   *in_p, *out_p;
+    int    j, nloop, k;
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Init.html#MPI_Init">MPI_Init</A>( &amp;argc, &amp;argv );
+
+    printf( "Size (bytes) Time (sec)\tRate (MB/sec)\n" );
+    for (size = 1; size &lt; 1000000; size *= 2 ) {
+	in_data = in_p = (char *)malloc( size * sizeof(int) + PAD );
+	out_data = out_p = (char *)malloc( size * sizeof(int) + PAD );
+	if (!in_data || !out_data) {
+	    fprintf( stderr, "Failed to allocate space for %d ints\n", size );
+	    break;
+	}
+	
+	/* make out_p, in_p unaligned */
+	out_p += 7;
+	in_p  += 10;
+	if ((((long)out_p) &amp; 0x3) == (((long)in_p) &amp; 0x3)) {
+	    out_p += 3;
+	}
+	tmin = 1000.0;
+	nloop = 100000/size;
+	if (nloop == 0) nloop = 1;
+	for (k=0; k &lt; 10; k++) {
+	    t1 = <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>();
+	    for (j=0; j&lt;nloop; j++) 
+		memcpy( out_p, in_p, size * sizeof(int) );
+	    t2 = (<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>() - t1) / nloop;
+	    
+	    if (t2 &lt; tmin) tmin = t2;
+	}
+	printf( "%d\t%f\t%f\n", size * sizeof(int), tmin, 
+		1.0e-6*size*sizeof(int)/tmin );
+	free( in_data );
+	free( out_data );
+    }
+
+    <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Finalize.html#MPI_Finalize">MPI_Finalize</A>( );
+    return 0;
+}
+</PRE>
+</BODY>

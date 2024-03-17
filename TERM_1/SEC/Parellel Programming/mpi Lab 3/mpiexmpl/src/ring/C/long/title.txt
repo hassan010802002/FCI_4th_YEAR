@@ -1,0 +1,1 @@
+Sending in a ring compared to broadcast

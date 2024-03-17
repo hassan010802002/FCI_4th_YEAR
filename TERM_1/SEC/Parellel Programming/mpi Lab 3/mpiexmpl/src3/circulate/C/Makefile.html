@@ -1,0 +1,106 @@
+<TITLE>Makefile</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+# Generated automatically from Makefile.in by configure.
+ALL: jacobi
+SHELL = /bin/sh
+OPT = -O
+MPICC=/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A>
+MPIRUN=<A href="http://www.mcs.anl.gov/mpi/www/www1/mpirun.html#mpirun">mpirun</A> -maxtime 5
+SRCFILES=circulate.c
+OBJFILES=circulate.o
+circulate: $(OBJFILES)
+	$(MPICC) -o circulate $(OPT) circulate.o -lm
+circulate.log: circulate.c
+	$(MPICC) -o circulate.log -mpilog $(OPT) -DDO_LOG circulate.c -lm
+
+#
+# An important part of understanding the behavior of these programs is
+# creating and examining the trace or log files of the operations.  The
+# following targets generate the log files by using a feature of the MPICH
+# implementation (automatic generation with the -mpilog switch when linking).
+# There are 4 versions:
+#    profile.alog   - A simple version for a single log
+#    profile.$()... - A version for runs with different numbers of processors,
+#                     machines, and problem sizes
+#    profile-nopoll. - A version like profile.$()..., but uses the -nopoll
+#                      switch to change how an MPI implementation reacts
+#                      to control messages.
+#
+profile.alog: circulate.log
+	$(MPIRUN) -np 4 -mvhome -mvback circulate.log_profile.log circulate.log
+	/bin/mv -f circulate.log_profile.log profile.alog
+# Use this for a particular machine
+profile.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog: circulate.log
+	$(MPIRUN) -np $(NP) -mvhome -mvback circulate.log_profile.log circulate.log \
+		-m $(MAXM) -n $(MAXN) 
+	/bin/mv -f circulate.log_profile.log \
+		profile.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog
+# Use this for a particular machine
+profile-nopoll.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog: circulate.log
+	$(MPIRUN) -np $(NP) -nopoll -mvhome -mvback circulate.log_profile.log \
+		circulate.log -m $(MAXM) -n $(MAXN)
+	/bin/mv -f circulate.log_profile.log \
+		profile-nopoll.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog
+
+#
+# The doall... targets run the tests, generating profiling information,
+# for this examples and all related ones.
+#  doall - Default tests
+#  doallnopoll - doall but with -nopoll to <A href="http://www.mcs.anl.gov/mpi/www/www1/mpirun.html#mpirun">mpirun</A>
+#
+doall:
+	@if [ -s related.lst ] ; then \
+	for dir in . `cat related.lst` ; do \
+	    ( cd $$dir ; echo $$dir ; cat title.txt ; \
+	      make MACH=$(MACH) OPT=$(OPT) NP=$(NP) MAXN=$(MAXN) \
+		profile.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog ) ; done ; \
+	else \
+	      make MACH=$(MACH) OPT=$(OPT) NP=$(NP) MAXN=$(MAXN) \
+		profile.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog ; \
+	fi
+doallnopoll:
+	@if [ -s related.lst ] ; then \
+	for dir in . `cat related.lst` ; do \
+	    ( cd $$dir ; echo $$dir ; cat title.txt ; \
+	      make MACH=$(MACH) OPT=$(OPT) NP=$(NP) MAXN=$(MAXN) \
+		profile-nopoll.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog ) ; done ; \
+	else \
+	      make MACH=$(MACH) OPT=$(OPT) NP=$(NP) MAXN=$(MAXN) \
+		profile-nopoll.$(MACH)-$(NP)-$(MAXM)-$(MAXN).alog ; \
+	fi
+
+compileall:
+	@if [ -s related.lst ] ; then \
+	for dir in . `cat related.lst` ; do \
+	    ( cd $$dir ; echo $$dir ; cat title.txt ; \
+	      make OPT=$(OPT) circulate ; ) ; done ; \
+	else \
+	      make OPT=$(OPT) circulate ; \
+	fi
+compilealllog:
+	@if [ -s related.lst ] ; then \
+	for dir in . `cat related.lst` ; do \
+	    ( cd $$dir ; echo $$dir ; cat title.txt ; \
+	      make OPT=$(OPT) circulate.log ; ) ; done ; \
+	else \
+	      make OPT=$(OPT) circulate.log ; \
+	fi
+
+.c.o:
+	$(MPICC) -c $(OPT) $(DEFN) $*.c
+cleanlocal:
+	/bin/rm -f circulate circulate.o circulate.log 
+clean: cleanlocal
+	if [ -s related.lst ] ; then \
+	    for dir in `cat related.lst` ; do \
+	        ( cd $$dir ; make clean ) ; done ; fi
+output:
+	$(MPICC) -o circulate $(OPT) circulate.c -lm 
+	if [ -z "$(NP)" ] ; then \
+	    $(MPIRUN) -np 4 circulate ; \
+	else
+	    $(MPIRUN) -np $(NP) circulate ; fi
+	    
+</PRE>
+</BODY>

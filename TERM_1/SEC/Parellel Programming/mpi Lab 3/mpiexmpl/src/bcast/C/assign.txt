@@ -1,0 +1,12 @@
+A common need is for one process to get data from the user, either by reading
+from the terminal or command line arguments, and then to distribute this
+information to all other processors.
+<P>
+Write a program that reads an integer value from the terminal and distributes
+the value to all of the MPI processes.  Each process should print out its rank
+and the value it received.  Values should be read until a negative integer
+is given as input.  
+<P>
+You may find it helpful to include a <CODE>fflush( stdout );</CODE> after
+the <CODE>printf</CODE> calls in your program.  Without this, output may not
+appear when you expect it.

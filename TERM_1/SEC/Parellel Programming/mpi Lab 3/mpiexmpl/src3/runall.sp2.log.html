@@ -1,0 +1,579 @@
+<TITLE>Results for MPI perforance tests on sp2</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<H1>Results for MPI perforance tests on sp2</H1>
+
+<H2>Contents</H2>
+<UL>
+<LI> <A HREF="#memcpy">Memcpy</A>
+<LI> <A HREF="#pingpong">Point-to-point tests</A>
+<LI> <A HREF="#barrier">Collective tests</A>
+<LI> <A HREF="#vector">Vector datatype tests</A>
+<LI> <A HREF="#circulate">Synchronization tests</A>
+<LI> <A HREF="#3way">More Synchronization tests</A>
+<LI> <A HREF="#jacobi">Sample application (Jacobi iteration)</A>
+</UL>
+<!-- runtests in memcpy -->
+<A NAME="memcpy"><H1>memcpy</H1></A>
+No logfiles for memcpy
+<!-- runtests in pingpong -->
+<A NAME="pingpong"><H1>pingpong</H1></A>
+No logfiles for pingpong
+<!-- runtests in barrier -->
+<A NAME="barrier"><H1>barrier</H1></A>
+No logfiles for barrier
+<!-- runtests in vector -->
+<A NAME="vector"><H1>vector</H1></A>
+No logfiles for vector
+<!-- runtests in circulate -->
+<A NAME="circulate"><H1>circulate</H1></A>
+<H2>Pipelining pitfalls</H2>
+<PRE>
+	mpicc -o circulate.log -mpilog -O -DDO_LOG circulate.c -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename circulate.log_profile.log to circulate.sp2-20000.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename circulate.log_profile.log to circulate.sp2-500.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+<LI> <A HREF="circulate/C/circulate.sp2-20000.alog">Logs for circulate -n 20000 -m 20000</A>
+<LI> <A HREF="circulate/C/circulate.sp2-500.alog">Logs for circulate -n 500 -m 500</A>
+</UL>
+<!-- runtests in 3way -->
+<A NAME="3way"><H1>3way</H1></A>
+<H2>Exploring the cost of synchronization delays</H2>
+<PRE>
+	mpicc -o bad.log -mpilog -O  bad.o    -lm
+[2] Litsize = 8, Time for first send = 0.005475, for second = 0.000072
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bad.log_profile.log to bad.sp2-8.alog:
+	     A file or directory in the path name does not exist.
+[2] Litsize = 9, Time for first send = 0.000085, for second = 0.000069
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bad.log_profile.log to bad.sp2-9.alog:
+	     A file or directory in the path name does not exist.
+[2] Litsize = 511, Time for first send = 0.000211, for second = 0.000191
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bad.log_profile.log to bad.sp2-511.alog:
+	     A file or directory in the path name does not exist.
+[2] Litsize = 512, Time for first send = 0.000209, for second = 0.000192
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bad.log_profile.log to bad.sp2-512.alog:
+	     A file or directory in the path name does not exist.
+[2] Litsize = 513, Time for first send = 0.000372, for second = 0.002131
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bad.log_profile.log to bad.sp2-513.alog:
+	     A file or directory in the path name does not exist.
+	mpicc -c -O  bounce.c
+	mpicc -o bounce.log -mpilog -O  bounce.o    -lm
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename bounce.log_profile.log to bounce.sp2.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+<LI> <A HREF="3way/C/bad.sp2-8.alog">Logs for bad -n 8</A>
+<LI> <A HREF="3way/C/bad.sp2-9.alog">Logs for bad -n 9</A>
+<LI> <A HREF="3way/C/bad.sp2-511.alog">Logs for bad -n 511</A>
+<LI> <A HREF="3way/C/bad.sp2-512.alog">Logs for bad -n 512</A>
+<LI> <A HREF="3way/C/bad.sp2-513.alog">Logs for bad -n 513</A>
+<LI> <A HREF="3way/C/bounce.sp2.alog">Logs for bounce</A>
+</UL>
+<!-- runtests in jacobi -->
+<A NAME="jacobi"><H1>jacobi</H1></A>
+<H2>Jacobi Iteration - Example Parallel Mesh</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 0.076745 secs (0.364844 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 0.876032 secs (26.183527 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 0.065663 secs (0.852839 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 1.768236 secs (25.944044 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 0.090328 secs (1.239932 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+send/recv: 25 iterations in 3.556198 secs (25.800138 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Shift up and down</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Exchange head-to-head</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Nonblocking send/recv</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.446573 secs (0.062700 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.172153 secs (133.239638 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.064282 secs (0.871165 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.217589 secs (210.834648 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+Running job under PBS
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.523318 secs (0.214019 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+irecv/isend: 25 iterations in 0.262472 secs (349.562720 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+Writing logfile.
+Finished writing logfile.
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Nonblocking send/recv for receiver pull</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Synchronous send</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Ready send</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Overlapping communication</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Overlapping communication (sends first)</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Persistent send/recv</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O  jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-7-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-01-4098-4.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-7-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-04-4098-10.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-7-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-16-4098-34.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-7-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-32-4098-66.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-7-130.alog:
+	     A file or directory in the path name does not exist.
+qsub failed: qsub: illegal -W value
+mpirun aborting
+mv: 0653-401 Cannot rename jacobi.log_profile.log to jacobi.sp2-64-4098-130.alog:
+	     A file or directory in the path name does not exist.
+</PRE>
+<UL>
+</UL>
+</BODY>
+Created file /u/mcinnes/perf/mpiexmpl/src3/logs.tar containing alog files

@@ -1,0 +1,7 @@
+This simple test does not identify sudden changes in performance.  The program
+<CODE>mpptest</CODE> in the MPICH distributions contains a more sophisticated
+version of this exercise.
+<P>
+One effect that this simple example does not take into account is the
+behavior of the memory cache.  This can lead to an over-estimate of the
+available performance.

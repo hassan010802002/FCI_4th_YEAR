@@ -1,0 +1,13 @@
+ALL: fairness
+SHELL = /bin/sh
+DIRS = waitsome
+fairness: fairness.c
+	@MPICC@ -o fairness fairness.c -lm 
+profile.alog: fairness.c
+	@MPICC@ -o fairness.log -mpilog fairness.c -lm
+	mpirun -np 4 fairness.log
+	/bin/mv fairness.log_profile.log profile.alog
+clean:
+	/bin/rm -f fairness fairness.o fairness.log
+	#for dir in $(DIRS) ; do \
+	#    ( cd $$dir ; make clean ) ; done

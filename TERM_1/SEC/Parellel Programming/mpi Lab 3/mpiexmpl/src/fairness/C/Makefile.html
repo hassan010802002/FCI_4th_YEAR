@@ -1,0 +1,19 @@
+<TITLE>Makefile</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+# Generated automatically from Makefile.in by configure.
+ALL: fairness
+SHELL = /bin/sh
+DIRS = waitsome
+fairness: fairness.c
+	/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o fairness fairness.c -lm 
+profile.alog: fairness.c
+	/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o fairness.log -mpilog fairness.c -lm
+	<A href="http://www.mcs.anl.gov/mpi/www/www1/mpirun.html#mpirun">mpirun</A> -np 4 fairness.log
+	/bin/mv fairness.log_profile.log profile.alog
+clean:
+	/bin/rm -f fairness fairness.o fairness.log
+	for dir in $(DIRS) ; do \
+	    ( cd $$dir ; make clean ) ; done
+</PRE>
+</BODY>

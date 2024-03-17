@@ -1,0 +1,8 @@
+Some MPI systems ensure that all processes have all command line arguments (it
+is one reason that the <CODE>argc</CODE> and <CODE>argv</CODE> arguments to
+MPI_Init are pointers) but this is not required by the standard.
+<P>
+Note that output from <CODE>printf</CODE> may not appear until a process
+(begins to) exit; this is actually a feature of Unix.  You can use the
+<CODE>fflush</CODE> function to force the <CODE>printf</CODE> routine to flush
+output.

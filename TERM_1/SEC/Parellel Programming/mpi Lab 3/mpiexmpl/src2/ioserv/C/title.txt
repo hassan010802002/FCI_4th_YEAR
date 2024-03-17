@@ -1,0 +1,1 @@
+A simple output server

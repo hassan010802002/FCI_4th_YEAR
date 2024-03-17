@@ -1,0 +1,549 @@
+<TITLE>Results for MPI perforance tests on anlspx</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<H1>Results for MPI perforance tests on anlspx</H1>
+<H2>Contents</H2>
+<UL>
+<LI> <A HREF="#memcpy">Memcpy</A>
+<LI> <A HREF="#pingpong">Point-to-point tests</A>
+<LI> <A HREF="#barrier">Collective tests</A>
+<LI> <A HREF="#vector">Vector datatype tests</A>
+<LI> <A HREF="#circulate">Synchronization tests</A>
+<LI> <A HREF="#3way">More Synchronization tests</A>
+<LI> <A HREF="#jacobi">Sample application (Jacobi iteration)</A>
+</UL>
+
+<!-- runtests in memcpy -->
+<A NAME="memcpy"><H1>memcpy</H1></A>
+<H2>Determining delivered memory performance</H2>
+<PRE>
+	mpicc -o memcpy -O memcpy.c
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	15.614326
+8	0.000000	31.225788
+16	0.000000	55.669409
+32	0.000001	46.609725
+64	0.000001	66.798314
+128	0.000002	85.264213
+256	0.000003	98.939649
+512	0.000005	107.567651
+1024	0.000009	112.469647
+2048	0.000018	115.091828
+4096	0.000035	116.449749
+8192	0.000070	117.139274
+16384	0.000144	114.014488
+32768	0.000551	59.483547
+65536	0.001122	58.428860
+131072	0.002250	58.249905
+262144	0.004509	58.140851
+524288	0.009269	56.563445
+1048576	0.018380	57.050923
+2097152	0.036755	57.057403
+</PRE>
+<H2>Determining delivered memory performance with unaligned data</H2>
+<PRE>
+	mpicc -o memcpy memcpy.c
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	9.601692
+8	0.000000	18.493497
+16	0.000000	32.225968
+32	0.000001	35.667154
+64	0.000001	53.442891
+128	0.000002	70.933621
+256	0.000003	84.811636
+512	0.000005	94.007904
+1024	0.000010	99.396445
+2048	0.000020	102.329821
+4096	0.000039	103.862922
+8192	0.000078	104.645513
+16384	0.000161	101.834478
+32768	0.000508	64.497588
+65536	0.001015	64.597719
+131072	0.002024	64.746096
+262144	0.004064	64.498383
+524288	0.008238	63.641277
+1048576	0.016541	63.394360
+2097152	0.033159	63.245237
+</PRE>
+<!-- runtests in pingpong -->
+<A NAME="pingpong"><H1>pingpong</H1></A>
+<H2>Benchmarking point to point performance</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind		n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000104	0.076765
+Send/Recv	2	0.000104	0.153357
+Send/Recv	4	0.000107	0.298157
+Send/Recv	8	0.000135	0.475562
+Send/Recv	16	0.000135	0.947681
+Send/Recv	32	0.000148	1.727645
+Send/Recv	64	0.000165	3.103093
+Send/Recv	128	0.000198	5.167290
+Send/Recv	256	0.000261	7.832739
+Send/Recv	512	0.000364	11.263187
+Send/Recv	1024	0.000575	14.234888
+Send/Recv	2048	0.001050	15.609011
+Send/Recv	4096	0.001662	19.714225
+Send/Recv	8192	0.002737	23.944902
+Send/Recv	16384	0.004857	26.988012
+Send/Recv	32768	0.008883	29.511789
+Send/Recv	65536	0.016951	30.929187
+Send/Recv	131072	0.033155	31.626827
+Send/Recv	262144	0.065577	31.979914
+Send/Recv	524288	0.130593	32.117468
+Send/Recv	1048576	0.260617	32.187432
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind		n	time (sec)	Rate (MB/sec)
+Isend/Irecv	1	0.000114	0.070279
+Isend/Irecv	2	0.000114	0.140762
+Isend/Irecv	4	0.000116	0.276044
+Isend/Irecv	8	0.000146	0.439235
+Isend/Irecv	16	0.000147	0.873457
+Isend/Irecv	32	0.000158	1.619716
+Isend/Irecv	64	0.000175	2.917711
+Isend/Irecv	128	0.000207	4.955367
+Isend/Irecv	256	0.000272	7.518585
+Isend/Irecv	512	0.000369	11.111937
+Isend/Irecv	1024	0.000588	13.934637
+Isend/Irecv	2048	0.001065	15.387651
+Isend/Irecv	4096	0.001696	19.318619
+Isend/Irecv	8192	0.002752	23.816009
+Isend/Irecv	16384	0.004903	26.730636
+Isend/Irecv	32768	0.008920	29.388794
+Isend/Irecv	65536	0.016999	30.843011
+Isend/Irecv	131072	0.033243	31.543117
+Isend/Irecv	262144	0.065365	32.083935
+Isend/Irecv	524288	0.130599	32.115805
+Isend/Irecv	1048576	0.260572	32.193074
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations, head-to-head</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind				n	time (sec)	Rate (MB/sec)
+head-to-head Isend/Irecv	1	0.000147	0.108858
+head-to-head Isend/Irecv	2	0.000147	0.217562
+head-to-head Isend/Irecv	4	0.000149	0.430426
+head-to-head Isend/Irecv	8	0.000235	0.544273
+head-to-head Isend/Irecv	16	0.000235	1.090261
+head-to-head Isend/Irecv	32	0.000247	2.077066
+head-to-head Isend/Irecv	64	0.000259	3.953973
+head-to-head Isend/Irecv	128	0.000285	7.183626
+head-to-head Isend/Irecv	256	0.000357	11.464556
+head-to-head Isend/Irecv	512	0.000513	15.974265
+head-to-head Isend/Irecv	1024	0.000862	19.014129
+head-to-head Isend/Irecv	2048	0.001575	20.808714
+head-to-head Isend/Irecv	4096	0.002742	23.898189
+head-to-head Isend/Irecv	8192	0.004617	28.391305
+head-to-head Isend/Irecv	16384	0.008475	30.932905
+head-to-head Isend/Irecv	32768	0.015942	32.886442
+head-to-head Isend/Irecv	65536	0.031141	33.671771
+head-to-head Isend/Irecv	131072	0.061472	34.115315
+head-to-head Isend/Irecv	262144	0.122062	34.362128
+head-to-head Isend/Irecv	524288	0.242440	34.600716
+head-to-head Isend/Irecv	1048576	0.484358	34.638043
+</PRE>
+<H2>Benchmarking point to point performance with unaligned data</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind char		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000101	0.009899
+Send/Recv		2	0.000101	0.019865
+Send/Recv		4	0.000100	0.039809
+Send/Recv		8	0.000101	0.079287
+Send/Recv		16	0.000101	0.158201
+Send/Recv		32	0.000103	0.310028
+Send/Recv		64	0.000132	0.483737
+Send/Recv		128	0.000132	0.972394
+Send/Recv		256	0.000145	1.770249
+Send/Recv		512	0.000157	3.252598
+Send/Recv		1024	0.000186	5.503158
+Send/Recv		2048	0.000255	8.034128
+Send/Recv		4096	0.000371	11.031140
+Send/Recv		8192	0.000608	13.470915
+Send/Recv		16384	0.001085	15.095072
+Send/Recv		32768	0.001681	19.495767
+Send/Recv		65536	0.002778	23.588631
+Send/Recv		131072	0.004907	26.709256
+Send/Recv		262144	0.008975	29.208367
+Send/Recv		524288	0.017022	30.800588
+Send/Recv		1048576	0.033321	31.468546
+Kind double		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000102	0.078589
+Send/Recv		2	0.000102	0.157390
+Send/Recv		4	0.000104	0.306526
+Send/Recv		8	0.000134	0.476883
+Send/Recv		16	0.000135	0.950038
+Send/Recv		32	0.000145	1.762180
+Send/Recv		64	0.000163	3.146235
+Send/Recv		128	0.000197	5.205945
+Send/Recv		256	0.000260	7.888427
+Send/Recv		512	0.000366	11.181711
+Send/Recv		1024	0.000613	13.361607
+Send/Recv		2048	0.001085	15.102550
+Send/Recv		4096	0.001672	19.595890
+Send/Recv		8192	0.002727	24.028856
+Send/Recv		16384	0.004829	27.143453
+Send/Recv		32768	0.008875	29.538808
+Send/Recv		65536	0.016951	30.929552
+Send/Recv		131072	0.033074	31.703769
+Send/Recv		262144	0.065646	31.946282
+Send/Recv		524288	0.130774	32.072846
+Send/Recv		1048576	0.260439	32.209548
+Kind int		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000101	0.039447
+Send/Recv		2	0.000102	0.078611
+Send/Recv		4	0.000102	0.156829
+Send/Recv		8	0.000104	0.306552
+Send/Recv		16	0.000133	0.479641
+Send/Recv		32	0.000134	0.952041
+Send/Recv		64	0.000143	1.788469
+Send/Recv		128	0.000162	3.169263
+Send/Recv		256	0.000193	5.291991
+Send/Recv		512	0.000258	7.933371
+Send/Recv		1024	0.000373	10.974614
+Send/Recv		2048	0.000615	13.312477
+Send/Recv		4096	0.001082	15.135859
+Send/Recv		8192	0.001713	19.126499
+Send/Recv		16384	0.002748	23.850028
+Send/Recv		32768	0.004868	26.923360
+Send/Recv		65536	0.008943	29.312267
+Send/Recv		131072	0.017087	30.682568
+Send/Recv		262144	0.033327	31.463364
+Send/Recv		524288	0.065625	31.956803
+Send/Recv		1048576	0.130545	32.129234
+</PRE>
+<H2>Benchmarking point to point performance with contention</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind (np=2)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000103	0.077528
+Send/Recv	2	0.000103	0.155322
+Send/Recv	4	0.000106	0.301088
+Send/Recv	8	0.000134	0.478318
+Send/Recv	16	0.000135	0.947745
+Send/Recv	32	0.000145	1.766161
+Send/Recv	64	0.000164	3.122935
+Send/Recv	128	0.000198	5.165893
+Send/Recv	256	0.000261	7.840484
+Send/Recv	512	0.000366	11.195081
+Send/Recv	1024	0.000573	14.300114
+Send/Recv	2048	0.001057	15.499556
+Send/Recv	4096	0.001689	19.396951
+Send/Recv	8192	0.002726	24.039763
+Send/Recv	16384	0.004796	27.327446
+Send/Recv	32768	0.008796	29.801621
+Send/Recv	65536	0.016918	30.990318
+Send/Recv	131072	0.033286	31.501788
+Send/Recv	262144	0.065738	31.901664
+Send/Recv	524288	0.130503	32.139417
+Send/Recv	1048576	0.260385	32.216110
+Kind (np=4)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000101	0.079398
+Send/Recv	2	0.000101	0.158582
+Send/Recv	4	0.000102	0.313930
+Send/Recv	8	0.000132	0.484275
+Send/Recv	16	0.000133	0.964484
+Send/Recv	32	0.000146	1.757273
+Send/Recv	64	0.000164	3.125636
+Send/Recv	128	0.000199	5.148546
+Send/Recv	256	0.000259	7.917527
+Send/Recv	512	0.000355	11.543717
+Send/Recv	1024	0.000569	14.399718
+Send/Recv	2048	0.001066	15.366364
+Send/Recv	4096	0.001708	19.185574
+Send/Recv	8192	0.002733	23.981156
+Send/Recv	16384	0.004823	27.174686
+Send/Recv	32768	0.008872	29.547798
+Send/Recv	65536	0.016968	30.898041
+Send/Recv	131072	0.033270	31.517624
+Send/Recv	262144	0.065520	32.007845
+Send/Recv	524288	0.130516	32.136287
+Send/Recv	1048576	0.260396	32.214839
+Kind (np=8)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000100	0.080152
+Send/Recv	2	0.000100	0.159942
+Send/Recv	4	0.000102	0.315196
+Send/Recv	8	0.000130	0.491317
+Send/Recv	16	0.000131	0.973895
+Send/Recv	32	0.000143	1.788934
+Send/Recv	64	0.000162	3.164189
+Send/Recv	128	0.000194	5.267974
+Send/Recv	256	0.000259	7.907972
+Send/Recv	512	0.000357	11.480220
+Send/Recv	1024	0.000567	14.440011
+Send/Recv	2048	0.001059	15.477046
+Send/Recv	4096	0.001691	19.382897
+Send/Recv	8192	0.002739	23.924250
+Send/Recv	16384	0.004781	27.412678
+Send/Recv	32768	0.008809	29.757938
+Send/Recv	65536	0.016814	31.182307
+Send/Recv	131072	0.033011	31.764021
+Send/Recv	262144	0.065307	32.112307
+Send/Recv	524288	0.130001	32.263520
+Send/Recv	1048576	0.259408	32.337510
+Kind (np=16)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000101	0.078902
+Send/Recv	2	0.000102	0.157423
+Send/Recv	4	0.000103	0.311658
+Send/Recv	8	0.000133	0.479940
+Send/Recv	16	0.000134	0.953829
+Send/Recv	32	0.000145	1.761530
+Send/Recv	64	0.000164	3.127529
+Send/Recv	128	0.000195	5.251812
+Send/Recv	256	0.000256	7.996487
+Send/Recv	512	0.000364	11.260094
+Send/Recv	1024	0.000609	13.456808
+Send/Recv	2048	0.001228	13.340120
+Send/Recv	4096	0.002042	16.049764
+Send/Recv	8192	0.003675	17.832440
+Send/Recv	16384	0.007427	17.647328
+Send/Recv	32768	0.014478	18.106103
+Send/Recv	65536	0.028325	18.509588
+Send/Recv	131072	0.056647	18.510633
+Send/Recv	262144	0.112816	18.589075
+Send/Recv	524288	0.225635	18.588905
+Send/Recv	1048576	0.451204	18.591620
+Kind (np=32)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000105	0.076366
+Send/Recv	2	0.000104	0.153164
+Send/Recv	4	0.000107	0.299988
+Send/Recv	8	0.000134	0.477105
+Send/Recv	16	0.000135	0.945916
+Send/Recv	32	0.000147	1.743323
+Send/Recv	64	0.000161	3.171719
+Send/Recv	128	0.000200	5.115524
+Send/Recv	256	0.000259	7.895144
+Send/Recv	512	0.000368	11.116459
+Send/Recv	1024	0.000700	11.704738
+Send/Recv	2048	0.001147	14.280638
+Send/Recv	4096	0.002830	11.579004
+Send/Recv	8192	0.005581	11.742646
+Send/Recv	16384	0.010970	11.947800
+Send/Recv	32768	0.021665	12.100017
+Send/Recv	65536	0.042806	12.247974
+Send/Recv	131072	0.085240	12.301449
+Send/Recv	262144	0.172683	12.144521
+Send/Recv	524288	0.345566	12.137488
+Send/Recv	1048576	0.673554	12.454254
+</PRE>
+<!-- runtests in barrier -->
+<A NAME="barrier"><H1>barrier</H1></A>
+<H2>Benchmarking collective barrier</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+Kind	np	time (sec)
+Barrier	1	0.000002
+Barrier	2	0.000148
+Barrier	4	0.000306
+Barrier	8	0.000524
+Barrier	16	0.000755
+Barrier	32	0.000992
+</PRE>
+<H2>Benchmarking collective Allreduce</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+Kind		np	time (sec)
+Allreduce	1	0.000017
+Allreduce	2	0.000263
+Allreduce	4	0.000476
+Allreduce	8	0.000682
+Allreduce	16	0.000910
+Allreduce	32	0.001175
+</PRE>
+<!-- runtests in vector -->
+<A NAME="vector"><H1>vector</H1></A>
+<H2>Comparing the performance of MPI vector datatypes</H2>
+<PRE>
+	mpicc -o vector -O vector.c
+Kind	n	stride	time (sec)	Rate (MB/sec)
+Vector	1000	24	0.001961	4.079713
+Struct	1000	24	0.011425	0.700237
+User	1000	24	0.001363	5.868871
+User(add)	1000	24	0.001368	5.846339
+</PRE>
+<!-- runtests in circulate -->
+<A NAME="circulate"><H1>circulate</H1></A>
+<H2>Pipelining pitfalls</H2>
+<PRE>
+	mpicc -c -O  circulate.c
+	mpicc -o circulate -O circulate.o -lm
+For n = 20000, m = 20000, T_comm = 0.012559, T_compute = 0.035706, sum = 0.048265, T_both = 0.044894
+For n = 500, m = 500, T_comm = 0.000277, T_compute = 0.000885, sum = 0.001162, T_both = 0.001106
+</PRE>
+<!-- runtests in 3way -->
+<A NAME="3way"><H1>3way</H1></A>
+<H2>Exploring the cost of synchronization delays</H2>
+<PRE>
+	mpicc -c -O  bad.c
+	mpicc -o bad -O bad.o  -lm
+[2] Litsize = 8, Time for first send = 0.000266, for second = 0.000098
+[2] Litsize = 9, Time for first send = 0.000278, for second = 0.000097
+[2] Litsize = 511, Time for first send = 0.000442, for second = 0.000304
+[2] Litsize = 512, Time for first send = 0.000438, for second = 0.000298
+[2] Litsize = 513, Time for first send = 0.000439, for second = 0.000303
+</PRE>
+<!-- runtests in jacobi -->
+<A NAME="jacobi"><H1>jacobi</H1></A>
+<H2>Jacobi Iteration - Example Parallel Mesh</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+send/recv: 6 iterations in 0.005936 secs (0.070760 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+send/recv: 7 iterations in 0.021281 secs (18.862072 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+send/recv: 24 iterations in 0.018214 secs (0.368939 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+send/recv: 25 iterations in 0.314889 secs (18.210837 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+send/recv: 25 iterations in 0.031620 secs (0.885511 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+send/recv: 25 iterations in 0.301708 secs (76.025757 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+send/recv: 25 iterations in 0.037695 secs (1.485607 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Shift up and down</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+shift/sendrecv: 6 iterations in 0.002730 secs (0.153832 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+shift/sendrecv: 7 iterations in 0.021880 secs (18.346054 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+shift/sendrecv: 24 iterations in 0.021756 secs (0.308887 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+shift/sendrecv: 25 iterations in 0.268722 secs (21.339520 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+shift/sendrecv: 25 iterations in 0.034136 secs (0.820245 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+shift/sendrecv: 25 iterations in 0.285873 secs (80.236993 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+shift/sendrecv: 25 iterations in 0.054288 secs (1.031526 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+shift/sendrecv: 25 iterations in 0.300203 secs (152.814120 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Exchange head-to-head</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+head-to-head sendrecv: 6 iterations in 0.002771 secs (0.151548 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+head-to-head sendrecv: 7 iterations in 0.021468 secs (18.697882 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+head-to-head sendrecv: 24 iterations in 0.021695 secs (0.309754 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+head-to-head sendrecv: 25 iterations in 0.249516 secs (22.982075 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+head-to-head sendrecv: 25 iterations in 0.033141 secs (0.844874 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+head-to-head sendrecv: 25 iterations in 0.278263 secs (82.431243 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+head-to-head sendrecv: 25 iterations in 0.039664 secs (1.411877 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+head-to-head sendrecv: 25 iterations in 0.316599 secs (144.900061 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+irecv/isend: 6 iterations in 0.002726 secs (0.154070 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+irecv/isend: 7 iterations in 0.022221 secs (18.064211 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+irecv/isend: 24 iterations in 0.017761 secs (0.378368 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+irecv/isend: 25 iterations in 0.307407 secs (18.654102 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+irecv/isend: 25 iterations in 0.032045 secs (0.873775 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+irecv/isend: 25 iterations in 0.300050 secs (76.445983 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+irecv/isend: 25 iterations in 0.035585 secs (1.573682 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+irecv/isend: 25 iterations in 0.338172 secs (135.656221 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv for receiver pull</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+isend/irecv: 6 iterations in 0.003004 secs (0.139797 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+isend/irecv: 7 iterations in 0.021650 secs (18.540700 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+isend/irecv: 24 iterations in 0.018179 secs (0.369664 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+isend/irecv: 25 iterations in 0.278133 secs (20.617508 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+isend/irecv: 25 iterations in 0.032580 secs (0.859411 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+isend/irecv: 25 iterations in 0.328086 secs (69.913382 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+isend/irecv: 25 iterations in 0.038458 secs (1.456116 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+isend/irecv: 25 iterations in 0.351832 secs (130.389606 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Synchronous send</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ssend/irecv: 6 iterations in 0.006492 secs (0.064693 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+ssend/irecv: 7 iterations in 0.021361 secs (18.791519 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+ssend/irecv: 24 iterations in 0.035334 secs (0.190184 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+ssend/irecv: 25 iterations in 0.254951 secs (22.492183 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+ssend/irecv: 25 iterations in 0.043648 secs (0.641491 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+ssend/irecv: 25 iterations in 0.292154 secs (78.512132 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+ssend/irecv: 25 iterations in 0.053200 secs (1.052628 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+ssend/irecv: 25 iterations in 0.316913 secs (144.756367 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Ready send</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+rsend: 6 iterations in 0.000308 secs (1.362862 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+rsend: 7 iterations in 0.021335 secs (18.814552 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+/tmp/shfdEMpt0: No space left on device
+/tmp/shfesNAN0: No space left on device
+/tmp/shfQENHt0: No space left on device
+rsend: 25 iterations in 0.279519 secs (82.061065 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+/etc/FRAMES/SP_Scheduler/Queue/tipei:102516471508:tipei:B:34:50:W not found
+rsend: 25 iterations in 0.037582 secs (1.490080 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+rsend: 25 iterations in 0.292237 secs (156.979384 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+isend/overlap: 6 iterations in 0.002733 secs (0.153676 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+isend/overlap: 7 iterations in 0.021322 secs (18.825891 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+isend/overlap: 24 iterations in 0.019064 secs (0.352500 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+isend/overlap: 25 iterations in 0.254702 secs (22.514132 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+isend/overlap: 25 iterations in 0.029156 secs (0.960341 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+isend/overlap: 25 iterations in 0.300965 secs (76.213583 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+isend/overlap: 25 iterations in 0.036606 secs (1.529791 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+isend/overlap: 25 iterations in 0.313245 secs (146.451511 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication (sends first)</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+send first/overlap: 6 iterations in 0.006601 secs (0.063622 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+send first/overlap: 7 iterations in 0.022270 secs (18.024425 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+send first/overlap: 24 iterations in 0.116756 secs (0.057556 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+send first/overlap: 25 iterations in 0.281508 secs (20.370304 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+send first/overlap: 25 iterations in 0.030827 secs (0.908292 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+send first/overlap: 25 iterations in 0.332135 secs (69.060976 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+send first/overlap: 25 iterations in 0.036385 secs (1.539115 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+send first/overlap: 25 iterations in 0.363885 secs (126.070625 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+<H2>Jacobi Iteration - Persistent send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+persistent send/recv: 6 iterations in 0.000302 secs (1.390729 MFlops); diffnorm 0.008134, m=7 n=4 np=1
+persistent send/recv: 7 iterations in 0.021336 secs (18.813296 MFlops); diffnorm 0.006899, m=4098 n=4 np=1
+persistent send/recv: 24 iterations in 0.016217 secs (0.414377 MFlops); diffnorm 0.009895, m=7 n=10 np=4
+persistent send/recv: 25 iterations in 0.255769 secs (22.420229 MFlops); diffnorm 0.138820, m=4098 n=10 np=4
+persistent send/recv: 25 iterations in 0.028345 secs (0.987824 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+persistent send/recv: 25 iterations in 0.298587 secs (76.820440 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+persistent send/recv: 25 iterations in 0.035549 secs (1.575282 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+persistent send/recv: 25 iterations in 0.337602 secs (135.885582 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+</PRE>
+</BODY>

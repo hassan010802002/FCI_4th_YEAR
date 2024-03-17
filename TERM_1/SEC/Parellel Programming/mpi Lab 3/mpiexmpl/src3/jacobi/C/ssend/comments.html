@@ -1,0 +1,6 @@
+<TITLE>Comments on Jacobi Iteration - Synchronous send</TITLE>
+<BODY BGCOLOR="FFFFFF">
+One implementation has chosen to have <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A> provide buffering by default at
+the cost of performance; using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Ssend.html#MPI_Ssend">MPI_Ssend</A> on this system can provide better
+performance. 
+</BODY>

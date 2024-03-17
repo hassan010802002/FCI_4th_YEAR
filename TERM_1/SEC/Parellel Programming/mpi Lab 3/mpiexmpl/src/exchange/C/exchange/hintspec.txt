@@ -1,0 +1,11 @@
+It is important to be careful with the message tags here.  In particular, note
+that in the code 
+<PRE><CODE>
+if ( (rank % 2) == 0 ) {
+    MPI_Sendrecv( ... )
+} else {
+    MPI_Sendrecv( ... )
+}
+</CODE></PRE>
+the first MPI_Sendrecv is exchanging data with the second (in the other branch
+of the if-statement).

@@ -1,0 +1,26 @@
+<TITLE>Comments on Using MPI_Pack to share data</TITLE>
+<BODY BGCOLOR="FFFFFF">
+Using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Pack.html#MPI_Pack">MPI_Pack</A> and <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Unpack.html#MPI_Unpack">MPI_Unpack</A> allows you to construct very complex collections
+of data without using the MPI Datatypes.  Because you can incrementally unpack
+the data by using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Unpack.html#MPI_Unpack">MPI_Unpack</A> to remove one item at a time, you can easily send
+data that is described by the contents of the packed data itself.  For
+example, to send a string of characters by sending the number of characters
+followed by the actual characters, you could do something like
+<PRE>
+<CODE>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Pack.html#MPI_Pack">MPI_Pack</A>( &number_of_chars, 1, MPI_INT, packbuf, MAXPACKBUF, &packsize, ...);
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Pack.html#MPI_Pack">MPI_Pack</A>( string, number_of_characters, MPI_CHAR, .... );
+</CODE>
+</PRE>
+and unpack this with
+<PRE>
+<CODE>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Unpack.html#MPI_Unpack">MPI_Unpack</A>( packbuf, MAXPACKBUF, &position, &number_of_chars, 1, MPI_INT, ...);
+string = (char *)malloc( number_of_chars * sizeof(char) );
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Unpack.html#MPI_Unpack">MPI_Unpack</A>( packbuf, MAXPACKBUF, &position, string, number_of_characters, 
+            MPI_CHAR, .... );
+</CODE>
+</PRE>
+
+
+</BODY>

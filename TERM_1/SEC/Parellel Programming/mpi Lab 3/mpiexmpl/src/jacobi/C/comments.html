@@ -1,0 +1,12 @@
+<TITLE>Comments on A simple Jacobi iteration</TITLE>
+<BODY BGCOLOR="FFFFFF">
+It should be clear from this example that the Jacobi iteration is a very slow
+method.  
+Because this iteration converges so
+slowly, it is necessary to test for convergence less frequently.
+<P>
+It is possible to avoid the step that copies xnew back into xlocal either by
+using pointer operations (basically swapping xnew and xlocal) or by doing two
+iterations at a time.  This latter approach requires another exchange of ghost
+points and another relaxation sweep.  
+</BODY>

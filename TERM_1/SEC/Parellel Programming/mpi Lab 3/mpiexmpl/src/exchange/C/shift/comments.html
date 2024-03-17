@@ -1,0 +1,8 @@
+<TITLE>Comments on Shifting data around</TITLE>
+<BODY BGCOLOR="FFFFFF">
+This example shows a common approach to sharing "ghost points", particularly
+for regular arrays.  Some systems may also be able to optimize the
+communications in this example.  Note also that this is deadlock "safe", since
+by combining the send and receive operations, it is up to the MPI
+implementation to ensure that both can complete.
+</BODY>

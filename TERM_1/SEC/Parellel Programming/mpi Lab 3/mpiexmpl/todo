@@ -1,0 +1,209 @@
+This is the to-do list for the examples.  To date, ALL of the Fortran 
+assignments need to be done.  In addition, there are more C assignments.
+Each paragraph is a SEPARATE related exercise.
+
+First set (src)
+===============
+Probably should have an overview (we will build a complete app)
+
+bcast
+   Show version for an argument list containing an int and a double.
+   Use two approaches (separate assignments): pack/unpack and Type_struct.
+   Discuss relative costs (time using separate bcast and combined bcast).
+
+ring
+   Show use to order output (token in ring)
+   This depends on output processing; discuss use of fflush(stdout)
+
+   Time bcast and ring used for broadcast (using MPI_WTIME and larger 
+   messages)
+
+exchange
+   Compare the various forms (send/recv, sendrecv, isend/irecv) using
+   longer messages and WTIME and nupshot.
+
+   Show use of ssend for send (which is allowed by the standard)
+   Show profile of it.
+
+   column decomposition, requiring Type_vector or Type_struct
+   Time these, along with explicit user pack/unpack of data (using USER
+   routine).
+
+collect
+   Use with MPE to do plotting of the solution (at least by coloring 
+   squares with the "cell" values).
+
+jacobicmpl
+   (a varient of collect/gatherv)
+   Complete the solver by allowing an unequal number of rows per 
+   processor; let the user specify the number (from the terminal) and 
+   broadcast that to the other processors.  This will need to use
+   x[i*n+j] instead of x[i][j], since it will need to malloc variable-sized
+   arrays.
+
+   Study scaling by using a larger problem and 1,2,4,8,16,32 processors.
+
+   Use topologies for neighbors
+
+   Try periodic boundaries (using topologies) (top periodic with bottom)
+
+overlap
+   Use nonblocking exchange, and move the wait after relax on the interior.
+
+   Measure "idle" time by using Isend/Irecv and Test/Wait.  Compare with 
+   a model. (Use the test, if not ready, then wait and view the
+   time as idle).
+
+   Alternative using Testany/Waitany (do the one that is available first).
+
+   Time this.  Is overlapping worth the extra programming?
+
+gauss
+   Do Gauss-Seidel with red/black ordering.  The code is something like
+        do j=1,n,2
+            do i=1,n,2
+                v(i,j) = ...
+            do i=2,n,2
+                v(i,j+1) = ...
+        exchange computed data
+        do j=1,n,2
+            do i=2,n,2
+               v(i,j) = ...
+            do i=1,n,2
+               v(i,j+1) = ...
+        exchange computed data
+   This is made more complicated if each processor doesn't have an even
+   number of rows to process (since the i and j here are even/odd relative
+   to the GLOBAL index, not the local one).
+
+   Compare sending entire row (a contiguous piece) versus every other
+   element (as needed).  Time the difference.
+cg
+   Discuss CG and then implement, using the jacobi relaxation, suitably
+   modified, as the matrix-vector product
+
+   Add the jacobi sweep as the preconditioner
+
+   Add the Gauss-Seidel sweep as the preconditioner (red-black)
+
+   Alternative examples
+   Poisson problem with Laplacian u = f, and
+      u = exp(x*y), f = (x*x + y*y) * exp(x*y)
+   Note this just adds h*h*f to the average.
+
+libraries
+   Make into a library, starting with the parallel data structure
+   and topologies.  Use an attribute to indicate initialized.
+
+   Use of Comm_dup (instead of a new topology).
+
+   Attribute for available tags.
+
+scalability
+   (May want to divide this into several sub-assignments) 
+   2-d decomposition, using topologies
+   Use Type_vector and Type_struct
+
+   Show use of gatherv/scatterv for setup and collecting.  This requires
+   careful use of TYPE_UB 
+
+Squeezing more 
+   Use of sendinit/recvinit/startall instead.
+
+   Time it.  Is it worth it?
+
+Scalability 2
+
+   Take CG, use Gauss-Seidel on local blocks.  Study the scaling of a
+   fixed sized problem with number of processors; compare with "global" 
+   G-S.  This is an exercise in changing the algorithm for better parallel
+   efficiency at the cost of sequential efficiency.
+
+   Link to PETSc here?
+
+Load balancing
+   Use of Scan (with local work as the contribution) for simple, static
+   load balancing.  Mention master/slave, which takes us to the second
+   set of exercises.
+
+src2 (master/slave)
+===================
+io
+   Show use of MPI_IO attribute to pick output processor (instead of rank==0
+   in MPI_COMM_WORLD).
+
+ioserv
+   (see assignment)
+   Build version that uses (slave 0 sends request to master; on ok,
+   circulates token to other slaves for them to print).
+
+ioserv2
+   Use a user-defined collective operation to check for all processors
+   writing the same text (MSG_PRINT_SAME).  This should use a struct with
+   three fields: int all_same; int len; char buf[maxlen];
+   The operation should set all_same to false if either is false; if both
+   true, set it so strcmp( buf1, buf2 ) == 0.
+
+   Use of gatherv (with 0 contribution from master) as an alternative.
+   ?? Does this make any sense??
+
+ioserv3
+   Provide for input.  Processes should ask, and mode is TOGETHER, or
+   INDEPENDENT.
+
+intercomm
+   re-work ioserv2 + ioserv3 to use intercommunicators.  
+
+   Build into a library (using attributes)   
+
+   Add options to send output to separate files, or files other than stdout.
+
+Advanced datatypes
+==================
+   onetotwo
+   Write code to redistribute a matrix, stored by rows, into 
+   one stored in a 2-d wrap mapping (such as needed by SCALApack).
+   Use Alltoallv and Type_struct with MPI_UB.
+
+   Note that you might need sqrt(p) independent communicators of size 
+   sqrt(p), depending on the 2-d mapping.
+
+   lu_factor
+   (no pivoting)
+   Assuming the 2-d decomposition, perform the LU factorization by forming
+   communicators for the rows/columns, and doing bcasts in both directions
+   of the appropriate data.
+
+   Implement the concurrent pipeline algorithm instead of using Bcast.
+
+   Time these and profile them. 
+
+=========================================
+Formatting changes
+
+Add <!-- source-location  --> and <!-- Author: ... --> to the derived
+files (and an author.txt in the directory; change maint/makepage to 
+look for it).
+
+Consider changing link colors to make the routines stand out more.
+
+Generic help is needed, it should contain things like
+
+    declarations (particularly status), missing ierr in Fortran, 
+    wrong argument order, 
+    use of value where address needed, particularly for scalars.
+
+Specific help should be looking for things like
+
+    off-by-one, misuse of requests, misuse of collective routines,
+    bcast received by recv, ...
+
+More info on things not to worry about (MPI_IO, generality)
+
+Assignment could contain length (in lines) of solution (use 
+cat `cat solution.lst` | wc -l).
+
+Also have trace and anim output, or at least show how to get (anim is
+particularly tricky, since mpeg is really inappropriate for it).
+
+More figures (use /home/gropp/bin/sun4/xfig and output in GIF format)

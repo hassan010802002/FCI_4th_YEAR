@@ -1,0 +1,110 @@
+#!/bin/sh
+# Generated automatically by configure.
+# Run this file to recreate the current configuration.
+# This directory was configured as follows,
+# on host godzilla.mcs.anl.gov:
+#
+# configure -cc=/usr/local/mpi/lib/sun4/ch_p4/mpicc -fc=/usr/local/mpi/lib/sun4/ch_p4/mpif77
+
+for arg
+do
+  case "$arg" in
+    -recheck | --recheck | --rechec | --reche | --rech | --rec | --re | --r)
+    echo running ${CONFIG_SHELL-/bin/sh} configure -cc=/usr/local/mpi/lib/sun4/ch_p4/mpicc -fc=/usr/local/mpi/lib/sun4/ch_p4/mpif77
+    exec ${CONFIG_SHELL-/bin/sh} configure -cc=/usr/local/mpi/lib/sun4/ch_p4/mpicc -fc=/usr/local/mpi/lib/sun4/ch_p4/mpif77 ;;
+    *) echo "Usage: config.status --recheck" 2>&1; exit 1 ;;
+  esac
+done
+
+trap 'rm -f src/hellow/C/Makefile src/bcast/C/Makefile src/bcast/C/struct/Makefile src/bcast/C/pack/Makefile src/ring/C/Makefile src/ring/C/long/Makefile src/ring/C/topol/Makefile src/exchange/C/Makefile src/exchange/C/nonblock/Makefile src/exchange/C/shift/Makefile src/exchange/C/exchange/Makefile src/jacobi/C/Makefile src/collect/C/Makefile src/collect/C/gatherv/Makefile src/jacobicmpl/C/Makefile src/fairness/C/Makefile src/fairness/C/waitsome/Makefile src/pi/C/Makefile Makefile src2/io/C/Makefile src2/ioserv/C/Makefile src3/memcpy/C/Makefile src3/memcpy/C/unaligned/Makefile src3/vector/C/Makefile src3/pingpong/C/Makefile src3/pingpong/C/nbhead/Makefile src3/pingpong/C/smass/Makefile src3/pingpong/C/mass/Makefile src3/pingpong/C/ssend/Makefile src3/pingpong/C/nb/Makefile src3/pingpong/C/unaligned/Makefile src3/irecv/C/Makefile src3/irecv/C/irecvisend/Makefile src3/irecv/C/Makefile src3/jacobi/C/Makefile src3/jacobi/C/rsend/Makefile src3/jacobi/C/ssend/Makefile src3/jacobi/C/overlap/Makefile src3/jacobi/C/overlapr/Makefile src3/jacobi/C/nbisend/Makefile src3/jacobi/C/shift/Makefile src3/jacobi/C/nb/Makefile src3/jacobi/C/headtohead/Makefile src3/jacobi/C/irsend/Makefile src3/jacobi/C/persist/Makefile src3/circulate/C/Makefile src3/3way/C/Makefile src3/barrier/C/Makefile src3/barrier/C/reduce/Makefile src3/Makefile ; exit 1' 1 3 15
+FINC=''
+ARCH=''
+CC='/usr/local/mpi/lib/sun4/ch_p4/mpicc'
+CFLAGS=''
+CLINKER=''
+COMM=''
+DEVICE=''
+F77='/usr/local/mpi/lib/sun4/ch_p4/mpif77'
+FFLAGS=''
+FLIB_PATH=''
+FLIB_PATH_LEADER=''
+FLINKER=''
+HAS_FORTRAN='1'
+INCLUDE_PATH=''
+LIB_LIST=''
+LIB_PATH=''
+LIB_DIR='.'
+MAKE='make'
+MPE_CFLAGS='  -DHAVE_STDLIB_H=1'
+MPIR_HOME='/home/MPI/class/mpiexmpl'
+MPI_FOBJECTS=''
+MPIFDEP=''
+MPILIBNAME='mpi'
+MPICC='/usr/local/mpi/lib/sun4/ch_p4/mpicc'
+MPIF77='/usr/local/mpi/lib/sun4/ch_p4/mpif77'
+OPTFLAGS=''
+OPTFLAGSC=''
+OPTFLAGSF=''
+HAS_MPI2='0'
+LIBS=''
+srcdir='.'
+DEFS=' -DHAVE_STDLIB_H=1'
+prefix=''
+exec_prefix=''
+prsub=''
+extrasub=''
+
+top_srcdir=$srcdir
+
+CONFIG_FILES=${CONFIG_FILES-"src/hellow/C/Makefile src/bcast/C/Makefile src/bcast/C/struct/Makefile src/bcast/C/pack/Makefile src/ring/C/Makefile src/ring/C/long/Makefile src/ring/C/topol/Makefile src/exchange/C/Makefile src/exchange/C/nonblock/Makefile src/exchange/C/shift/Makefile src/exchange/C/exchange/Makefile src/jacobi/C/Makefile src/collect/C/Makefile src/collect/C/gatherv/Makefile src/jacobicmpl/C/Makefile src/fairness/C/Makefile src/fairness/C/waitsome/Makefile src/pi/C/Makefile Makefile src2/io/C/Makefile src2/ioserv/C/Makefile src3/memcpy/C/Makefile src3/memcpy/C/unaligned/Makefile src3/vector/C/Makefile src3/pingpong/C/Makefile src3/pingpong/C/nbhead/Makefile src3/pingpong/C/smass/Makefile src3/pingpong/C/mass/Makefile src3/pingpong/C/ssend/Makefile src3/pingpong/C/nb/Makefile src3/pingpong/C/unaligned/Makefile src3/irecv/C/Makefile src3/irecv/C/irecvisend/Makefile src3/irecv/C/Makefile src3/jacobi/C/Makefile src3/jacobi/C/rsend/Makefile src3/jacobi/C/ssend/Makefile src3/jacobi/C/overlap/Makefile src3/jacobi/C/overlapr/Makefile src3/jacobi/C/nbisend/Makefile src3/jacobi/C/shift/Makefile src3/jacobi/C/nb/Makefile src3/jacobi/C/headtohead/Makefile src3/jacobi/C/irsend/Makefile src3/jacobi/C/persist/Makefile src3/circulate/C/Makefile src3/3way/C/Makefile src3/barrier/C/Makefile src3/barrier/C/reduce/Makefile src3/Makefile "}
+for file in .. ${CONFIG_FILES}; do if test "x$file" != x..; then
+  srcdir=$top_srcdir
+  # Remove last slash and all that follows it.  Not all systems have dirname.
+  dir=`echo $file|sed 's%/[^/][^/]*$%%'`
+  if test "$dir" != "$file"; then
+    test "$top_srcdir" != . && srcdir=$top_srcdir/$dir
+    test ! -d $dir && mkdir $dir
+  fi
+  echo creating $file
+  rm -f $file
+  echo "# Generated automatically from `echo $file|sed 's|.*/||'`.in by configure." > $file
+  sed -e "
+$prsub
+$extrasub
+s%@FINC@%$FINC%g
+s%@ARCH@%$ARCH%g
+s%@CC@%$CC%g
+s%@CFLAGS@%$CFLAGS%g
+s%@CLINKER@%$CLINKER%g
+s%@COMM@%$COMM%g
+s%@DEVICE@%$DEVICE%g
+s%@F77@%$F77%g
+s%@FFLAGS@%$FFLAGS%g
+s%@FLIB_PATH@%$FLIB_PATH%g
+s%@FLIB_PATH_LEADER@%$FLIB_PATH_LEADER%g
+s%@FLINKER@%$FLINKER%g
+s%@HAS_FORTRAN@%$HAS_FORTRAN%g
+s%@INCLUDE_PATH@%$INCLUDE_PATH%g
+s%@LIB_LIST@%$LIB_LIST%g
+s%@LIB_PATH@%$LIB_PATH%g
+s%@LIB_DIR@%$LIB_DIR%g
+s%@MAKE@%$MAKE%g
+s%@MPE_CFLAGS@%$MPE_CFLAGS%g
+s%@MPIR_HOME@%$MPIR_HOME%g
+s%@MPI_FOBJECTS@%$MPI_FOBJECTS%g
+s%@MPIFDEP@%$MPIFDEP%g
+s%@MPILIBNAME@%$MPILIBNAME%g
+s%@MPICC@%$MPICC%g
+s%@MPIF77@%$MPIF77%g
+s%@OPTFLAGS@%$OPTFLAGS%g
+s%@OPTFLAGSC@%$OPTFLAGSC%g
+s%@OPTFLAGSF@%$OPTFLAGSF%g
+s%@HAS_MPI2@%$HAS_MPI2%g
+s%@LIBS@%$LIBS%g
+s%@srcdir@%$srcdir%g
+s%@DEFS@%$DEFS%
+" $top_srcdir/${file}.in >> $file
+fi; done
+
+
+exit 0

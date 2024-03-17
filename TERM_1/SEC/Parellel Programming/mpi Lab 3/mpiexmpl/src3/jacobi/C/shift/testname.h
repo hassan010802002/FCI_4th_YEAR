@@ -1,0 +1,1 @@
+#define TESTNAME "shift/sendrecv"

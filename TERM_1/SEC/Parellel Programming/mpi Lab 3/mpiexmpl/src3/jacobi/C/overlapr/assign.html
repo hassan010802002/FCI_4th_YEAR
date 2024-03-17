@@ -1,0 +1,13 @@
+<TITLE>Jacobi Iteration - Overlapping communication (sends first)</TITLE>
+<BODY BGCOLOR="FFFFFF">
+In this example, the computation is split into two parts: the part that needs
+data from the other processors, and the part that doesn't.  The part that is
+independent of the other processors represents the <IT>interior</IT> of the
+domain (relative to each processor); the part that requires data from other
+processors is the <IT>boundary</IT>.  The communication is started, the
+computation on the interior takes place, followed by completing the
+communication and finaly performing the computation on the boundary.
+<P>
+This version calls <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A> before <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>.  This should be slightly better
+for systems that use a sender-push rendezvous strategy.
+</BODY>

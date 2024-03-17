@@ -1,0 +1,3 @@
+Note that the shift operations, because they allow simultaneous sending and
+receiving, are not subject to the serialization that just using MPI_Send and
+MPI_Recv are.

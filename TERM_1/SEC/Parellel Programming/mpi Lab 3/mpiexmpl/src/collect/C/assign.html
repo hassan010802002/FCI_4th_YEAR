@@ -1,0 +1,21 @@
+<TITLE>Collecting Data</TITLE>
+<BODY BGCOLOR="FFFFFF">
+Once a parallel program computes a solution, it it often necessary to write
+the solution out to disk or display it on the user's terminal.  This often
+means collecting the data onto a single processor that handles performing the
+output (since there are few parallel file systems around).  This exercise
+shows one way in which this may be performed.
+
+Take your <A HREF="../../jacobi/C/main.html" TARGET="mainwindow">Jacobi
+iteration example</A> and modify it so that the computed solution is collected
+onto process 0, which then writes the solution out (to standard output).  You
+might want to write the results out in a form that can be used for display
+with tools like gnuplot or matlab, but this is not required.
+
+You may assume that process zero can store the entire solution.  Also, assume
+that each process contributes exactly the same amount of data (see the related
+problems for the general case).
+<P>
+You may want to use these MPI routines in your solution:<BR>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Gather.html#MPI_Gather">MPI_Gather</A>
+</BODY>

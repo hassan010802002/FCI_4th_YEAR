@@ -1,0 +1,19 @@
+<TITLE>Makefile</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+# Generated automatically from Makefile.in by configure.
+ALL: io
+SHELL = /bin/sh
+DIRS = 
+io: io.c
+	/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o io io.c 
+profile.alog: io.c
+	/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o io.log -mpilog io.c 
+	<A href="http://www.mcs.anl.gov/mpi/www/www1/mpirun.html#mpirun">mpirun</A> -np 4 io.log
+	/bin/mv io.log_profile.log profile.alog
+clean:
+	/bin/rm -f io io.o io.log
+	#for dir in $(DIRS) ; do \
+	#    ( cd $$dir ; make clean ) ; done
+</PRE>
+</BODY>

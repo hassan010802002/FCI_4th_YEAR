@@ -1,0 +1,3 @@
+Write a program to determine the amount of buffering that MPI_Send provides.
+That it, write a program that determines how large a message can be sent with
+MPI_Send without a matching receive at the destination.

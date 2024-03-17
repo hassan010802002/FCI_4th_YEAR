@@ -1,0 +1,8 @@
+<TITLE>Comments on Collecting Data (with varying amounts from each process)</TITLE>
+<BODY BGCOLOR="FFFFFF">
+We could have used exact knowledge of the amount of data on each process (the
+<CODE>lcnt</CODE> value in the solution) instead of using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Gather.html#MPI_Gather">MPI_Gather</A> to
+collect the values.  Using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Gather.html#MPI_Gather">MPI_Gather</A>, however, is simple and allows us to
+ensure that we are using the correct values.
+
+</BODY>

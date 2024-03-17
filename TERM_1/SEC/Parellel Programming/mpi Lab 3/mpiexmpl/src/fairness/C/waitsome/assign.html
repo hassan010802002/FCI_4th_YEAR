@@ -1,0 +1,14 @@
+<TITLE>Implementing Fairness using Waitsome</TITLE>
+<BODY BGCOLOR="FFFFFF">
+Write a program to provide fair reception of message from all sending
+processes. Arrange the program to have all processes except process 0 send 100
+messages to process 0.  Have process 0 print out the messages as it receives
+them.  Use nonblocking receives and <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitsome.html#MPI_Waitsome">MPI_Waitsome</A>.
+
+Is the MPI implementation fair?
+<P>
+You may want to use these MPI routines in your solution:<BR>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitsome.html#MPI_Waitsome">MPI_Waitsome</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Cancel.html#MPI_Cancel">MPI_Cancel</A>
+</BODY>

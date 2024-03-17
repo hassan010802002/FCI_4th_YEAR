@@ -1,0 +1,29 @@
+<TITLE>Putting it all together: A complete application</TITLE>
+<BODY BGCOLOR="FFFFFF">
+In this exercise, you will put together parts from the previous exercise to
+provide a simple linear equation solver.  
+<P>
+To make this a complete parallel program, we must handle the issue of input
+and output.  Rather than specify the values of the boundary conditions of the
+distributed array, these values should be read in from a file.  Assume that
+the file is in the same format as the output data from the <A
+HREF="../../collect/C/main.html" TARGET="mainwindow">Collecting data</A>
+exercise. 
+<P>
+Have process zero read this data and send it to the other processes.  A <A
+HREF="in.dat">Sample data file</A> is available.
+<P>
+Use the Jacobi linear solver from the previous examples, as well as the data
+output from the "Collecting data" example.  
+<P>
+Once your solution is working, consider enhancing it by
+<UL>
+<LI> Using topologies to find the neighbors
+<LI> Using some of the alternative strategies from <A HREF=""
+TARGET="mainwindow">A Parallel Data Structure</A>
+<LI> Allowing each processor to have a different number of rows of the mesh
+</UL>
+<P>
+You may want to use these MPI routines in your solution:<BR>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Scatterv.html#MPI_Scatterv">MPI_Scatterv</A>
+</BODY>

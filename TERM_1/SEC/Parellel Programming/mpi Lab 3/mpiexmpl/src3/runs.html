@@ -1,0 +1,51 @@
+<TITLE>Results for different MPI implementations</TITLE>
+<BODY BGCOLOR="FFFFFF">
+
+<H1>Results for different MPI implementations</H1>
+The example programs in this section test the performance characteristics of
+an MPI implementation.  
+
+<!-- Use a table to get multicolumn output -->
+<CENTER>
+<TABLE>
+<TH WIDTH=25%>System
+<TH WIDTH=70%>Comments
+<TR><TD COLSPAN=2><HR WIDTH=95% ALIGN=LEFT>
+<TR><TD VALIGN=TOP>Cray T3D
+<TD>This is the official Cray/EPCC version.  
+<UL>
+<LI> <A HREF="runall.t3depcc.html" TARGET="_blank">Basic tests</A>
+</UL>
+This installation does not have a complete MPI implementation; the tests 
+involving MPI_Rsend and persistent sends failed.  Logs are not available (MPE 
+could not be built due to bugs in /bin/sh and/or /bin/sed).
+
+<TR><TD COLSPAN=2><HR WIDTH=95% ALIGN=LEFT>
+<TR><TD VALIGN=TOP>IBM SPx<TD>This is MPICH running on Argonne's IBM SP (SP1 nodes with
+SP2 switch)
+<UL>
+<LI> <A HREF="runall.anlspx.html" TARGET="_blank">Basic tests</A>
+<LI> <A HREF="runall.anlspx.nopoll.html" TARGET="_blank">Tests with nopoll</A>
+<LI> <A HREF="runall.anlspx.log.html" TARGET="_blank">Tests with logging</A>
+</UL>
+
+<TR><TD COLSPAN=2><HR WIDTH=95% ALIGN=LEFT>
+<TR><TD VALIGN=TOP>IBM SP2<TD>This is the official IBM version.
+<UL>
+<LI> <A HREF="runall.sp2.html" TARGET="_blank">Basic tests</A>
+<LI> <A HREF="runall.sp2.nopoll.html" TARGET="_blank">Tests with nopoll</A>
+<LI> <A HREF="runall.sp2.log.html" TARGET="_blank">Tests with logging</A>
+</UL>
+<TR><TD COLSPAN=2><HR WIDTH=95% ALIGN=LEFT>
+<TR><TD VALIGN=TOP>SGI Power Challenge<TD>This is the official SGI version, running on 
+a single multiprocessor system.
+<UL>
+<LI> <A HREF="runall.sgi.html" TARGET="_blank">Basic tests</A>
+<!-- 
+<LI> <A HREF="runall.sgi.log.html" TARGET="_blank">Tests with logging (failed)</A> 
+-->
+</UL>
+</TABLE>
+</CENTER>
+
+</BODY>

@@ -1,0 +1,633 @@
+<TITLE>Results for MPI perforance tests on sp2</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<H1>Results for MPI perforance tests on sp2</H1>
+
+<H2>Contents</H2>
+<UL>
+<LI> <A HREF="#memcpy">Memcpy</A>
+<LI> <A HREF="#pingpong">Point-to-point tests</A>
+<LI> <A HREF="#barrier">Collective tests</A>
+<LI> <A HREF="#vector">Vector datatype tests</A>
+<LI> <A HREF="#circulate">Synchronization tests</A>
+<LI> <A HREF="#3way">More Synchronization tests</A>
+<LI> <A HREF="#jacobi">Sample application (Jacobi iteration)</A>
+</UL>
+<!-- runtests in memcpy -->
+<A NAME="memcpy"><H1>memcpy</H1></A>
+<H2>Determining delivered memory performance</H2>
+<PRE>
+	mpicc -o memcpy -O memcpy.c
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	18.985397
+8	0.000000	37.940945
+16	0.000000	76.032616
+32	0.000000	70.972320
+64	0.000001	109.090656
+128	0.000001	149.134097
+256	0.000001	182.662942
+512	0.000002	205.801349
+1024	0.000005	219.709263
+2048	0.000009	227.400055
+4096	0.000018	231.432652
+8192	0.000035	233.504672
+16384	0.000070	234.559777
+32768	0.000139	235.082110
+65536	0.000278	235.345954
+131072	0.000574	228.205962
+262144	0.001592	164.712457
+524288	0.003164	165.700240
+1048576	0.006343	165.313615
+2097152	0.012857	163.112050
+</PRE>
+<H2>Determining delivered memory performance with unaligned data</H2>
+<PRE>
+	mpicc -o memcpy memcpy.c
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	15.642934
+8	0.000000	29.534735
+16	0.000000	56.050473
+32	0.000001	56.050278
+64	0.000001	86.870124
+128	0.000001	119.811600
+256	0.000002	147.840661
+512	0.000003	167.424303
+1024	0.000006	179.292242
+2048	0.000011	185.893654
+4096	0.000022	189.369790
+8192	0.000043	191.148317
+16384	0.000085	192.053909
+32768	0.000170	192.514659
+65536	0.000340	192.743488
+131072	0.000698	187.672443
+262144	0.001854	141.378498
+524288	0.003685	142.291696
+1048576	0.007365	142.364150
+2097152	0.014943	140.341091
+</PRE>
+<!-- runtests in pingpong -->
+<A NAME="pingpong"><H1>pingpong</H1></A>
+<H2>Benchmarking point to point performance</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind		n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000049	0.163185
+Send/Recv	2	0.000049	0.326268
+Send/Recv	4	0.000049	0.652744
+Send/Recv	8	0.000050	1.292506
+Send/Recv	16	0.000050	2.537236
+Send/Recv	32	0.000067	3.810393
+Send/Recv	64	0.000080	6.409815
+Send/Recv	128	0.000099	10.291640
+Send/Recv	256	0.000138	14.880116
+Send/Recv	512	0.000212	19.362990
+Send/Recv	1024	0.000415	19.721938
+Send/Recv	2048	0.000674	24.319430
+Send/Recv	4096	0.001163	28.174805
+Send/Recv	8192	0.002101	31.187940
+Send/Recv	16384	0.003990	32.849508
+Send/Recv	32768	0.007872	33.300549
+Send/Recv	65536	0.015528	33.764963
+Send/Recv	131072	0.030608	34.258009
+Send/Recv	262144	0.061561	34.066513
+Send/Recv	524288	0.122536	34.229035
+Send/Recv	1048576	0.244839	34.261775
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind		n	time (sec)	Rate (MB/sec)
+Isend/Irecv	1	0.000063	0.126050
+Isend/Irecv	2	0.000063	0.253398
+Isend/Irecv	4	0.000063	0.505098
+Isend/Irecv	8	0.000063	1.008824
+Isend/Irecv	16	0.000064	1.985775
+Isend/Irecv	32	0.000082	3.126286
+Isend/Irecv	64	0.000089	5.728778
+Isend/Irecv	128	0.000109	9.356785
+Isend/Irecv	256	0.000148	13.874555
+Isend/Irecv	512	0.000225	18.211533
+Isend/Irecv	1024	0.000424	19.337289
+Isend/Irecv	2048	0.000685	23.932224
+Isend/Irecv	4096	0.001170	28.000258
+Isend/Irecv	8192	0.002120	30.913571
+Isend/Irecv	16384	0.004027	32.552037
+Isend/Irecv	32768	0.007897	33.195338
+Isend/Irecv	65536	0.015564	33.686862
+Isend/Irecv	131072	0.030882	33.954580
+Isend/Irecv	262144	0.061660	34.011754
+Isend/Irecv	524288	0.122753	34.168762
+Isend/Irecv	1048576	0.245075	34.228686
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations, head-to-head</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind				n	time (sec)	Rate (MB/sec)
+head-to-head Isend/Irecv	1	0.000080	0.201214
+head-to-head Isend/Irecv	2	0.000079	0.402765
+head-to-head Isend/Irecv	4	0.000080	0.795391
+head-to-head Isend/Irecv	8	0.000080	1.595369
+head-to-head Isend/Irecv	16	0.000082	3.104092
+head-to-head Isend/Irecv	32	0.000098	5.212693
+head-to-head Isend/Irecv	64	0.000112	9.125339
+head-to-head Isend/Irecv	128	0.000135	15.123161
+head-to-head Isend/Irecv	256	0.000175	23.389012
+head-to-head Isend/Irecv	512	0.000233	35.109834
+head-to-head Isend/Irecv	1024	0.000542	30.207881
+head-to-head Isend/Irecv	2048	0.000898	36.478814
+head-to-head Isend/Irecv	4096	0.001617	40.541285
+head-to-head Isend/Irecv	8192	0.003017	43.446280
+head-to-head Isend/Irecv	16384	0.005857	44.756812
+head-to-head Isend/Irecv	32768	0.011543	45.419346
+head-to-head Isend/Irecv	65536	0.022918	45.754080
+head-to-head Isend/Irecv	131072	0.045612	45.978504
+head-to-head Isend/Irecv	262144	0.090735	46.225714
+head-to-head Isend/Irecv	524288	0.181509	46.216036
+head-to-head Isend/Irecv	1048576	0.363857	46.109399
+</PRE>
+<H2>Benchmarking point to point performance with unaligned data</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind char		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000049	0.020405
+Send/Recv		2	0.000049	0.040865
+Send/Recv		4	0.000049	0.081714
+Send/Recv		8	0.000049	0.163980
+Send/Recv		16	0.000049	0.326449
+Send/Recv		32	0.000049	0.647599
+Send/Recv		64	0.000050	1.280320
+Send/Recv		128	0.000052	2.482080
+Send/Recv		256	0.000070	3.666092
+Send/Recv		512	0.000091	5.641870
+Send/Recv		1024	0.000104	9.811954
+Send/Recv		2048	0.000148	13.874161
+Send/Recv		4096	0.000206	19.908861
+Send/Recv		8192	0.000418	19.610990
+Send/Recv		16384	0.000672	24.383221
+Send/Recv		32768	0.001153	28.411150
+Send/Recv		65536	0.002094	31.289756
+Send/Recv		131072	0.004028	32.542137
+Send/Recv		262144	0.007851	33.387761
+Send/Recv		524288	0.015546	33.725867
+Send/Recv		1048576	0.030873	33.964575
+Kind double		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000049	0.162870
+Send/Recv		2	0.000049	0.326104
+Send/Recv		4	0.000049	0.652024
+Send/Recv		8	0.000050	1.292666
+Send/Recv		16	0.000050	2.539784
+Send/Recv		32	0.000067	3.812383
+Send/Recv		64	0.000079	6.441872
+Send/Recv		128	0.000099	10.379945
+Send/Recv		256	0.000140	14.612915
+Send/Recv		512	0.000209	19.632131
+Send/Recv		1024	0.000415	19.733221
+Send/Recv		2048	0.000675	24.264503
+Send/Recv		4096	0.001157	28.331317
+Send/Recv		8192	0.002113	31.012682
+Send/Recv		16384	0.004060	32.283644
+Send/Recv		32768	0.007947	32.984461
+Send/Recv		65536	0.015460	33.912411
+Send/Recv		131072	0.030828	34.014154
+Send/Recv		262144	0.061546	34.074490
+Send/Recv		524288	0.122700	34.183435
+Send/Recv		1048576	0.245707	34.140733
+Kind int		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000049	0.081716
+Send/Recv		2	0.000049	0.163345
+Send/Recv		4	0.000049	0.326250
+Send/Recv		8	0.000049	0.651736
+Send/Recv		16	0.000049	1.295562
+Send/Recv		32	0.000050	2.539622
+Send/Recv		64	0.000068	3.788757
+Send/Recv		128	0.000079	6.446187
+Send/Recv		256	0.000101	10.174293
+Send/Recv		512	0.000147	13.948569
+Send/Recv		1024	0.000210	19.493159
+Send/Recv		2048	0.000414	19.793411
+Send/Recv		4096	0.000675	24.273492
+Send/Recv		8192	0.001151	28.465448
+Send/Recv		16384	0.002107	31.109846
+Send/Recv		32768	0.004033	32.501992
+Send/Recv		65536	0.007845	33.413614
+Send/Recv		131072	0.015422	33.995393
+Send/Recv		262144	0.030761	34.087409
+Send/Recv		524288	0.061300	34.211198
+Send/Recv		1048576	0.122871	34.135771
+</PRE>
+<H2>Benchmarking point to point performance with contention</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+Kind (np=2)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000049	0.163598
+Send/Recv	2	0.000049	0.325285
+Send/Recv	4	0.000049	0.649081
+Send/Recv	8	0.000049	1.293648
+Send/Recv	16	0.000050	2.540597
+Send/Recv	32	0.000067	3.795790
+Send/Recv	64	0.000080	6.430141
+Send/Recv	128	0.000099	10.344181
+Send/Recv	256	0.000141	14.515384
+Send/Recv	512	0.000214	19.113392
+Send/Recv	1024	0.000419	19.574669
+Send/Recv	2048	0.000673	24.352868
+Send/Recv	4096	0.001158	28.301036
+Send/Recv	8192	0.002095	31.279488
+Send/Recv	16384	0.003998	32.780395
+Send/Recv	32768	0.007843	33.425277
+Send/Recv	65536	0.015587	33.635615
+Send/Recv	131072	0.030801	34.043846
+Send/Recv	262144	0.061414	34.147548
+Send/Recv	524288	0.122301	34.294932
+Send/Recv	1048576	0.245985	34.102155
+Kind (np=4)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000049	0.162797
+Send/Recv	2	0.000049	0.326176
+Send/Recv	4	0.000049	0.648283
+Send/Recv	8	0.000050	1.287263
+Send/Recv	16	0.000051	2.532530
+Send/Recv	32	0.000068	3.771057
+Send/Recv	64	0.000080	6.398667
+Send/Recv	128	0.000101	10.167918
+Send/Recv	256	0.000139	14.754160
+Send/Recv	512	0.000213	19.189511
+Send/Recv	1024	0.000414	19.770128
+Send/Recv	2048	0.000672	24.376421
+Send/Recv	4096	0.001157	28.311429
+Send/Recv	8192	0.002118	30.936557
+Send/Recv	16384	0.004036	32.472701
+Send/Recv	32768	0.007879	33.272494
+Send/Recv	65536	0.015539	33.740436
+Send/Recv	131072	0.030841	33.999444
+Send/Recv	262144	0.061530	34.083365
+Send/Recv	524288	0.122533	34.230055
+Send/Recv	1048576	0.245507	34.168519
+Kind (np=8)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000049	0.162823
+Send/Recv	2	0.000049	0.324955
+Send/Recv	4	0.000049	0.647729
+Send/Recv	8	0.000050	1.289964
+Send/Recv	16	0.000051	2.532763
+Send/Recv	32	0.000068	3.769735
+Send/Recv	64	0.000080	6.391811
+Send/Recv	128	0.000100	10.190503
+Send/Recv	256	0.000140	14.612045
+Send/Recv	512	0.000214	19.167057
+Send/Recv	1024	0.000416	19.705337
+Send/Recv	2048	0.000679	24.144271
+Send/Recv	4096	0.001160	28.256194
+Send/Recv	8192	0.002113	31.018738
+Send/Recv	16384	0.004039	32.450893
+Send/Recv	32768	0.007884	33.249863
+Send/Recv	65536	0.015517	33.787185
+Send/Recv	131072	0.030881	33.954855
+Send/Recv	262144	0.061674	34.004033
+Send/Recv	524288	0.122890	34.130441
+Send/Recv	1048576	0.246030	34.095821
+Kind (np=16)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000051	0.158407
+Send/Recv	2	0.000051	0.312505
+Send/Recv	4	0.000052	0.620784
+Send/Recv	8	0.000052	1.236058
+Send/Recv	16	0.000054	2.368169
+Send/Recv	32	0.000069	3.687904
+Send/Recv	64	0.000083	6.180154
+Send/Recv	128	0.000102	10.073428
+Send/Recv	256	0.000143	14.369410
+Send/Recv	512	0.000222	18.472299
+Send/Recv	1024	0.000442	18.517701
+Send/Recv	2048	0.000730	22.431159
+Send/Recv	4096	0.001251	26.199992
+Send/Recv	8192	0.002312	28.349394
+Send/Recv	16384	0.004411	29.717414
+Send/Recv	32768	0.008621	30.408624
+Send/Recv	65536	0.017136	30.595906
+Send/Recv	131072	0.034046	30.799243
+Send/Recv	262144	0.067761	30.949043
+Send/Recv	524288	0.135505	30.953037
+Send/Recv	1048576	0.272360	30.799719
+Kind (np=32)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000051	0.157621
+Send/Recv	2	0.000051	0.313361
+Send/Recv	4	0.000052	0.620078
+Send/Recv	8	0.000052	1.224519
+Send/Recv	16	0.000055	2.337237
+Send/Recv	32	0.000070	3.659166
+Send/Recv	64	0.000083	6.169294
+Send/Recv	128	0.000106	9.655172
+Send/Recv	256	0.000155	13.232467
+Send/Recv	512	0.000323	12.697823
+Send/Recv	1024	0.000498	16.460956
+Send/Recv	2048	0.000826	19.834152
+Send/Recv	4096	0.001513	21.655844
+Send/Recv	8192	0.002810	23.319618
+Send/Recv	16384	0.005436	24.110849
+Send/Recv	32768	0.010479	25.015531
+Send/Recv	65536	0.021049	24.907710
+Send/Recv	131072	0.041756	25.112217
+Send/Recv	262144	0.083295	25.177255
+Send/Recv	524288	0.166516	25.188585
+Send/Recv	1048576	0.333755	25.134057
+Kind (np=64)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000055	0.145556
+Send/Recv	2	0.000055	0.290432
+Send/Recv	4	0.000056	0.573316
+Send/Recv	8	0.000056	1.142998
+Send/Recv	16	0.000056	2.279837
+Send/Recv	32	0.000072	3.545726
+Send/Recv	64	0.000086	5.958627
+Send/Recv	128	0.000105	9.770160
+Send/Recv	256	0.000225	9.104245
+Send/Recv	512	0.000311	13.161954
+Send/Recv	1024	0.000469	17.453926
+Send/Recv	2048	0.000832	19.683140
+Send/Recv	4096	0.001558	21.038507
+Send/Recv	8192	0.002971	22.061258
+Send/Recv	16384	0.006034	21.721566
+Send/Recv	32768	0.011912	22.005838
+Send/Recv	65536	0.023890	21.945896
+Send/Recv	131072	0.047515	22.068426
+Send/Recv	262144	0.095488	21.962383
+Send/Recv	524288	0.187142	22.412377
+Send/Recv	1048576	0.377694	22.210091
+</PRE>
+<!-- runtests in barrier -->
+<A NAME="barrier"><H1>barrier</H1></A>
+<H2>Benchmarking collective barrier</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+Kind	np	time (sec)
+Barrier	1	0.000009
+Barrier	2	0.000082
+Barrier	4	0.000147
+Barrier	8	0.000217
+Barrier	16	0.000297
+Barrier	32	0.000391
+Barrier	64	0.000593
+</PRE>
+<H2>Benchmarking collective Allreduce</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+Kind		np	time (sec)
+Allreduce	1	0.000019
+Allreduce	2	0.000105
+Allreduce	4	0.000179
+Allreduce	8	0.000259
+Allreduce	16	0.000357
+Allreduce	32	0.000468
+Allreduce	64	0.000670
+</PRE>
+<!-- runtests in vector -->
+<A NAME="vector"><H1>vector</H1></A>
+<H2>Comparing the performance of MPI vector datatypes</H2>
+<PRE>
+	mpicc -o vector -O vector.c
+Kind	n	stride	time (sec)	Rate (MB/sec)
+Vector	1000	24	0.002025	3.951277
+Struct	1000	24	0.002662	3.005806
+User	1000	24	0.000532	15.029694
+User(add)	1000	24	0.000532	15.042305
+</PRE>
+<!-- runtests in circulate -->
+<A NAME="circulate"><H1>circulate</H1></A>
+<H2>Pipelining pitfalls</H2>
+<PRE>
+	mpicc -c -O  circulate.c
+	mpicc -o circulate -O circulate.o -lm
+For n = 20000, m = 20000, T_comm = 0.006650, T_compute = 0.024686, sum = 0.031336, T_both = 0.031700
+For n = 500, m = 500, T_comm = 0.000145, T_compute = 0.000631, sum = 0.000776, T_both = 0.000787
+</PRE>
+<!-- runtests in 3way -->
+<A NAME="3way"><H1>3way</H1></A>
+<H2>Exploring the cost of synchronization delays</H2>
+<PRE>
+	mpicc -c -O  bad.c
+	mpicc -o bad -O bad.o  -lm
+[2] Litsize = 8, Time for first send = 0.000049, for second = 0.000033
+[2] Litsize = 9, Time for first send = 0.000049, for second = 0.000032
+[2] Litsize = 511, Time for first send = 0.000179, for second = 0.000146
+[2] Litsize = 512, Time for first send = 0.000170, for second = 0.000139
+[2] Litsize = 513, Time for first send = 0.000348, for second = 0.001785
+</PRE>
+<!-- runtests in jacobi -->
+<A NAME="jacobi"><H1>jacobi</H1></A>
+<H2>Jacobi Iteration - Example Parallel Mesh</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+send/recv: 25 iterations in 0.013504 secs (2.073418 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+send/recv: 25 iterations in 0.864316 secs (26.538430 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+send/recv: 25 iterations in 0.017809 secs (3.144473 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+send/recv: 25 iterations in 1.760595 secs (26.056649 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+send/recv: 25 iterations in 0.025680 secs (4.361456 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+send/recv: 25 iterations in 3.492929 secs (26.267467 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Shift up and down</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+shift/sendrecv: 25 iterations in 0.016899 secs (1.656886 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+shift/sendrecv: 25 iterations in 0.149310 secs (153.623592 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+shift/sendrecv: 25 iterations in 0.018448 secs (3.035477 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+shift/sendrecv: 25 iterations in 0.177332 secs (258.697083 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+shift/sendrecv: 25 iterations in 0.047895 secs (2.338469 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+shift/sendrecv: 25 iterations in 0.171299 secs (535.616832 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Exchange head-to-head</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+head-to-head sendrecv: 25 iterations in 0.014439 secs (1.939253 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+head-to-head sendrecv: 25 iterations in 0.149807 secs (153.114340 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+head-to-head sendrecv: 25 iterations in 0.019578 secs (2.860408 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+head-to-head sendrecv: 25 iterations in 0.180843 secs (253.674708 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+head-to-head sendrecv: 25 iterations in 0.033262 secs (3.367246 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+head-to-head sendrecv: 25 iterations in 0.242692 secs (378.052490 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+irecv/isend: 25 iterations in 0.035451 secs (0.789819 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+irecv/isend: 25 iterations in 0.150000 secs (152.917384 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+irecv/isend: 25 iterations in 0.041119 secs (1.361916 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+irecv/isend: 25 iterations in 0.175528 secs (261.355491 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+irecv/isend: 25 iterations in 0.046269 secs (2.420634 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+irecv/isend: 25 iterations in 0.269917 secs (339.921231 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv for receiver pull</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+isend/irecv: 25 iterations in 0.014410 secs (1.943095 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+isend/irecv: 25 iterations in 0.140435 secs (163.332241 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+isend/irecv: 25 iterations in 0.016638 secs (3.365734 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+isend/irecv: 25 iterations in 0.168898 secs (271.615263 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+isend/irecv: 25 iterations in 0.053518 secs (2.092769 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+isend/irecv: 25 iterations in 0.156072 secs (587.873865 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Synchronous send</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+ssend/irecv: 25 iterations in 0.019422 secs (1.441638 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+ssend/irecv: 25 iterations in 0.146725 secs (156.330044 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+ssend/irecv: 25 iterations in 0.022631 secs (2.474528 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+ssend/irecv: 25 iterations in 0.175759 secs (261.012028 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+ssend/irecv: 25 iterations in 0.209149 secs (0.535504 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+ssend/irecv: 25 iterations in 0.175688 secs (522.234202 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Ready send</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+rsend: 25 iterations in 0.013047 secs (2.146100 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+rsend: 25 iterations in 0.224038 secs (102.382460 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+rsend: 25 iterations in 0.016684 secs (3.356424 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+rsend: 25 iterations in 0.174061 secs (263.557913 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+rsend: 25 iterations in 0.023240 secs (4.819225 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+rsend: 25 iterations in 0.152655 secs (601.031674 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+isend/overlap: 25 iterations in 0.014017 secs (1.997621 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+isend/overlap: 25 iterations in 0.152737 secs (150.176782 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+isend/overlap: 25 iterations in 0.017677 secs (3.167972 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+isend/overlap: 25 iterations in 0.178825 secs (256.537017 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+isend/overlap: 25 iterations in 0.027328 secs (4.098297 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+isend/overlap: 25 iterations in 0.220125 secs (416.810591 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication (sends first)</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+send first/overlap: 25 iterations in 0.013883 secs (2.016837 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+send first/overlap: 25 iterations in 0.142112 secs (161.405515 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+send first/overlap: 25 iterations in 0.017231 secs (3.250004 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+send first/overlap: 25 iterations in 0.170886 secs (268.455504 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+send first/overlap: 25 iterations in 0.034886 secs (3.210418 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+send first/overlap: 25 iterations in 0.178609 secs (513.694662 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+<H2>Jacobi Iteration - Persistent send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+qsub failed: qsub: Job exceeds queue resource limits
+mpirun aborting
+persistent send/recv: 25 iterations in 0.013110 secs (2.135713 MFlops); diffnorm 0.036615, m=7 n=34 np=16
+persistent send/recv: 25 iterations in 0.150196 secs (152.718011 MFlops); diffnorm 0.468864, m=4098 n=34 np=16
+persistent send/recv: 25 iterations in 0.016714 secs (3.350575 MFlops); diffnorm 0.055291, m=7 n=66 np=32
+persistent send/recv: 25 iterations in 0.177111 secs (259.019997 MFlops); diffnorm 0.470684, m=4098 n=66 np=32
+persistent send/recv: 25 iterations in 0.024360 secs (4.597654 MFlops); diffnorm 0.080560, m=7 n=130 np=64
+persistent send/recv: 25 iterations in 0.179437 secs (511.324535 MFlops); diffnorm 0.474303, m=4098 n=130 np=64
+</PRE>
+</BODY>

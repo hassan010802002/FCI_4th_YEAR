@@ -1,0 +1,12 @@
+ALL: exchng
+
+exchng: exchng.c
+	@MPICC@ -o exchng exchng.c
+
+profile.alog: exchng.c
+	@MPICC@ -o exchng.log -mpilog exchng.c 
+	mpirun -np 4 exchng.log
+	/bin/mv exchng.log_profile.log profile.alog
+
+clean:
+	/bin/rm -f exchng exchng.o exchng.log

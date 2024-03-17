@@ -1,0 +1,3 @@
+One implementation has chosen to have MPI_Send provide buffering by default at
+the cost of performance; using MPI_Ssend on this system can provide better
+performance. 

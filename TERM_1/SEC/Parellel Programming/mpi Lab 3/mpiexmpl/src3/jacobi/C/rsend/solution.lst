@@ -1,0 +1,4 @@
+jacobi.c
+cmdline.c
+setupmesh.c
+exchng.c

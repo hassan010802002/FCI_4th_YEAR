@@ -1,0 +1,3 @@
+Note the variation in performance.  Can you estimate the cache size of your
+system (some systems have multi-megabyte caches, or multilevel caches)?  How
+do the values compare with the claimed memory performance of the system?

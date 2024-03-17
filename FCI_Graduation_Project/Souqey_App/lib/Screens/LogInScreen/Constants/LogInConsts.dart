@@ -1,6 +1,9 @@
 // ignore_for_file: file_names
 
-class SplashConsts{
+import 'package:flutter/material.dart';
+import 'package:souqey/Screens/LogInScreen/Constants/Colors/LogInColors.dart';
+
+class LogInConsts{
 ///***************************************Images*****************************************
 
 
@@ -15,5 +18,5 @@ class SplashConsts{
 
 ///***************************************Colors*****************************************
 
-
+  static final Color screenBackGroundColor = LogInColors.screenBackGroundColor;
 }

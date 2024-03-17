@@ -1,0 +1,9 @@
+<TITLE>Comments on Pipelining pitfalls</TITLE>
+<BODY BGCOLOR="FFFFFF">
+If the MPI implementation uses rendezvous with sender push and polls for 
+MPI control information, a process that is ready to receive can end up waiting
+until the sender completes a computation step before the transfer actually
+begins.  If all of the processes are out-of-step with each other, this can
+cascade, leading to delays proportional to the number of processes in the
+worst case.
+</BODY>

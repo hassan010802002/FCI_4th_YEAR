@@ -1,0 +1,24 @@
+A natural form for a server that is to perform one of several tasks is to
+receive the message from any source and with any tag, and then use the tag
+to determine the task to perform.
+<PRE>
+<CODE>
+    while (not done) {
+	MPI_Recv( buf, 256, MPI_CHAR, MPI_ANY_SOURCE, MPI_ANY_TAG, 
+		  master_comm, &status );
+	switch (status.MPI_TAG) {
+	case MSG_EXIT: 
+	    code for exit message; 
+	    break;
+	case MSG_PRINT_UNORDERED:
+	    code for unordered message;
+	    break;
+	case MSG_PRINT_ORDERED:
+	    code for ordered message;
+	    break;
+	}
+    }
+</CODE>
+</PRE>
+An alternate approach explored in a related assignment is to use MPI_Probe
+instead. 

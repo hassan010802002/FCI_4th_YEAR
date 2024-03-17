@@ -1,0 +1,11 @@
+Write a program to measure the time it takes to perform an MPI_Barrier on 
+MPI_COMM_WORLD.  Use the
+same techniques as in the memcpy assignment to average out variations and
+overhead in MPI_Wtime.
+<P>
+Print the size of MPI_COMM_WORLD and time for each test.
+<P>
+Make sure that both sender and reciever are ready when you begin the test.
+<P>
+How does the performance of MPI_Barrier vary with the size of MPI_COMM_WORLD?
+

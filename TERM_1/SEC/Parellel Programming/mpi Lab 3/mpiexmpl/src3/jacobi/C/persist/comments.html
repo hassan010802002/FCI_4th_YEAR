@@ -1,0 +1,9 @@
+<TITLE>Comments on Jacobi Iteration - Persistent send/recv</TITLE>
+<BODY BGCOLOR="FFFFFF">
+This example does allow all data transfers to take place simultaneously.
+Whether or not the underlying MPI implementation and hardware can do this is
+something that this example evaluates.
+<P>
+By using MPI persistent operations, the overhead of creating the internal MPI
+datastructures for these operations is reduced.
+</BODY>

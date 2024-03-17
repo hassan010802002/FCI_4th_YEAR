@@ -1,0 +1,281 @@
+<TITLE>Results for MPI perforance tests on datarray</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<H1>Results for MPI perforance tests on datarray</H1>
+
+<H2>Contents</H2>
+<UL>
+<LI> <A HREF="#memcpy">Memcpy</A>
+<LI> <A HREF="#pingpong">Point-to-point tests</A>
+<LI> <A HREF="#barrier">Collective tests</A>
+<LI> <A HREF="#vector">Vector datatype tests</A>
+<LI> <A HREF="#circulate">Synchronization tests</A>
+<LI> <A HREF="#3way">More Synchronization tests</A>
+<LI> <A HREF="#jacobi">Sample application (Jacobi iteration)</A>
+</UL>
+<!-- runtests in memcpy -->
+<A NAME="memcpy"><H1>memcpy</H1></A>
+No logfiles for memcpy
+<!-- runtests in pingpong -->
+<A NAME="pingpong"><H1>pingpong</H1></A>
+No logfiles for pingpong
+<!-- runtests in barrier -->
+<A NAME="barrier"><H1>barrier</H1></A>
+No logfiles for barrier
+<!-- runtests in vector -->
+<A NAME="vector"><H1>vector</H1></A>
+No logfiles for vector
+<!-- runtests in circulate -->
+<A NAME="circulate"><H1>circulate</H1></A>
+<H2>Pipelining pitfalls</H2>
+<PRE>
+	mpicc -o circulate.log -mpilog -O -DDO_LOG circulate.c -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+For n = 20000, m = 20000, T_comm = 0.004480, T_compute = 0.005336, sum =
+0.009816, T_both = 0.005458
+circulate.log_profile.log - No such file or directory
+For n = 500, m = 500, T_comm = 0.000851, T_compute = 0.000134, sum = 0.000985,
+T_both = 0.000156
+circulate.log_profile.log - No such file or directory
+</PRE>
+<UL>
+<LI> <A HREF="circulate/C/circulate.datarray-20000.alog">Logs for circulate -n
+20000 -m 20000</A>
+<LI> <A HREF="circulate/C/circulate.datarray-500.alog">Logs for circulate -n
+500 -m 500</A>
+</UL>
+<!-- runtests in 3way -->
+<A NAME="3way"><H1>3way</H1></A>
+<H2>Exploring the cost of synchronization delays</H2>
+<PRE>
+	mpicc -o bad.log -mpilog -O \
+		bad.o    -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+[2] Litsize = 8, Time for first send = 0.000021, for second = 0.000015
+bad.log_profile.log - No such file or directory
+[2] Litsize = 9, Time for first send = 0.001483, for second = 0.000232
+bad.log_profile.log - No such file or directory
+[2] Litsize = 511, Time for first send = 0.001562, for second = 0.000258
+bad.log_profile.log - No such file or directory
+[2] Litsize = 512, Time for first send = 0.001564, for second = 0.000256
+bad.log_profile.log - No such file or directory
+[2] Litsize = 513, Time for first send = 0.001539, for second = 0.000313
+bad.log_profile.log - No such file or directory
+	mpicc -c -O  bounce.c
+	mpicc -o bounce.log -mpilog -O \
+		bounce.o    -lm
+bounce.log_profile.log - No such file or directory
+</PRE>
+<!-- runtests in jacobi -->
+<A NAME="jacobi"><H1>jacobi</H1></A>
+<H2>Jacobi Iteration - Example Parallel Mesh</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+send/recv: 6 iterations in 0.000182 secs (2.301761 MFlops); diffnorm 0.008134,
+m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+send/recv: 7 iterations in 0.018544 secs (21.646483 MFlops); diffnorm 0.006899,
+m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+send/recv: 24 iterations in 0.004182 secs (1.606950 MFlops); diffnorm 0.009895,
+m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+send/recv: 25 iterations in 0.133784 secs (42.863201 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Shift up and down</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+shift/sendrecv: 6 iterations in 0.000205 secs (2.048551 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+shift/sendrecv: 7 iterations in 0.018542 secs (21.648959 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+shift/sendrecv: 24 iterations in 0.004406 secs (1.525349 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+shift/sendrecv: 25 iterations in 0.114388 secs (50.131056 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Exchange head-to-head</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+head-to-head sendrecv: 6 iterations in 0.000214 secs (1.962902 MFlops);
+diffnorm 0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+head-to-head sendrecv: 7 iterations in 0.018595 secs (21.586395 MFlops);
+diffnorm 0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+head-to-head sendrecv: 24 iterations in 0.004332 secs (1.551244 MFlops);
+diffnorm 0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+head-to-head sendrecv: 25 iterations in 0.110481 secs (51.903898 MFlops);
+diffnorm 0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Nonblocking send/recv</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+irecv/isend: 6 iterations in 0.000189 secs (2.223210 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+irecv/isend: 7 iterations in 0.018529 secs (21.664049 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+irecv/isend: 24 iterations in 0.004143 secs (1.622167 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+irecv/isend: 25 iterations in 0.105346 secs (54.433930 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Nonblocking send/recv for receiver pull</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+isend/irecv: 6 iterations in 0.000187 secs (2.241649 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+isend/irecv: 7 iterations in 0.018575 secs (21.609579 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+isend/irecv: 24 iterations in 0.004006 secs (1.677369 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+isend/irecv: 25 iterations in 0.101310 secs (56.602480 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Synchronous send</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+ssend/irecv: 6 iterations in 0.000200 secs (2.098416 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+ssend/irecv: 7 iterations in 0.018583 secs (21.600544 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+ssend/irecv: 24 iterations in 0.006511 secs (1.032148 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+ssend/irecv: 25 iterations in 0.114664 secs (50.010387 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Overlapping communication</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+isend/overlap: 6 iterations in 0.000189 secs (2.227419 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+isend/overlap: 7 iterations in 0.018548 secs (21.641654 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+isend/overlap: 24 iterations in 0.004227 secs (1.589754 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+isend/overlap: 25 iterations in 0.105828 secs (54.186022 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Overlapping communication (sends first)</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+send first/overlap: 6 iterations in 0.000188 secs (2.229902 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+send first/overlap: 7 iterations in 0.018548 secs (21.641752 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+send first/overlap: 24 iterations in 0.004180 secs (1.607822 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+send first/overlap: 25 iterations in 0.098271 secs (58.353202 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+<H2>Jacobi Iteration - Persistent send/recv</H2>
+<PRE>
+	mpicc -o jacobi.log -mpilog -O \
+		jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+persistent send/recv: 6 iterations in 0.000156 secs (2.688894 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+persistent send/recv: 7 iterations in 0.018477 secs (21.725261 MFlops);
+diffnorm 0.006899, m=4098 n=4 np=1
+jacobi.log_profile.log - No such file or directory
+persistent send/recv: 24 iterations in 0.003963 secs (1.695751 MFlops);
+diffnorm 0.009895, m=7 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+persistent send/recv: 25 iterations in 0.104176 secs (55.045218 MFlops);
+diffnorm 0.138820, m=4098 n=10 np=4
+jacobi.log_profile.log - No such file or directory
+</PRE>
+<UL>
+</UL>
+</BODY>

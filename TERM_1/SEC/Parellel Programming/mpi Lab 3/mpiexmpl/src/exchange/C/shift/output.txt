@@ -1,0 +1,4 @@
+% mpicc -o exchng exchng.c
+% mpirun -np 4 exchng
+No errors
+

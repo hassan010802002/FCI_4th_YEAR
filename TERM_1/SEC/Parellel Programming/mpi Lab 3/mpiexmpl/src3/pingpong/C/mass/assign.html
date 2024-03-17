@@ -1,0 +1,17 @@
+<TITLE>Benchmarking point to point performance with contention</TITLE>
+<BODY BGCOLOR="FFFFFF">
+Write a program to measure the time it takes to send 1, 2, 4, ..., 1M C
+doubles from one processor to another using <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A> and <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A>.  Use the
+same techniques as in the memcpy assignment to average out variations and
+overhead in <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Wtime.html#MPI_Wtime">MPI_Wtime</A>.  In this version, use an MPI_COMM_WORLD that has more
+than 2 processes (the more the better).  Have each process send and receive
+with the process <CODE>size/2</CODE> away, where there are <CODE>size</CODE>
+processes in MPI_COMM_WORLD.
+<P>
+Print the size, time, and rate in MB/sec for each test.
+<P>
+Make sure that both sender and reciever are ready when you begin the test.
+The sample solution uses <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Sendrecv.html#MPI_Sendrecv">MPI_Sendrecv</A>, as well
+as <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Barrier.html#MPI_Barrier">MPI_Barrier</A> to ensure that the various pairs start nearly together, but
+other choices are possible. 
+</BODY>

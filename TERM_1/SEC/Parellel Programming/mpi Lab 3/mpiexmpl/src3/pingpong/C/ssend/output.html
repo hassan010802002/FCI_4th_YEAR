@@ -1,0 +1,31 @@
+<TITLE>Output</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+% <A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o pingpong pingpong.c 
+% <A href="http://www.mcs.anl.gov/mpi/www/www1/mpirun.html#mpirun">mpirun</A> -np 2 pingpong
+Kind		n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.003574	0.002238
+Send/Recv	2	0.003592	0.004455
+Send/Recv	4	0.003603	0.008882
+Send/Recv	8	0.003621	0.017675
+Send/Recv	16	0.003678	0.034803
+Send/Recv	32	0.003709	0.069020
+Send/Recv	64	0.003735	0.137084
+Send/Recv	128	0.004264	0.240178
+Send/Recv	256	0.005268	0.388799
+Send/Recv	512	0.007890	0.519171
+Send/Recv	1024	0.011941	0.686011
+Send/Recv	2048	0.021438	0.764250
+Send/Recv	4096	0.038588	0.849165
+Send/Recv	8192	0.077029	0.850802
+Send/Recv	16384	0.146270	0.896096
+Send/Recv	32768	0.287323	0.912367
+Send/Recv	65536	0.575686	0.910719
+Send/Recv	131072	1.193515	0.878562
+Send/Recv	262144	2.309940	0.907882
+Send/Recv	524288	4.651385	0.901732
+p0_26008:  p4_error: interrupt SIGINT: 2
+p0_26008:  p4_error: interrupt SIGINT: 2
+bm_list_26009:  p4_error: interrupt SIGINT: 2
+</PRE>
+</BODY>

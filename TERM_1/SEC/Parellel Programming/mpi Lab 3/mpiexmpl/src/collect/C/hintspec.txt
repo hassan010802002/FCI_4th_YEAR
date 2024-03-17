@@ -1,0 +1,2 @@
+The "recvcount" argument in MPI_Gather is the number of elements from any
+single receive, not the total size of the receive buffer.

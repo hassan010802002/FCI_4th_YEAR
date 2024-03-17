@@ -1,0 +1,6 @@
+Compare the results of this test to the basic pingpong test.  On shared
+networks, you are likely to see performance that is very roughly 1/(size/2) of
+the performance of the basic pingpong test.  Multistage networks will provide
+performance that degrades more slowly as the number of processors increases;
+there may be steps indicating major changes in interconnection (e.g., a system
+made up of 4 x 4 crossbars may show changes at 4, 16, 64, etc. processors).

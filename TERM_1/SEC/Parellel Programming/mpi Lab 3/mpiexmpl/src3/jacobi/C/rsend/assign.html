@@ -1,0 +1,17 @@
+<TITLE>Jacobi Iteration - Ready send</TITLE>
+<BODY BGCOLOR="FFFFFF">
+In the simple Jacobi loop, at the end of each iteration, there is an
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Allreduce.html#MPI_Allreduce">MPI_Allreduce</A> used to test for convergence.  This provides a synchronization
+point in the program.  This example uses that synchronization point to allow
+the use of the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Rsend.html#MPI_Rsend">MPI_Rsend</A> routine.
+<P>
+To do this, the matching receives (as <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>) must be posted before the
+synchronization point and the sends (as <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Rsend.html#MPI_Rsend">MPI_Rsend</A>) must be posted after the 
+synchronization point.
+<P>
+You may want to use these MPI routines in your solution:<BR>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Rsend.html#MPI_Rsend">MPI_Rsend</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitall.html#MPI_Waitall">MPI_Waitall</A>
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Cancel.html#MPI_Cancel">MPI_Cancel</A>
+</BODY>

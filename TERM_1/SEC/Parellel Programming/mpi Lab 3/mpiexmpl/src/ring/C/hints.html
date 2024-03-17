@@ -1,0 +1,28 @@
+<BODY BGCOLOR="FFFFFF">
+A common error is to pass the object where the address of the object is
+needed.
+For example, 
+
+<PRE>
+	MPI_Status status;
+	...
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A>( ..., status );
+</PRE>	
+is incorrect; it must be
+<PRE>
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A>( ..., &status );
+</PRE>
+
+This is also true for buffers, and is a common error when passing single
+element buffers.  For example,
+
+<PRE>
+	int value;
+	...
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A>( value, 1, MPI_INT, ... );
+</PRE>
+is incorrect; it must be
+<PRE>
+	<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A>( &value, 1, MPI_INT, ... );
+</PRE>
+</BODY>

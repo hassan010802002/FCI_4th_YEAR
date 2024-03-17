@@ -1,0 +1,9 @@
+ALL: buflimit
+SHELL = /bin/sh
+DIRS = 
+buflimit: buflimit.c
+	@MPICC@ -o buflimit -O buflimit.c
+clean:
+	/bin/rm -f buflimit buflimit.o buflimit.log PI*
+	for dir in $(DIRS) ; do \
+	    ( cd $$dir ; make clean ) ; done

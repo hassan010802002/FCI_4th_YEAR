@@ -1,0 +1,582 @@
+<TITLE>Results for MPI perforance tests on datarray</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<H1>Results for MPI perforance tests on datarray</H1>
+
+<H2>Contents</H2>
+<UL>
+<LI> <A HREF="#memcpy">Memcpy</A>
+<LI> <A HREF="#pingpong">Point-to-point tests</A>
+<LI> <A HREF="#barrier">Collective tests</A>
+<LI> <A HREF="#vector">Vector datatype tests</A>
+<LI> <A HREF="#circulate">Synchronization tests</A>
+<LI> <A HREF="#3way">More Synchronization tests</A>
+<LI> <A HREF="#jacobi">Sample application (Jacobi iteration)</A>
+</UL>
+
+<H2>Machine Characteristics</H2>
+The following describes the system on which these tests were run.
+
+<PRE>
+{datarray:368} hinv
+10 90 MHZ IP21 Processors
+CPU: MIPS R8000 Processor Chip Revision: 3.0
+FPU: MIPS R8010 Floating Point Chip Revision: 0.2
+Secondary unified instruction/data cache size: 4 Mbytes
+Data cache size: 16 Kbytes
+Instruction cache size: 16 Kbytes
+Main memory size: 256 Mbytes, 2-way interleaved
+I/O board, Ebus slot 15: IO4 revision 1
+Integral EPC serial ports: 4
+Integral Ethernet controller: et0, Ebus slot 15
+EPC external interrupts
+Integral SCSI controller 1: Version WD33C95A, differential, revision 0
+  Disk drive: unit 3 on SCSI controller 1
+  Disk drive: unit 2 on SCSI controller 1
+  Disk drive: unit 1 on SCSI controller 1
+Integral SCSI controller 0: Version WD33C95A, single ended, revision 0
+HIPPI adapter: hippi1, slot 15 adap 6, firmware version 3217024
+HIPPI adapter: hippi0, slot 15 adap 5, firmware version 3217024
+CC synchronization join counter
+Integral EPC parallel port: Ebus slot 15
+VME bus: adapter 0 mapped to adapter 61
+VME bus: adapter 61
+</PRE>
+
+<!-- runtests in memcpy -->
+<A NAME="memcpy"><H1>memcpy</H1></A>
+<H2>Determining delivered memory performance</H2>
+<PRE>
+	mpicc -o memcpy -O memcpy.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	18.883521
+8	0.000000	47.983724
+16	0.000000	36.820583
+32	0.000001	45.704048
+64	0.000001	88.591105
+128	0.000001	153.531828
+256	0.000001	253.013238
+512	0.000001	374.258519
+1024	0.000002	492.200251
+2048	0.000004	584.244099
+4096	0.000006	644.510969
+8192	0.000012	677.444783
+16384	0.000024	694.995652
+32768	0.000046	706.507732
+65536	0.000092	712.394385
+131072	0.000183	715.360789
+262144	0.000366	716.346174
+524288	0.000730	718.138864
+1048576	0.001458	719.048853
+2097152	0.003297	636.001885
+</PRE>
+<H2>Determining delivered memory performance with unaligned data</H2>
+<PRE>
+	mpicc -o memcpy memcpy.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Size (bytes) Time (sec)	Rate (MB/sec)
+4	0.000000	14.961017
+8	0.000000	35.899415
+16	0.000000	37.785548
+32	0.000001	51.415157
+64	0.000001	77.812080
+128	0.000001	127.948863
+256	0.000001	188.742975
+512	0.000002	226.836029
+1024	0.000004	278.203283
+2048	0.000006	323.052701
+4096	0.000013	316.667540
+8192	0.000048	170.144498
+16384	0.000144	114.074750
+32768	0.000286	114.604680
+65536	0.000570	114.881017
+131072	0.001140	115.015793
+262144	0.002278	115.065980
+524288	0.004555	115.108949
+1048576	0.009140	114.720185
+2097152	0.019023	110.242621
+</PRE>
+<!-- runtests in pingpong -->
+<A NAME="pingpong"><H1>pingpong</H1></A>
+<H2>Benchmarking point to point performance</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind		n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000019	0.423613
+Send/Recv	2	0.000019	0.842978
+Send/Recv	4	0.000020	1.573952
+Send/Recv	8	0.000020	3.143120
+Send/Recv	16	0.000026	4.886436
+Send/Recv	32	0.000028	9.111408
+Send/Recv	64	0.000032	15.935958
+Send/Recv	128	0.000040	25.432782
+Send/Recv	256	0.000056	36.335255
+Send/Recv	512	0.000089	45.785829
+Send/Recv	1024	0.000150	54.509208
+Send/Recv	2048	0.000279	58.753709
+Send/Recv	4096	0.000532	61.603309
+Send/Recv	8192	0.001038	63.139447
+Send/Recv	16384	0.002050	63.938249
+Send/Recv	32768	0.004074	64.345606
+Send/Recv	65536	0.008141	64.403370
+Send/Recv	131072	0.016292	64.362692
+Send/Recv	262144	0.032838	63.863993
+Send/Recv	524288	0.068444	61.280439
+Send/Recv	1048576	0.130390	64.334699
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind		n	time (sec)	Rate (MB/sec)
+Isend/Irecv	1	0.000018	0.442608
+Isend/Irecv	2	0.000018	0.874249
+Isend/Irecv	4	0.000019	1.680110
+Isend/Irecv	8	0.000019	3.366776
+Isend/Irecv	16	0.000026	4.965734
+Isend/Irecv	32	0.000028	9.229232
+Isend/Irecv	64	0.000032	16.111471
+Isend/Irecv	128	0.000040	25.657409
+Isend/Irecv	256	0.000056	36.532621
+Isend/Irecv	512	0.000089	46.023506
+Isend/Irecv	1024	0.000152	53.843377
+Isend/Irecv	2048	0.000279	58.727169
+Isend/Irecv	4096	0.000532	61.630070
+Isend/Irecv	8192	0.001038	63.150309
+Isend/Irecv	16384	0.002049	63.963474
+Isend/Irecv	32768	0.004078	64.278677
+Isend/Irecv	65536	0.008143	64.382443
+Isend/Irecv	131072	0.016287	64.381946
+Isend/Irecv	262144	0.032892	63.758429
+Isend/Irecv	524288	0.068451	61.274686
+Isend/Irecv	1048576	0.130585	64.238523
+</PRE>
+<H2>Benchmarking point to point performance with nonblocking operations,
+head-to-head</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind				n	time (sec)	Rate (MB/sec)
+head-to-head Isend/Irecv	1	0.000030	0.528809
+head-to-head Isend/Irecv	2	0.000030	1.050803
+head-to-head Isend/Irecv	4	0.000031	2.078901
+head-to-head Isend/Irecv	8	0.000030	4.225410
+head-to-head Isend/Irecv	16	0.000043	5.937138
+head-to-head Isend/Irecv	32	0.000043	11.815431
+head-to-head Isend/Irecv	64	0.000044	23.206693
+head-to-head Isend/Irecv	128	0.000041	49.450682
+head-to-head Isend/Irecv	256	0.000046	89.008636
+head-to-head Isend/Irecv	512	0.000047	174.852202
+head-to-head Isend/Irecv	1024	0.000052	314.973688
+head-to-head Isend/Irecv	2048	0.000064	511.599671
+head-to-head Isend/Irecv	4096	0.000087	753.989876
+head-to-head Isend/Irecv	8192	0.000132	996.253459
+head-to-head Isend/Irecv	16384	0.000223	1173.770371
+head-to-head Isend/Irecv	32768	0.000405	1293.982397
+head-to-head Isend/Irecv	65536	0.000772	1358.255484
+head-to-head Isend/Irecv	131072	0.001504	1394.052965
+head-to-head Isend/Irecv	262144	0.004119	1018.281376
+head-to-head Isend/Irecv	524288	0.057209	146.630436
+head-to-head Isend/Irecv	1048576	0.130729	128.336241
+</PRE>
+<H2>Benchmarking point to point performance with unaligned data</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind char		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000019	0.053435
+Send/Recv		2	0.000019	0.106428
+Send/Recv		4	0.000019	0.211828
+Send/Recv		8	0.000018	0.432778
+Send/Recv		16	0.000019	0.859679
+Send/Recv		32	0.000020	1.636121
+Send/Recv		64	0.000020	3.253918
+Send/Recv		128	0.000023	5.608868
+Send/Recv		256	0.000023	11.100749
+Send/Recv		512	0.000025	20.874095
+Send/Recv		1024	0.000026	39.968797
+Send/Recv		2048	0.000027	75.307887
+Send/Recv		4096	0.000030	138.725141
+Send/Recv		8192	0.000035	231.236149
+Send/Recv		16384	0.000047	350.018375
+Send/Recv		32768	0.000070	469.570270
+Send/Recv		65536	0.000115	570.419020
+Send/Recv		131072	0.000206	636.760347
+Send/Recv		262144	0.000388	675.416410
+Send/Recv		524288	0.000752	696.987594
+Send/Recv		1048576	0.001480	708.393666
+Kind double		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000018	0.436918
+Send/Recv		2	0.000019	0.853971
+Send/Recv		4	0.000020	1.622158
+Send/Recv		8	0.000020	3.243708
+Send/Recv		16	0.000023	5.643191
+Send/Recv		32	0.000023	11.037906
+Send/Recv		64	0.000023	21.995207
+Send/Recv		128	0.000024	42.899923
+Send/Recv		256	0.000025	80.675958
+Send/Recv		512	0.000029	139.220541
+Send/Recv		1024	0.000035	231.647963
+Send/Recv		2048	0.000047	349.547630
+Send/Recv		4096	0.000070	470.277533
+Send/Recv		8192	0.000115	570.419020
+Send/Recv		16384	0.000206	636.825176
+Send/Recv		32768	0.000388	675.252152
+Send/Recv		65536	0.000753	696.423742
+Send/Recv		131072	0.001481	708.152537
+Send/Recv		262144	0.004011	522.840581
+Send/Recv		524288	0.051437	81.542329
+Send/Recv		1048576	0.118260	70.933693
+Kind int		n	time (sec)	Rate (MB/sec)
+Send/Recv		1	0.000019	0.216068
+Send/Recv		2	0.000019	0.431582
+Send/Recv		4	0.000019	0.859852
+Send/Recv		8	0.000020	1.635536
+Send/Recv		16	0.000020	3.238758
+Send/Recv		32	0.000023	5.641043
+Send/Recv		64	0.000023	11.197278
+Send/Recv		128	0.000023	22.059934
+Send/Recv		256	0.000024	42.309691
+Send/Recv		512	0.000027	76.729965
+Send/Recv		1024	0.000030	138.823939
+Send/Recv		2048	0.000035	231.099076
+Send/Recv		4096	0.000047	351.436933
+Send/Recv		8192	0.000070	470.561350
+Send/Recv		16384	0.000115	570.836343
+Send/Recv		32768	0.000206	636.111166
+Send/Recv		65536	0.000388	675.507790
+Send/Recv		131072	0.000752	696.783353
+Send/Recv		262144	0.001483	707.259822
+Send/Recv		524288	0.004017	522.030223
+Send/Recv		1048576	0.051484	81.468557
+</PRE>
+<H2>Benchmarking point to point performance with contention</H2>
+<PRE>
+	mpicc -o pingpong -O pingpong.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind (np=2)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000019	0.428918
+Send/Recv	2	0.000019	0.854186
+Send/Recv	4	0.000020	1.603521
+Send/Recv	8	0.000020	3.223275
+Send/Recv	16	0.000026	4.975344
+Send/Recv	32	0.000028	9.298723
+Send/Recv	64	0.000032	16.197100
+Send/Recv	128	0.000040	25.675742
+Send/Recv	256	0.000056	36.412128
+Send/Recv	512	0.000090	45.764330
+Send/Recv	1024	0.000152	54.059754
+Send/Recv	2048	0.000279	58.691829
+Send/Recv	4096	0.000533	61.528008
+Send/Recv	8192	0.001038	63.127315
+Send/Recv	16384	0.002050	63.929078
+Send/Recv	32768	0.004076	64.319414
+Send/Recv	65536	0.008126	64.523378
+Send/Recv	131072	0.016294	64.354895
+Send/Recv	262144	0.032876	63.790135
+Send/Recv	524288	0.068407	61.314160
+Send/Recv	1048576	0.130810	64.128002
+Kind (np=4)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000019	0.427066
+Send/Recv	2	0.000019	0.845780
+Send/Recv	4	0.000020	1.601347
+Send/Recv	8	0.000020	3.188753
+Send/Recv	16	0.000026	4.953172
+Send/Recv	32	0.000028	9.189397
+Send/Recv	64	0.000032	16.001850
+Send/Recv	128	0.000040	25.529792
+Send/Recv	256	0.000057	36.102099
+Send/Recv	512	0.000091	45.066454
+Send/Recv	1024	0.000154	53.027284
+Send/Recv	2048	0.000272	60.334900
+Send/Recv	4096	0.000538	60.923823
+Send/Recv	8192	0.001058	61.945074
+Send/Recv	16384	0.002075	63.158935
+Send/Recv	32768	0.004134	63.418197
+Send/Recv	65536	0.008264	63.439388
+Send/Recv	131072	0.016496	63.566224
+Send/Recv	262144	0.033580	62.452690
+Send/Recv	524288	0.073483	57.078211
+Send/Recv	1048576	0.141908	59.113106
+Kind (np=8)	n	time (sec)	Rate (MB/sec)
+Send/Recv	1	0.000019	0.422781
+Send/Recv	2	0.000019	0.837794
+Send/Recv	4	0.000021	1.555905
+Send/Recv	8	0.000021	3.108420
+Send/Recv	16	0.000026	4.834180
+Send/Recv	32	0.000029	8.978279
+Send/Recv	64	0.000033	15.675374
+Send/Recv	128	0.000041	24.906660
+Send/Recv	256	0.000058	35.192337
+Send/Recv	512	0.000093	44.133387
+Send/Recv	1024	0.000159	51.541961
+Send/Recv	2048	0.000291	56.364007
+Send/Recv	4096	0.000556	58.885633
+Send/Recv	8192	0.001089	60.188853
+Send/Recv	16384	0.002156	60.796530
+Send/Recv	32768	0.004277	61.298231
+Send/Recv	65536	0.008536	61.424386
+Send/Recv	131072	0.017049	61.504813
+Send/Recv	262144	0.034895	60.098172
+Send/Recv	524288	0.091697	45.740806
+Send/Recv	1048576	0.181798	46.142381
+</PRE>
+<!-- runtests in barrier -->
+<A NAME="barrier"><H1>barrier</H1></A>
+<H2>Benchmarking collective barrier</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind	np	time (sec)
+Barrier	1	0.000001
+Barrier	2	0.000033
+Barrier	4	0.000071
+Barrier	8	0.000113
+</PRE>
+<H2>Benchmarking collective Allreduce</H2>
+<PRE>
+	mpicc -o barrier -O barrier.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind		np	time (sec)
+Allreduce	1	0.000004
+Allreduce	2	0.000049
+Allreduce	4	0.000096
+Allreduce	8	0.000143
+</PRE>
+<!-- runtests in vector -->
+<A NAME="vector"><H1>vector</H1></A>
+<H2>Comparing the performance of MPI vector datatypes</H2>
+<PRE>
+	mpicc -o vector -O vector.c
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+Kind	n	stride	time (sec)	Rate (MB/sec)
+Vector	1000	24	0.001202	6.655450
+Struct	1000	24	0.002651	3.017600
+User	1000	24	0.000198	40.478039
+User(add)	1000	24	0.000185	43.243851
+</PRE>
+<!-- runtests in circulate -->
+<A NAME="circulate"><H1>circulate</H1></A>
+<H2>Pipelining pitfalls</H2>
+<PRE>
+	mpicc -c -O  circulate.c
+	mpicc -o circulate -O circulate.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+For n = 20000, m = 20000, T_comm = 0.004025, T_compute = 0.005378, sum =
+0.009403, T_both = 0.005406
+For n = 500, m = 500, T_comm = 0.000642, T_compute = 0.000133, sum = 0.000775,
+T_both = 0.000156
+</PRE>
+<!-- runtests in 3way -->
+<A NAME="3way"><H1>3way</H1></A>
+<H2>Exploring the cost of synchronization delays</H2>
+<PRE>
+	mpicc -c -O  bad.c
+	mpicc -o bad -O bad.o  -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+[2] Litsize = 8, Time for first send = 0.000021, for second = 0.000014
+[2] Litsize = 9, Time for first send = 0.001488, for second = 0.000233
+[2] Litsize = 511, Time for first send = 0.001599, for second = 0.000252
+[2] Litsize = 512, Time for first send = 0.001545, for second = 0.000238
+[2] Litsize = 513, Time for first send = 0.001606, for second = 0.000251
+</PRE>
+<!-- runtests in jacobi -->
+<A NAME="jacobi"><H1>jacobi</H1></A>
+<H2>Jacobi Iteration - Example Parallel Mesh</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+send/recv: 6 iterations in 0.000191 secs (2.201674 MFlops); diffnorm 0.008134,
+m=7 n=4 np=1
+send/recv: 7 iterations in 0.018870 secs (21.271939 MFlops); diffnorm 0.006899,
+m=4098 n=4 np=1
+send/recv: 24 iterations in 0.004247 secs (1.582310 MFlops); diffnorm 0.009895,
+m=7 n=10 np=4
+send/recv: 25 iterations in 0.142042 secs (40.371168 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Shift up and down</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+shift/sendrecv: 6 iterations in 0.000212 secs (1.977066 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+shift/sendrecv: 7 iterations in 0.018562 secs (21.625739 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+shift/sendrecv: 24 iterations in 0.004347 secs (1.546043 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+shift/sendrecv: 25 iterations in 0.115958 secs (49.452518 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Exchange head-to-head</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+head-to-head sendrecv: 6 iterations in 0.000211 secs (1.993621 MFlops);
+diffnorm 0.008134, m=7 n=4 np=1
+head-to-head sendrecv: 7 iterations in 0.018574 secs (21.611460 MFlops);
+diffnorm 0.006899, m=4098 n=4 np=1
+head-to-head sendrecv: 24 iterations in 0.004382 secs (1.533632 MFlops);
+diffnorm 0.009895, m=7 n=10 np=4
+head-to-head sendrecv: 25 iterations in 0.113537 secs (50.506947 MFlops);
+diffnorm 0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+irecv/isend: 6 iterations in 0.000186 secs (2.257337 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+irecv/isend: 7 iterations in 0.018601 secs (21.579961 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+irecv/isend: 24 iterations in 0.004032 secs (1.666675 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+irecv/isend: 25 iterations in 0.105342 secs (54.436198 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Nonblocking send/recv for receiver pull</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+isend/irecv: 6 iterations in 0.000187 secs (2.243409 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+isend/irecv: 7 iterations in 0.018562 secs (21.625739 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+isend/irecv: 24 iterations in 0.003988 secs (1.685195 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+isend/irecv: 25 iterations in 0.098789 secs (58.046740 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Synchronous send</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+ssend/irecv: 6 iterations in 0.000210 secs (2.000800 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+ssend/irecv: 7 iterations in 0.018573 secs (21.612804 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+ssend/irecv: 24 iterations in 0.006225 secs (1.079466 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+ssend/irecv: 25 iterations in 0.114765 secs (49.966261 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+isend/overlap: 6 iterations in 0.000195 secs (2.151001 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+isend/overlap: 7 iterations in 0.018564 secs (21.623048 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+isend/overlap: 24 iterations in 0.004130 secs (1.627257 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+isend/overlap: 25 iterations in 0.105742 secs (54.229895 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Overlapping communication (sends first)</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+send first/overlap: 6 iterations in 0.000192 secs (2.192262 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+send first/overlap: 7 iterations in 0.018545 secs (21.645183 MFlops); diffnorm
+0.006899, m=4098 n=4 np=1
+send first/overlap: 24 iterations in 0.004085 secs (1.645033 MFlops); diffnorm
+0.009895, m=7 n=10 np=4
+send first/overlap: 25 iterations in 0.098207 secs (58.391122 MFlops); diffnorm
+0.138820, m=4098 n=10 np=4
+</PRE>
+<H2>Jacobi Iteration - Persistent send/recv</H2>
+<PRE>
+	mpicc -c -O  jacobi.c
+	mpicc -c -O  cmdline.c
+	mpicc -c -O  setupmesh.c
+	mpicc -c -O  exchng.c
+	mpicc -o jacobi -O jacobi.o cmdline.o setupmesh.o exchng.o -lm
+ld64: WARNING 84: /usr/lib64/mips4/libm.so is not used for resolving any
+symbol.
+ld64: WARNING 84: /usr/people/salo/mpe/libmpe.a is not used for resolving any
+symbol.
+persistent send/recv: 6 iterations in 0.000158 secs (2.663825 MFlops); diffnorm
+0.008134, m=7 n=4 np=1
+persistent send/recv: 7 iterations in 0.018546 secs (21.644350 MFlops);
+diffnorm 0.006899, m=4098 n=4 np=1
+persistent send/recv: 24 iterations in 0.003914 secs (1.717125 MFlops);
+diffnorm 0.009895, m=7 n=10 np=4
+persistent send/recv: 25 iterations in 0.104866 secs (54.683317 MFlops);
+diffnorm 0.138820, m=4098 n=10 np=4
+</PRE>
+</BODY>

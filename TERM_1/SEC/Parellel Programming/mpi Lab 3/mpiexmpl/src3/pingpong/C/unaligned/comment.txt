@@ -1,0 +1,3 @@
+Some systems can use special aligned move instructions for data that meets
+special alignment rules.  Data that does not, such as in this example, may not
+be handled as efficiently.

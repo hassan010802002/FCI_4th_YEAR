@@ -1,0 +1,5 @@
+Replace the MPI_Send and MPI_Recv calls in your solution with two calls to
+MPI_Sendrecv.  The first call should shift data up; that is, it should send
+data to the processor above and receive data from the processor below.  The
+second call to MPI_Sendrecv should reverse this; it should send data to the
+processor below and receive from the processor above.  

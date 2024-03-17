@@ -1,0 +1,11 @@
+<TITLE>Comments on Jacobi Iteration - Nonblocking send/recv for receiver pull</TITLE>
+<BODY BGCOLOR="FFFFFF">
+On systems with receiver-pull rendezvous protocol, it is important for the
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>'s to arrive before the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>'s are posted (more specifically,
+before the code posts the last MPI call and enters a compute loop).
+This example illustrates the effect of using the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A> calls first.
+<P>
+Note that this does not guarentee that the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>'s occur before the 
+<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A>'s, only that they are more likely to.  Other examples show how to
+enforce the ordering.
+</BODY>

@@ -1,0 +1,18 @@
+<TITLE>Makefile</TITLE>
+<BODY BGCOLOR="FFFFFF">
+<PRE>
+# Generated automatically from Makefile.in by configure.
+ALL: ring
+SHELL = /bin/sh
+
+DIRS = topol
+
+ring: ring.c
+	/usr/local/mpi/lib/sun4/ch_p4/<A href="http://www.mcs.anl.gov/mpi/www/www1/mpicc.html#mpicc">mpicc</A> -o ring ring.c
+
+clean:
+	/bin/rm -f ring ring.o
+	for dir in $(DIRS) ; do \
+	    ( cd $$dir ; make clean ) ; done
+</PRE>
+</BODY>

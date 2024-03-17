@@ -1,0 +1,17 @@
+<TITLE>Jacobi Iteration - Example Parallel Mesh</TITLE>
+<BODY BGCOLOR="FFFFFF">
+This example code shows the use of simple <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A>/<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A> operations
+in implementing a simple, one-dimensional decomposition of a 2-d mesh.
+The code uses
+<UL>
+<LI>Topologies to specify neighbors
+<LI>Arbitrary sized <IT>square</IT> mesh of size <TT>maxn</TT> by  
+<TT>maxn</TT>
+<LI>Takes at most  <TT>maxn</TT> iterations
+<LI>Tests for convergence by comparing the 2-norm of the difference of the
+current and previous iteration.
+</UL>
+<P>
+There are a number of related exercises that look at many variations of the
+communication step, including overlapping communication and computation.
+</BODY>

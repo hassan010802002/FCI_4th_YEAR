@@ -1,0 +1,10 @@
+<TITLE>Comments on Benchmarking point to point performance with MPI_Ssend</TITLE>
+<BODY BGCOLOR="FFFFFF">
+This simple test does not identify sudden changes in performance.  The program
+<CODE>mpptest</CODE> in the MPICH distributions contains a more sophisticated
+version of this exercise.  Compare this to the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A>/<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Recv.html#MPI_Recv">MPI_Recv</A> version.
+<P>
+One effect that this simple example does not take into account is the
+behavior of the memory cache.  This can lead to an over-estimate of the
+available performance.
+</BODY>

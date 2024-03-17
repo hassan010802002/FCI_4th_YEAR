@@ -1,0 +1,12 @@
+In this assigment you will study the relative performance of regular strided
+data with MPI_Send and MPI_Recv.  Send a vector of 1000 elements of type
+MPI_DOUBLE, with a stride of 24 between each element.
+Test these three forms:
+<OL>
+<LI> Use MPI_Type_vector
+<LI> Use MPI_Type_struct to form a "striding" structure
+<LI> Use MPI_DOUBLE and a loop to pack and unpack the vector your self (that
+is, do not use the MPI Datatypes)
+</OL>
+Time these in the same way you timed <CODE>memcpy</CODE>; do several
+interations to get a good average, and repeat the test 10 times.

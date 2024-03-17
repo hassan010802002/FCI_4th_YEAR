@@ -1,0 +1,12 @@
+This example shows how performance can be harmed by specifying excessive
+synchronization.  
+
+Form a grid of processors containing 4 rows and 3 columns.  Have each
+processor send len (default of 2048) MPI_DOUBLE to the 4 neighboring
+processors in the order down, right, up, left.  The grid of processors is NOT
+periodic.  That is, the processors on the bottom row do not send down, the
+processors in the rightmost column do not send right, etc.
+
+Use MPI_Irecv to post receives for each of the four directions.  Use MPI_Send
+to send in the order down, right, up, left.  Observe the time that each
+MPI_Send takes.  

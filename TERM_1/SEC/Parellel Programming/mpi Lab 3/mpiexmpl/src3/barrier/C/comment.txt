@@ -1,0 +1,8 @@
+Systems which must use point-to-point communication for MPI_Barrier (by
+exchanging zero-length messages) will probably display a log(p) behavior for
+the cost of an MPI_Barrier.  Systems that can use either a special network or
+shared memory may have faster barriers with different scaling.
+<P>
+Some of these optimizations (in particular, special networks) apply only to
+MPI_COMM_WORLD or a communicator that contains the same processes as
+MPI_COMM_WORLD.  

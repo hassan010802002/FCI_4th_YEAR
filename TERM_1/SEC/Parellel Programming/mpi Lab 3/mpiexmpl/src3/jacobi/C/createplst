@@ -1,0 +1,14 @@
+#! /bin/sh
+# List all of the files
+# Jacobi with convergence test
+ls jacobi.*.alog | sed -e \
+  's/jacobi\.\(.*\)-\([0-9]*\)-\([0-9]*\).alog/jacobi.\1-\2-\3.alog \1 np=\2 maxn=\3/' | sed -e 's/ anlspx/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g'
+echo "<BR>"
+ls jacobi-nopoll.*.alog 2>/dev/null | sed -e \
+  's/jacobi-nopoll\.\(.*\)-\([0-9]*\)-\([0-9]*\).alog/jacobi-nopoll.\1-\2-\3.alog \1 np=\2 maxn=\3/' | \
+    sed -e 's/ anlspx/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g'
+# Jacobi without convergence test (like explicit iteration)
+echo "<BR>"
+ls jacobi-exp.*.alog 2>/dev/null | sed -e \
+  's/jacobi-exp\.\(.*\)-\([0-9]*\)-\([0-9]*\).alog/jacobi-exp.\1-\2-\3.alog \1 np=\2 maxn=\3/' | \
+    sed -e 's/ anlspx/ ANL SP2 (with SP1 nodes)/g' -e 's/=0*/=/g'

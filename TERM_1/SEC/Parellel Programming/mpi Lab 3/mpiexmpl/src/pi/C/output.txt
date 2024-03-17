@@ -1,0 +1,6 @@
+Enter the number of intervals: (0 quits) pi is approximately 3.1416009869231249, Error is 0.0000083333333318
+Enter the number of intervals: (0 quits) pi is approximately 3.1415927369231267, Error is 0.0000000833333336
+Enter the number of intervals: (0 quits) pi is approximately 3.1415926544231239, Error is 0.0000000008333307
+Enter the number of intervals: (0 quits) pi is approximately 3.1415926535981167, Error is 0.0000000000083236
+Enter the number of intervals: (0 quits) pi is approximately 3.1415926535899033, Error is 0.0000000000001101
+Enter the number of intervals: (0 quits) 

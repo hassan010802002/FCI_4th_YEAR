@@ -1,0 +1,6 @@
+<TITLE>Jacobi Iteration - Synchronous send</TITLE>
+<BODY BGCOLOR="FFFFFF">
+The synchronous send operation can allow the MPI implementation to send
+without buffering.  You can think of it as a ``safe'' read send (<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Rsend.html#MPI_Rsend">MPI_Rsend</A>);
+that is, if the matching receive is not posted yet, it will wait for it.
+</BODY>

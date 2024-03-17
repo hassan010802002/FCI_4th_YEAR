@@ -1,0 +1,13 @@
+ALL: barrier
+SHELL = /bin/sh
+DIRS = reduce
+barrier: barrier.c
+	@MPICC@ -o barrier -O barrier.c
+profile.alog: barrier.c
+	@MPICC@ -o barrier.log -O -mpilog barrier.c
+	mpirun -np 2 barrier.log
+	/bin/mv barrier.log_profile.log profile.alog
+clean:
+	/bin/rm -f barrier barrier.o barrier.log PI*
+	for dir in $(DIRS) ; do \
+	    ( cd $$dir ; make clean ) ; done

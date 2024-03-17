@@ -1,0 +1,20 @@
+DIRS3 = memcpy vector pingpong barrier 3way circulate jacobi
+SHELL = /bin/sh
+install:
+	make clean
+	(cd .. ; \
+	maint/makecourse -root=http://www.mcs.anl.gov/mpi/tutorial/mpiexmpl \
+		-src=src3 )
+	cp -rp . /mcs/www/mpi/tutorial/mpiexmpl
+
+clean:
+	for dir in $(DIRS3) ; do \
+	    (cd $$dir/C ; make clean ) ; \
+	done
+#
+# This target tries to run the example programs, when possible
+examples:
+	@if [ -x $$dir/runtests ] ; then \
+	    echo "runtests in $$dir" ; \
+	    ( cd $$dir ; runtests -base ) \
+	    fi 

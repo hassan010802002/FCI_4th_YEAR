@@ -1,0 +1,10 @@
+Write a program that takes data from process zero and sends it to all of the
+other processes by sending it in a ring.  That is, process i should receive
+the data and send it to process i+1, until the last process is reached.
+
+<CENTER>
+<IMG SRC="ring.gif">
+</CENTER>
+
+Assume that the data consists of a single integer.  Process zero reads the
+data from the user.
