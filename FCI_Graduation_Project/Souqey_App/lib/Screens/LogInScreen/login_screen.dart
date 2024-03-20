@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:souqey/Constants/Colors/AppColors.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 import 'package:souqey/Screens/LogInScreen/Controller/log_in_controller_bloc.dart';
 import 'package:souqey/Screens/LogInScreen/UI/Views/login_main_view.dart';
