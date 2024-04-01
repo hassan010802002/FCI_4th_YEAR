@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Config/AppConfigs.dart';
+
 import '../../Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -10,8 +11,8 @@ class CustomTextField extends StatelessWidget {
   Color? fillColor;
   TextInputType? keyboardType;
   TextEditingController? textEditingController;
-  String? hintText;
-  TextStyle? hintStyle;
+  String? labelText , hintText;
+  TextStyle? hintStyle , labelStyle;
   InputBorder? focusedBorder, enabledBorder;
   Widget? prefixIcon;
   void Function(String)? onChanged;
@@ -27,29 +28,19 @@ class CustomTextField extends StatelessWidget {
     this.fillColor,
     this.keyboardType,
     this.textEditingController,
-    this.hintText,
+    this.labelText,
+    this.labelStyle,
     this.hintStyle,
     this.prefixIcon,
-    this.enabledBorder = const UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xffC5D4F5),
-        width: 2.0,
-        strokeAlign: BorderSide.strokeAlignCenter,
-      ),
-    ),
-    this.focusedBorder = const UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xffC5D4F5),
-        width: 2.0,
-        strokeAlign: BorderSide.strokeAlignCenter,
-      ),
-    ),
+    this.enabledBorder,
+    this.focusedBorder,
     this.onChanged,
     this.onSubmitted,
     this.onEditingComplete,
     this.suffixIcon,
     this.onTap,
-    this.contentPadding,
+    this.hintText,
+    this.contentPadding = const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
   });
 
   @override
@@ -59,8 +50,13 @@ class CustomTextField extends StatelessWidget {
       textAlign: TextAlign.start,
       controller: textEditingController,
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        labelText: labelText,
+        labelStyle: labelStyle,
         fillColor: fillColor,
         hintText: hintText,
+        alignLabelWithHint: true,
         hintStyle: hintStyle,
         focusedBorder: focusedBorder,
         enabledBorder: enabledBorder,
@@ -79,7 +75,7 @@ class CustomTextField extends StatelessWidget {
       ),
       obscureText: opsecure!,
       style: TextStyle(
-        color: const Color(0xff000E08),
+        color: const Color(0xff2D2D2D),
         fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 20.0.sp,
         fontWeight: FontWeight.w600,
         fontFamily: TextFontFamily,

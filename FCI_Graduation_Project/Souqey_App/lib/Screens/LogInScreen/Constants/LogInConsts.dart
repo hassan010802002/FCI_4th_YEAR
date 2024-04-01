@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/Colors/LogInColors.dart';
+import 'package:souqey/Screens/LogInScreen/Constants/Texts/LogInTexts.dart';
 
 class LogInConsts{
 ///***************************************Images*****************************************
@@ -10,7 +11,9 @@ class LogInConsts{
 
 ///*************************************Texts********************************************
 
-
+static final titleText = LogInTexts.titleText;
+static final emailLabelText = LogInTexts.emailLabelText;
+static final passwordLabelText = LogInTexts.passwordLabelText;
 
 ///***************************************Styles*****************************************
 
@@ -19,4 +22,7 @@ class LogInConsts{
 ///***************************************Colors*****************************************
 
   static final Color screenBackGroundColor = LogInColors.screenBackGroundColor;
+  static final Color titleColor = LogInColors.titleColor;
+  static final Color emailLabelColor = LogInColors.emailLabelColor;
+  static const Color color1 = LogInColors.color1;
 }

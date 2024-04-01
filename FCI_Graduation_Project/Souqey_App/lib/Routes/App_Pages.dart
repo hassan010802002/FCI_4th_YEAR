@@ -6,6 +6,6 @@ import 'package:souqey/Screens/LogInScreen/login_screen.dart';
 
 class AppPages {
   static Map<String, Widget Function(BuildContext)> pages = {
-    AppRoutes.splashScreen : (context) => LogInScreen(),
+    AppRoutes.loginScreen : (context) => LogInScreen(),
   };
 }

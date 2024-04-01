@@ -25,7 +25,7 @@ class _SouqeyAppState extends State<SouqeyApp> {
       ensureScreenSize: true,
       minTextAdapt: true,
       builder: (context, child) => MaterialApp(
-        initialRoute: AppRoutes.splashScreen,
+        initialRoute: AppRoutes.loginScreen,
         routes: AppPages.pages,
         // onGenerateRoute: (settings) {
         //

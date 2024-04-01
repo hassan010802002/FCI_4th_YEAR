@@ -2,7 +2,9 @@
 
 class AppTexts{
   static const Map<String, String> _myTexts = <String,String>{
-    "SignupText":"Sign Up",
+    "login":"Login",
+    "loginEmailLabel":"Email",
+    "loginPasswordLabel":"Password",
   };
   static const Map<String, String> _myImages = <String,String>{};
 

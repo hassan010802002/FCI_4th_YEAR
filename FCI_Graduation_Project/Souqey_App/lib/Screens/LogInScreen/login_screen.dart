@@ -17,12 +17,14 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: true,
-      backgroundColor: LogInConsts.screenBackGroundColor,
-      body: BlocProvider(
-        create: (context) => widget.loginControllerBloc,
-        child: LogInMainView(logInControllerBloc: widget.loginControllerBloc),
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        backgroundColor: LogInConsts.screenBackGroundColor,
+        body: BlocProvider(
+          create: (context) => widget.loginControllerBloc,
+          child: LogInMainView(logInControllerBloc: widget.loginControllerBloc),
+        ),
       ),
     );
   }

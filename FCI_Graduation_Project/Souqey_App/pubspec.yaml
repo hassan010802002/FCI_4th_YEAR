@@ -102,6 +102,9 @@ flutter:
     - family: Metropolis
       fonts:
         - asset: Assets/Fonts/MetropolisRegular.ttf
-  #
+    - family: BoldMetropolis
+      fonts:
+        - asset: Assets/Fonts/MetropolisBold.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
