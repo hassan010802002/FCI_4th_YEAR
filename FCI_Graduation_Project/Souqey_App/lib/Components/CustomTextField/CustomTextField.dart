@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,8 +11,8 @@ class CustomTextField extends StatelessWidget {
   Color? fillColor;
   TextInputType? keyboardType;
   TextEditingController? textEditingController;
-  String? labelText , hintText;
-  TextStyle? hintStyle , labelStyle;
+  String? labelText, hintText;
+  TextStyle? hintStyle, labelStyle;
   InputBorder? focusedBorder, enabledBorder;
   Widget? prefixIcon;
   void Function(String)? onChanged;

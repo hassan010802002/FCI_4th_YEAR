@@ -2,15 +2,13 @@
 
 import 'package:souqey/Constants/Texts/AppTexts.dart';
 
-class LogInTexts{
-///******************************************Texts*********************************************
+class LogInTexts {
+  ///******************************************Texts*********************************************
 
-static final titleText = AppTexts.myTexts("login")!;
-static final emailLabelText = AppTexts.myTexts("loginEmailLabel")!;
-static final passwordLabelText = AppTexts.myTexts("loginPasswordLabel")!;
+  static final titleText = AppTexts.myTexts("login")!;
+  static final emailLabelText = AppTexts.myTexts("loginEmailLabel")!;
+  static final passwordLabelText = AppTexts.myTexts("loginPasswordLabel")!;
+  static final forgetPasswordText = AppTexts.myTexts("forgetPasswordText")!;
 
-///******************************************Images********************************************
-
-
-
+  ///******************************************Images********************************************
 }

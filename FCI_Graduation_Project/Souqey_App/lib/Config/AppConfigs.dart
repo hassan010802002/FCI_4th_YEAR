@@ -2,3 +2,7 @@
 
 const String TextFontFamily = "Metropolis";
 const String BoldTextFontFamily = "BoldMetropolis";
+
+////////////////////////////////////API Data///////////////////////////////////////////
+
+const String BaseApiUrl = "https://ecommerce.routemisr.com";
