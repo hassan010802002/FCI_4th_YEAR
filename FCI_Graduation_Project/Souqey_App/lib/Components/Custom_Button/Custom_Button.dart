@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
       style: ButtonStyle(
         elevation: const MaterialStatePropertyAll(5.0),
         fixedSize: fixedSize!,
-        shape: shape!=null? shape! : null,
+        shape: shape,
         backgroundColor: backgroundColor!,
       ),
       child: Text(

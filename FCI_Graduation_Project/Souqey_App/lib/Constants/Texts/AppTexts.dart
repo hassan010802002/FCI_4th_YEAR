@@ -6,8 +6,12 @@ class AppTexts {
     "loginEmailLabel": "Email",
     "loginPasswordLabel": "Password",
     "forgetPasswordText": 'Forgot your password?',
+    "social_account_login_text": 'Or login with social account',
   };
-  static const Map<String, String> _myImages = <String, String>{};
+  static const Map<String, String> _myImages = <String, String>{
+    "google_icon": "Assets/Images/Group.png",
+    "facebook_icon": "Assets/Images/facebook.png",
+  };
 
   static String? myTexts(String textIdx) => _myTexts[textIdx];
 

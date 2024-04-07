@@ -9,6 +9,9 @@ class LogInTexts {
   static final emailLabelText = AppTexts.myTexts("loginEmailLabel")!;
   static final passwordLabelText = AppTexts.myTexts("loginPasswordLabel")!;
   static final forgetPasswordText = AppTexts.myTexts("forgetPasswordText")!;
+  static final socialAccountLoginText = AppTexts.myTexts("social_account_login_text")!;
 
   ///******************************************Images********************************************
+  static final googleIcon = AppTexts.myImages("google_icon")!;
+  static final facebookIcon = AppTexts.myImages("facebook_icon")!;
 }
