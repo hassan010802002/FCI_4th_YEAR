@@ -6,7 +6,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Routes/App_Pages.dart';
 import 'package:souqey/Routes/App_Routes.dart';
-import 'package:souqey/Screens/LogInScreen/login_screen.dart';
+import 'package:souqey/Screens/HomeScreen/home_screen.dart';
 
 class SouqeyApp extends StatefulWidget {
   const SouqeyApp({super.key});
@@ -25,7 +25,7 @@ class _SouqeyAppState extends State<SouqeyApp> {
       ensureScreenSize: true,
       minTextAdapt: true,
       builder: (context, child) => MaterialApp(
-        initialRoute: AppRoutes.loginScreen,
+        initialRoute: AppRoutes.initialRoute,
         routes: AppPages.pages,
         // onGenerateRoute: (settings) {
         //
@@ -41,7 +41,7 @@ class _SouqeyAppState extends State<SouqeyApp> {
           ],
         ),
         debugShowCheckedModeBanner: false,
-        home: LogInScreen(),
+        home: const HomeScreen(baseIndex: 0),
       ),
     );
   }

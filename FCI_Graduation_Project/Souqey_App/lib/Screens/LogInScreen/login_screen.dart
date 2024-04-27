@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:souqey/Injections/Base_Injection.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 import 'package:souqey/Screens/LogInScreen/Controller/log_in_controller_bloc.dart';
 import 'package:souqey/Screens/LogInScreen/UI/Views/login_main_view.dart';
@@ -18,7 +19,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   void initState() {
-    loginControllerBloc = LogInControllerBloc();
+    loginControllerBloc = get_Locator_it.get<LogInControllerBloc>();
     super.initState();
   }
 

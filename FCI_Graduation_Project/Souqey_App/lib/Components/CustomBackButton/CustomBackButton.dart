@@ -26,7 +26,9 @@ class CustomBackButton extends StatelessWidget {
         FontAwesomeIcons.chevronLeft,
       ),
       splashRadius: 30.0.sp,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 }

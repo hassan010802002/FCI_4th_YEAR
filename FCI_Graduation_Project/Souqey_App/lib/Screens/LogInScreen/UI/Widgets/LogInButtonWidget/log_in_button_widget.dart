@@ -5,9 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Components/Custom_Button/Custom_Button.dart';
 import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
+import 'package:souqey/Screens/LogInScreen/Controller/log_in_controller_bloc.dart';
 
 class LogInButtonWidget extends StatefulWidget {
-  const LogInButtonWidget({super.key});
+  final LogInControllerBloc logInControllerBloc;
+
+  const LogInButtonWidget({super.key, required this.logInControllerBloc});
 
   @override
   _LogInButtonWidgetState createState() => _LogInButtonWidgetState();
@@ -24,7 +27,9 @@ class _LogInButtonWidgetState extends State<LogInButtonWidget> {
       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(45.0.sp),
       )),
-      onPressed: () {},
+      onPressed: () {
+        widget.logInControllerBloc.logInFunc();
+      },
       backgroundColor: MaterialStatePropertyAll(LogInConsts.color2),
       buttonText: "LOGIN",
     );

@@ -35,26 +35,24 @@ public class IR_App {
         StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_42);
         Directory indexesDirectory = FSDirectory.open(new File("IndexDir"));
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(Version.LUCENE_42, analyzer);
-        IndexWriter indexWriter = new IndexWriter(indexesDirectory, indexWriterConfig);
-
-        File[] myDataFiles = new File("MyDataset").listFiles();
-        List<File> mainDataFiles = new ArrayList<>();
-
-        for (File myDataFile : myDataFiles) {
-            if (!myDataFile.isDirectory() && !myDataFile.isHidden() && myDataFile.exists() && myDataFile.canRead()) {
-                mainDataFiles.add(myDataFile);
-            } else {
-                mainDataFiles.addAll(Arrays.asList(myDataFile.listFiles()));
+        try (IndexWriter indexWriter = new IndexWriter(indexesDirectory, indexWriterConfig)) {
+            File[] myDataFiles = new File("MyDataset").listFiles();
+            List<File> mainDataFiles = new ArrayList<>();
+            
+            for (File myDataFile : myDataFiles) {
+                if (!myDataFile.isDirectory() && !myDataFile.isHidden() && myDataFile.exists() && myDataFile.canRead()) {
+                    mainDataFiles.add(myDataFile);
+                } else {
+                    mainDataFiles.addAll(Arrays.asList(myDataFile.listFiles()));
+                }
             }
+            
+            for (File mySubFile : mainDataFiles) {
+                addIdxDoc(indexWriter, mySubFile);
+            }
+            
+            System.out.println("# Number of Indexed Docs => " + indexWriter.numDocs());
         }
-                
-        for (File mySubFile : mainDataFiles) {
-            addIdxDoc(indexWriter, mySubFile);
-        }
-
-        System.out.println("# Number of Indexed Docs => " + indexWriter.numDocs());
-
-        indexWriter.close();
 
         System.out.println("Indexing DataSet Files Finished Successfully .....!!!! \n");
 
@@ -65,23 +63,23 @@ public class IR_App {
         String textQuery = input.nextLine();
 
         Query query = new QueryParser(Version.LUCENE_42, "fileContent", analyzer).parse(textQuery);
-        IndexReader indexReader = DirectoryReader.open(indexesDirectory);
-        IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-        TopDocs hitsDocs = indexSearcher.search(query, 20);
-
-        System.err.println("Found " + hitsDocs.totalHits + " document(s) That Matched The Searching Text Query '" + textQuery + "':");
-        System.out.println("Searching Finished Successfully ........ !!!! \n");
-
-        /////////////////////////////////////////////////////////////////////////////
-        
-        System.out.println("Display Results : ");
-        for (ScoreDoc scoreDoc : hitsDocs.scoreDocs) {
-            int docID = scoreDoc.doc;
-            Document doc = indexSearcher.doc(docID);
-            System.out.println("\n\tFile Path --> "+ doc.get("filePath") + "\t File Name --> " + doc.get("fileName")+ "\n");
-            System.out.println("_________________________________________________________________________________________");
+        try (IndexReader indexReader = DirectoryReader.open(indexesDirectory)) {
+            IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+            TopDocs hitsDocs = indexSearcher.search(query, 20);
+            
+            System.err.println("Found " + hitsDocs.totalHits + " document(s) That Matched The Searching Text Query '" + textQuery + "':");
+            System.out.println("Searching Finished Successfully ........ !!!! \n");
+            
+            /////////////////////////////////////////////////////////////////////////////
+            
+            System.out.println("Display Results : ");
+            for (ScoreDoc scoreDoc : hitsDocs.scoreDocs) {
+                int docID = scoreDoc.doc;
+                Document doc = indexSearcher.doc(docID);
+                System.out.println("\n\tFile Path --> "+ doc.get("filePath") + "\t File Name --> " + doc.get("fileName")+ "\n");
+                System.out.println("_________________________________________________________________________________________");
+            }
         }
-        indexReader.close();
     }
 
     public static void addIdxDoc(IndexWriter iw, File dataFile) throws IOException {
