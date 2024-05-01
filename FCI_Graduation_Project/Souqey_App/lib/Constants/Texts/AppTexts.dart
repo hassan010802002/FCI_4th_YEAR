@@ -17,6 +17,10 @@ class AppTexts {
     "base_item_title3": 'Bag',
     "base_item_title4": 'Favorites',
     "base_item_title5": 'Profile',
+    "home_staggered_grid_text": 'Summer Sale',
+    "check_button_text": 'Check',
+    "fashion_sale_text": 'Fashion Sale',
+    "view_all_button_text": 'View all',
   };
   static const Map<String, String> _myImages = <String, String>{
     "google_icon": "Assets/Images/Group.png",

@@ -5,7 +5,8 @@ import 'package:souqey/Constants/Texts/AppTexts.dart';
 class HomeTexts {
   ///******************************************Texts*********************************************
 
-  static final emailLabelText = AppTexts.myTexts("loginEmailLabel")!;
-  static final forgetPasswordTitle = AppTexts.myTexts("forget_password_title")!;
-  static final forgetPasswordText2 = AppTexts.myTexts("forget_password_text2")!;
+  static final homeStaggeredGridText = AppTexts.myTexts("home_staggered_grid_text")!;
+  static final checkButtonText = AppTexts.myTexts("check_button_text")!;
+  static final fashionSaleText = AppTexts.myTexts("fashion_sale_text")!;
+  static final viewAllButtonText = AppTexts.myTexts("view_all_button_text")!;
 }

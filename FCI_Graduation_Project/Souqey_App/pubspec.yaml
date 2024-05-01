@@ -48,7 +48,6 @@ dependencies:
   bloc:
   flutter_bloc:
   font_awesome_flutter:
-  dotted_border:
   flutter_staggered_grid_view:
   flutter_svg:
   injectable:
@@ -56,6 +55,7 @@ dependencies:
   animated_text_kit:
   shimmer:
   animate_do:
+  flutter_rating_bar:
 
 dev_dependencies:
   flutter_test:

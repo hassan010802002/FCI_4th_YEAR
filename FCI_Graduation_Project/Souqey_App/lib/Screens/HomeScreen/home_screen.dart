@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeController = get_Locator_it.get<HomeControllerBloc>();
     _baseController = get_Locator_it.get<BaseCubit>(param1: widget.baseIndex);
     _homeController!.add(HomeGetCategoriesEvent());
+    _homeController!.add(HomeGetProductsEvent());
     super.initState();
   }
 
