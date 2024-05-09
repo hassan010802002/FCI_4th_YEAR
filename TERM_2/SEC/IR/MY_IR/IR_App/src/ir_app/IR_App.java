@@ -65,7 +65,7 @@ public class IR_App {
         Query query = new QueryParser(Version.LUCENE_42, "fileContent", analyzer).parse(textQuery);
         try (IndexReader indexReader = DirectoryReader.open(indexesDirectory)) {
             IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-            TopDocs hitsDocs = indexSearcher.search(query, 20);
+            TopDocs hitsDocs = indexSearcher.search(query, 10);
             
             System.err.println("Found " + hitsDocs.totalHits + " document(s) That Matched The Searching Text Query '" + textQuery + "':");
             System.out.println("Searching Finished Successfully ........ !!!! \n");

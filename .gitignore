@@ -5,3 +5,10 @@
 *.mp4
 *.mkv
 /TERM_2/SEC/Gamming/My_Games/
+/TERM_2/SEC/IR/MY_IR/MySearchEngine/nbproject/private/
+/TERM_2/SEC/IR/MY_IR/MySearchEngine/build/
+/TERM_2/SEC/IR/MY_IR/MySearchEngine/dist/
+/TERM_2/SEC/IR/MY_IR/IR_Project/target/
+/TERM_2/SEC/IR/MY_IR/InformationRetrieval/dist/
+/TERM_2/SEC/IR/MY_IR/InformationRetrieval/nbproject/private/
+/TERM_2/SEC/IR/MY_IR/InformationRetrieval/build/

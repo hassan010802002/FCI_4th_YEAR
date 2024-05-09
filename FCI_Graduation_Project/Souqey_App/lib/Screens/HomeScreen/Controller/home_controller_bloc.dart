@@ -7,8 +7,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:souqey/Injections/Base_Injection.dart';
-import 'package:souqey/Models/AllProductsModel/AllProductsModel.dart';
-import 'package:souqey/Models/CategoriesModel/CategoriesModel.dart';
+import 'package:souqey/Models/AllProductsModel/AllProductsModel.dart' as Products;
+import 'package:souqey/Models/CategoriesModel/CategoriesModel.dart' as Categories;
 import 'package:souqey/Screens/HomeScreen/Repository/GetAllProductsRepository/GetAllProductsRepository.dart';
 import 'package:souqey/Screens/HomeScreen/Repository/GetCategoriesRepo/GetCategoriesRepo.dart';
 
@@ -21,16 +21,18 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
   bool isSuccessProductsService = false;
   bool isImageSwitching = false;
   bool isSuccessFilter = false;
-  CategoriesModel? categoriesModel;
+  Categories.CategoriesModel? categoriesModel;
   GetCategoriesRepo? _categoriesRepo;
   GetAllProductsRepository? _productsRepository;
-  AllProductsModel? productsModel;
+  Products.AllProductsModel? productsModel;
   int? activeCurrentIndex;
   int? activeCurrentView;
+  List<Map<Categories.Data, List<Products.Data>>>? productsFilterData;
 
   HomeControllerBloc() : super(HomeControllerInitial()) {
     activeCurrentIndex = 0;
     activeCurrentView = 0;
+    productsFilterData = <Map<Categories.Data, List<Products.Data>>>[];
     _categoriesRepo = get_Locator_it.get<GetCategoriesRepo>();
     _productsRepository = get_Locator_it.get<GetAllProductsRepository>();
 
@@ -38,7 +40,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
       (event, emit) async {
         isSuccessCategoriesService = false;
         emit(HomeGetCategoriesState(
-          categoriesModel: CategoriesModel(),
+          categoriesModel: Categories.CategoriesModel(),
           state: CategoriesStates.loading,
         ).copyWith());
         try {
@@ -52,7 +54,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
           } else {
             isSuccessCategoriesService = false;
             emit(HomeGetCategoriesState(
-              categoriesModel: CategoriesModel(),
+              categoriesModel: Categories.CategoriesModel(),
               state: CategoriesStates.failure,
             ).copyWith());
             throw Exception("Categories Controller Failure");
@@ -61,7 +63,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
           isSuccessCategoriesService = false;
           log(e.toString(), name: "Categories Controller Exception");
           emit(HomeGetCategoriesState(
-            categoriesModel: CategoriesModel(),
+            categoriesModel: Categories.CategoriesModel(),
             state: CategoriesStates.failure,
           ).copyWith());
         }
@@ -72,7 +74,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
       (event, emit) async {
         isSuccessProductsService = false;
         emit(HomeGetProductsState(
-          productsModel: AllProductsModel(),
+          productsModel: Products.AllProductsModel(),
           state: ProductsStates.loading,
         ).copyWith());
         try {
@@ -86,7 +88,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
           } else {
             isSuccessProductsService = false;
             emit(HomeGetProductsState(
-              productsModel: AllProductsModel(),
+              productsModel: Products.AllProductsModel(),
               state: ProductsStates.failure,
             ).copyWith());
             throw Exception("Products Controller Failure");
@@ -95,7 +97,7 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
           isSuccessProductsService = false;
           log(e.toString(), name: "Products Controller Exception");
           emit(HomeGetProductsState(
-            productsModel: AllProductsModel(),
+            productsModel: Products.AllProductsModel(),
             state: ProductsStates.failure,
           ).copyWith());
         }
@@ -128,7 +130,11 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
   void productsFilter() {
     if (isSuccessFilter) {
       for (var category in categoriesModel!.data!) {
-        // productsModel!.data.
+        if (productsModel!.data!.any((categoryData) => categoryData.category!.name == category.name!)) {
+          productsFilterData!.add({category: productsModel!.data!.where((product) => product.category!.name == category.name!).toList()});
+        } else {
+          continue;
+        }
       }
     }
   }

@@ -48,14 +48,14 @@ final class HomeControllerInitial extends HomeControllerState {
 }
 
 final class HomeGetCategoriesState extends HomeControllerState {
-  final CategoriesModel? categoriesModel;
+  final Categories.CategoriesModel? categoriesModel;
   final CategoriesStates? state;
 
   @override
   List<Object?> get props => [categoriesModel, state];
 
   HomeGetCategoriesState copyWith({
-    CategoriesModel? categoriesModel,
+    Categories.CategoriesModel? categoriesModel,
     CategoriesStates? state,
   }) {
     return HomeGetCategoriesState(
@@ -71,14 +71,14 @@ final class HomeGetCategoriesState extends HomeControllerState {
 }
 
 final class HomeGetProductsState extends HomeControllerState {
-  final AllProductsModel? productsModel;
+  final Products.AllProductsModel? productsModel;
   final ProductsStates? state;
 
   @override
   List<Object?> get props => [productsModel, state];
 
   HomeGetProductsState copyWith({
-    AllProductsModel? productsModel,
+    Products.AllProductsModel? productsModel,
     ProductsStates? state,
   }) {
     return HomeGetProductsState(
