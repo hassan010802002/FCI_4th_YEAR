@@ -1,3 +1,0 @@
-The synchronous send operation can allow the MPI implementation to send
-without buffering.  You can think of it as a ``safe'' read send (MPI_Rsend);
-that is, if the matching receive is not posted yet, it will wait for it.

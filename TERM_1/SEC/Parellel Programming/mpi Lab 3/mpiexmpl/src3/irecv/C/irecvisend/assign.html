@@ -1,6 +1,0 @@
-<TITLE>Demonstation of improved performance by defering synchronization</TITLE>
-<BODY BGCOLOR="FFFFFF">
-Take the previous example but replace the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A> calls with <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Isend.html#MPI_Isend">MPI_Isend</A>.
-Perform an <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Waitall.html#MPI_Waitall">MPI_Waitall</A> on all eight requests.  Observe the time that
-communication takes, and compare it with the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Send.html#MPI_Send">MPI_Send</A> version.
-</BODY>

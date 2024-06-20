@@ -1,2 +1,0 @@
-This a contrived example designed to demonstrate how a third-party message
-can be delayed by a long message being moved between the first two processes.

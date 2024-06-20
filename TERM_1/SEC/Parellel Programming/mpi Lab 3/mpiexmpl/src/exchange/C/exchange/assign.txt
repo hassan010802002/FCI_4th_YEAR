@@ -1,4 +1,0 @@
-In this exercise, use MPI_Sendrecv to exchange data with the neighboring
-processors.  That is, processors 0 and 1 exchange, 2 and 3 exchange, etc.  Then
-1 and 2 exchange, 3 and 4, etc.  This "head-to-head" exchange may be more
-efficient on some systems.  

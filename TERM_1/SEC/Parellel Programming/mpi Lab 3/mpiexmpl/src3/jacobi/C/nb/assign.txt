@@ -1,7 +1,0 @@
-This version uses nonblocking operations for both sending and receiving; 
-primarily, this is to handle the buffering issues.  This case posts the
-receives first, allowing eager delivery to often avoid copies (but without
-guarenteeing that).
-<P>
-A separate example shows the use of nonblocking operations to express the
-overlap of communication and computation.

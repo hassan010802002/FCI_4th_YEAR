@@ -1,2 +1,0 @@
-Compare this with the original "Hellow World" example.  By using a processor
-to handle all output, we can ensure that the output occurs in rank ordering.

@@ -1,2 +1,0 @@
-Note that a separate set of persistent requests is required for 
-<CODE>xlocal</CODE> and <CODE>xnew</CODE>

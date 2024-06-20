@@ -9,4 +9,6 @@ class HomeTexts {
   static final checkButtonText = AppTexts.myTexts("check_button_text")!;
   static final fashionSaleText = AppTexts.myTexts("fashion_sale_text")!;
   static final viewAllButtonText = AppTexts.myTexts("view_all_button_text")!;
+  static final categorySmallText = AppTexts.myTexts("category_small_text")!;
+  static final discountText = AppTexts.myTexts("discount_text")!;
 }

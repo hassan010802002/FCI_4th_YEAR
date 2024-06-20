@@ -1,3 +1,0 @@
-% mpicc -o jacobi -O jacobi.c cmdline.c setupmesh.c exchng.c -lm
-% mpirun -np 4 jacobi
-isend/irecv: 100 iterations in 2.155051 secs (5.321823 MFlops); diffnorm 0.134684, n=130 np=4

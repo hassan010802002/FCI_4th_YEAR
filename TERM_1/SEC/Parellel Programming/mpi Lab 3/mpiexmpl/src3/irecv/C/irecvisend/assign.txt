@@ -1,3 +1,0 @@
-Take the previous example but replace the MPI_Send calls with MPI_Isend.
-Perform an MPI_Waitall on all eight requests.  Observe the time that
-communication takes, and compare it with the MPI_Send version.

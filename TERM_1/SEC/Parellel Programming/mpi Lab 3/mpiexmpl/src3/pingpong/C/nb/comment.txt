@@ -1,3 +1,0 @@
-In some MPI implementations, the blocking operations have lower latency than
-the nonblocking operations.  This is due to the additional cost of allocating
-setting, and freeing an MPI_Request.

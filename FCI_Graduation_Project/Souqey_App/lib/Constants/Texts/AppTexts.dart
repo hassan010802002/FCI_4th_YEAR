@@ -21,6 +21,13 @@ class AppTexts {
     "check_button_text": 'Check',
     "fashion_sale_text": 'Fashion Sale',
     "view_all_button_text": 'View all',
+    "category_small_text": 'You’ve never seen it before!',
+    "discount_text": '-20%',
+    "categories_appbar_title": 'Categories',
+    "categories_summer_sales_text": 'SUMMER SALES',
+    "categories_summer_sales_discount_text": 'Up to 50% off',
+    "categories_view_all_items_button_text": 'VIEW ALL ITEMS',
+    "categories_choose_category_text": 'Choose category',
   };
   static const Map<String, String> _myImages = <String, String>{
     "google_icon": "Assets/Images/Group.png",

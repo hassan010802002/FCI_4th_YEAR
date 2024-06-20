@@ -1,3 +1,0 @@
-Use MPI_Wtime to establish a delay until an MPI_Recv is called at the
-destination process.  By timing the MPI_Send, you can detect when the MPI_Send
-was waiting for the MPI_Recv

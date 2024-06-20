@@ -1,9 +1,0 @@
-ALL: memcpy
-SHELL = /bin/sh
-DIRS = 
-memcpy: memcpy.c
-	@MPICC@ -o memcpy memcpy.c
-clean:
-	/bin/rm -f memcpy memcpy.o memcpy.log
-	#for dir in $(DIRS) ; do \
-	#    ( cd $$dir ; make clean ) ; done

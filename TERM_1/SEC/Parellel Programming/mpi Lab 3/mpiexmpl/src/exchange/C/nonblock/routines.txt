@@ -1,3 +1,0 @@
-MPI_Isend
-MPI_Irecv
-MPI_Waitall

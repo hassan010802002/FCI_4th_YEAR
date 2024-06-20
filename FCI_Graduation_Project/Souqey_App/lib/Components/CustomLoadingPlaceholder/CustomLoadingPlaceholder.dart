@@ -14,8 +14,8 @@ class CustomLoadingPlaceholder extends StatelessWidget {
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 10.0.w, vertical: 8.0.h),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade500,
-        highlightColor: Colors.grey.shade50,
+        baseColor: Colors.grey.shade400,
+        highlightColor: Colors.grey.shade100,
         direction: ShimmerDirection.ltr,
         period: const Duration(seconds: 3),
         loop: 5,

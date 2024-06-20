@@ -1,6 +1,0 @@
-The top and bottom processors have one less row of interior points than the
-other processors (see the figure in the assignment).
-<P>
-If you use <CODE>sqrt</CODE>, don't forget to include <math.h> in your file
-and link with -lm.
-

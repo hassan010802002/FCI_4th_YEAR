@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
           extendBody: true,
           primary: true,
           backgroundColor: HomeConsts.screenBackGroundColor,
-          floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
           bottomNavigationBar: BaseHome(baseIndex: widget.baseIndex),
           body: HomeMainView(homeController: _homeController!),
         ),

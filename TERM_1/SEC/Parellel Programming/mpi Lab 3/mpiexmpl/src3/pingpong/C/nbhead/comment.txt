@@ -1,7 +1,0 @@
-Some systems can manage two-way exchanges of data between partners more
-efficiently than they can send and receive with two different partners.
-Other systems may suffer performance penalties when sending head-to-head.
-<P>
-Note that this example did not have both processes doing an MPI_Send followed
-by an MPI_Recv.  Recall that MPI_Send may block (depending on implementation)
-until the matching receive begins.  

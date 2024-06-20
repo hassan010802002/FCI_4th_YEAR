@@ -1,6 +1,0 @@
-Write a program to provide fair reception of message from all sending
-processes. Arrange the program to have all processes except process 0 send 100
-messages to process 0.  Have process 0 print out the messages as it receives
-them.  Use nonblocking receives and MPI_Waitsome.
-
-Is the MPI implementation fair?

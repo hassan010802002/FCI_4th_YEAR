@@ -1,4 +1,0 @@
-This is the root directory of a variety of codes for the simple jacobi
-iteration.  The operative parts are the data exchange and a simple 
-computation; we allow an overlap if the system can manage it.  We
-assume topologies and relatively large but two-d (not three-d) data.

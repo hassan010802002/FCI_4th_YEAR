@@ -33,7 +33,7 @@ class BaseCubit extends Cubit<BaseState> {
       NavigatorHelper(context, AppRoutes.homeScreen);
       emit(HomeBase());
     } else if (index == 1) {
-      // NavigatorHelper(context, AppRoutes.messagesScreen);
+      NavigatorHelper(context, AppRoutes.categoriesScreen);
       emit(ShopBase());
     } else if (index == 2) {
       // NavigatorHelper(context, AppRoutes.appliedJobsScreen);

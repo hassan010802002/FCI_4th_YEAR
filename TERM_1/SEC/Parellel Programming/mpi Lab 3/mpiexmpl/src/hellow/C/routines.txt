@@ -1,4 +1,0 @@
-MPI_Init
-MPI_Comm_size
-MPI_Comm_rank
-MPI_Finalize

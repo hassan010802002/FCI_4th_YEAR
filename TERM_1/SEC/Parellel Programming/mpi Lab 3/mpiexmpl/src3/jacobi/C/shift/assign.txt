@@ -1,2 +1,0 @@
-This variant uses shift up and shift down operations implemented with
-MPI_Sendrecv 

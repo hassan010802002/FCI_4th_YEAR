@@ -1,4 +1,0 @@
-This version uses head-to-head communication using MPI_Sendrecv.  Some
-hardware systems have enhanced performance for bidirectional transfers (IBM
-SP2, for instance).  This test allows you to evaluation whether that extra
-performance is visable to an MPI programmer.

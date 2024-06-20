@@ -1,9 +1,0 @@
-<TITLE>Comments on Jacobi Iteration - Nonblocking Ready send</TITLE>
-<BODY BGCOLOR="FFFFFF">
-Note the use of <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Cancel.html#MPI_Cancel">MPI_Cancel</A> to remove the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Irecv.html#MPI_Irecv">MPI_Irecv</A> requests that are begun
-before the synchronization point (the <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Allreduce.html#MPI_Allreduce">MPI_Allreduce</A>) but never used because
-the loop is exited.
-<P>
-This approach allows the underlying system to use eager protocol independent
-of the size of the message.
-</BODY>

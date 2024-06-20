@@ -34,9 +34,54 @@ class HomeStyles {
 
   static TextStyle? Function(BuildContext context) style1 = (context) => TextStyle(
         color: HomeColors.color4,
-        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 36.0.sp,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 30.0.sp,
         fontWeight: FontWeight.w600,
         fontFamily: TextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style2 = (context) => TextStyle(
+        color: HomeColors.color3,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 12.0.sp,
+        fontWeight: FontWeight.w800,
+        fontFamily: BoldTextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style3 = (context) => TextStyle(
+        color: HomeColors.color4,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 35.0.sp,
+        fontWeight: FontWeight.w600,
+        fontFamily: TextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style4 = (context) => TextStyle(
+        color: HomeColors.color4,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 20.0.sp,
+        fontWeight: FontWeight.w600,
+        fontFamily: TextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style5 = (context) => TextStyle(
+        color: HomeColors.color3,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 15.0.sp,
+        fontWeight: FontWeight.w800,
+        fontFamily: BoldTextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style6 = (context) => TextStyle(
+        color: HomeColors.color4,
+        decoration: TextDecoration.lineThrough,
+        decorationThickness: 3.0,
+        decorationColor: HomeColors.color4,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 18.0.sp,
+        fontWeight: FontWeight.w800,
+        fontFamily: TextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style8 = (context) => TextStyle(
+        color: HomeColors.color2,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 18.0.sp,
+        fontWeight: FontWeight.w800,
+        fontFamily: TextFontFamily,
+      );
+  static TextStyle? Function(BuildContext context) style11 = (context) => TextStyle(
+        fontFamily: BoldTextFontFamily,
+        fontWeight: FontWeight.w600,
+        fontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 25.0.sp,
+        color: HomeColors.color1,
       );
 
   /////////////////////////////////////////Containers Styles/////////////////////////////////////////////
@@ -50,8 +95,29 @@ class HomeStyles {
               alignment: Alignment.center,
               filterQuality: FilterQuality.high,
               fit: BoxFit.cover,
+              isAntiAlias: true,
             ),
           );
+  static BoxDecoration? Function(BuildContext context, HomeControllerBloc homeController, int categoryViewIdx, int productViewIdx) containerStyle3 =
+      (context, homeController, categoryViewIdx, productViewIdx) => BoxDecoration(
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(
+                homeController.productsFilterData!.elementAt(categoryViewIdx).values.toList().elementAt(0).elementAt(productViewIdx).imageCover!,
+              ),
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+              isAntiAlias: true,
+            ),
+            borderRadius: BorderRadius.circular(20.0.sp),
+          );
+  static ShapeDecoration? Function(BuildContext context) containerStyle2 = (context) => ShapeDecoration(
+        color: HomeColors.color5,
+        shape: StarBorder(
+          pointRounding: 0.3.sp,
+          squash: 1,
+          innerRadiusRatio: 0.5.sp,
+        ),
+      );
 
   ////////////////////////////////////////Button Styles///////////////////////////////////////////////////
 

@@ -1,9 +1,0 @@
-Write a program to measure the time it takes to send 1, 2, 4, ..., 1M C
-doubles from one processor to another using MPI_Send and MPI_Recv.  Use the
-same techniques as in the memcpy assignment to average out variations and
-overhead in MPI_Wtime.
-<P>
-Print the size, time, and rate in MB/sec for each test.
-<P>
-Make sure that both sender and reciever are ready when you begin the test.
-The sample solution uses MPI_Sendrecv, but other choices are possible.

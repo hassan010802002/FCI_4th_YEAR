@@ -1,1 +1,0 @@
-#define TESTNAME "irecv/isend"

@@ -1,1 +1,0 @@
-Jacobi Iteration - Shift up and down

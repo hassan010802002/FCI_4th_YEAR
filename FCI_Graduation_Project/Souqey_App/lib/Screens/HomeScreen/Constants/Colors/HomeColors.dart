@@ -9,4 +9,6 @@ class HomeColors {
   static final Color color2 = Color(AppColors.myColors('login_forget_password_icon_color')!);
   static final Color color3 = Color(AppColors.myColors('login_title_color')!);
   static final Color color4 = Color(AppColors.myColors('login_email_label_color')!);
+  static final Color color5 = Color(AppColors.myColors('rating_color')!);
+  static final Color color6 = Color(AppColors.myColors('unselected_base_item_color')!);
 }

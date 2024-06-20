@@ -7,7 +7,7 @@ public class SyncronousDownload {
 
     public synchronized void fileDownloader() throws InterruptedException {
         fileDownloadCounter++;
-        Thread.sleep(100);
+        Thread.sleep(300);
         System.out.println("File Downloaded Successfully (Download Counts) ------------> "+fileDownloadCounter);
     }
 

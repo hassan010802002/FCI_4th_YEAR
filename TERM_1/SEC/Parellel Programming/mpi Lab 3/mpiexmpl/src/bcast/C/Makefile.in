@@ -1,9 +1,0 @@
-ALL: bcast
-DIRS = struct pack
-bcast: bcast.c
-	@MPICC@ -o bcast bcast.c
-
-clean:
-	/bin/rm -f bcast *.o
-	for dir in $(DIRS) ; do \
-	    ( cd $$dir ; make clean ) ; done

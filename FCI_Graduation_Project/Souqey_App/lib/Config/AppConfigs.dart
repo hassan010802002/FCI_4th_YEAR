@@ -10,6 +10,7 @@ const String SignUpAuthEndPoint = "${BaseApiUrl}auth/signup";
 const String LogInAuthEndPoint = "${BaseApiUrl}auth/signin";
 const String resetForgetPasswordAuthEndPoint = "${BaseApiUrl}auth/forgotPasswords";
 const String categoriesEndPoint = "${BaseApiUrl}categories";
+const String subCategoriesOnCategoryEndPoint = "${BaseApiUrl}categories";
 const String productsEndPoint = "${BaseApiUrl}products";
 
 ///////////////////////////////////User Profile Data///////////////////////////////////

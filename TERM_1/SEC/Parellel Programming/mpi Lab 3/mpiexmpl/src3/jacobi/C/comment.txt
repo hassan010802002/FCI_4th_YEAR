@@ -1,5 +1,0 @@
-The performance of this example depends on both the MPI implementation and the
-size of the problem.  Because blocking sends and receives are used, for a
-large enough problem, every send except the one sending the MPI_PROC_NULL (at
-the top or bottom edge) will block until the send closer to that final send
-completes.  This produces a ripple pattern in the sends and receives.

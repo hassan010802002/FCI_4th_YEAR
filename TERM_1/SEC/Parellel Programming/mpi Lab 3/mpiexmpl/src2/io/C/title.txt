@@ -1,1 +1,0 @@
-Master/slave programs in MPI

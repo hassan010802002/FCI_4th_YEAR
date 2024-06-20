@@ -1,3 +1,0 @@
-The MPI_Sendrecv operation is quite general and is designed primarily to
-provide for combined send and receive operations, specifically, to deal with
-the problem of providing buffering without using nonblocking operations.

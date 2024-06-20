@@ -1,4 +1,0 @@
-MPI_Irecv
-MPI_Rsend
-MPI_Waitall
-MPI_Cancel

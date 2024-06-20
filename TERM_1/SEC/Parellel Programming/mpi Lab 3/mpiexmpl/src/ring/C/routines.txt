@@ -1,2 +1,0 @@
-MPI_Send
-MPI_Recv

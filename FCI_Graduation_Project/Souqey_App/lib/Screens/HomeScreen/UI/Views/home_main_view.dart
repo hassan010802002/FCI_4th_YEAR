@@ -6,6 +6,7 @@ import 'package:souqey/Components/CustomLoadingPlaceholder/CustomLoadingPlacehol
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView1/home_view1.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView2/home_view2.dart';
+import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView3/home_view3.dart';
 
 class HomeMainView extends StatefulWidget {
   final HomeControllerBloc _homeController;
@@ -18,20 +19,14 @@ class HomeMainView extends StatefulWidget {
 
 class _HomeMainViewState extends State<HomeMainView> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeControllerBloc, HomeControllerState, bool>(
       bloc: widget._homeController,
       selector: (state) {
         if (widget._homeController.isSuccessProductsService && widget._homeController.isSuccessCategoriesService) {
-          widget._homeController.isSuccessFilter = true;
           widget._homeController.productsFilter();
         }
-        return widget._homeController.isSuccessCategoriesService && widget._homeController.isSuccessProductsService;
+        return widget._homeController.isSuccessProductsService && widget._homeController.isSuccessCategoriesService;
       },
       builder: (context, state) {
         return state
@@ -44,7 +39,11 @@ class _HomeMainViewState extends State<HomeMainView> {
                     return widget._homeController.activeCurrentView!;
                   },
                   builder: (context, state) {
-                    return state == 0 ? HomeView1(homeController: widget._homeController) : HomeView2(homeController: widget._homeController);
+                    return state == 0
+                        ? HomeView1(homeController: widget._homeController)
+                        : state == 1
+                            ? HomeView2(homeController: widget._homeController)
+                            : HomeView3(homeController: widget._homeController);
                   },
                 ),
               )

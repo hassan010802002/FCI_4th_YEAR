@@ -1,7 +1,0 @@
-<TITLE>Comments on Using MPI datatypes to share data</TITLE>
-<BODY BGCOLOR="FFFFFF">
-Note the use of <A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Address.html#MPI_Address">MPI_Address</A> to get the values for the indices argument to
-<A href="http://www.mcs.anl.gov/mpi/www/www3/MPI_Type_struct.html#MPI_Type_struct">MPI_Type_struct</A>.  It is important <IT>not</IT> to use the C "address" operator
-<CODE>&</CODE>, because this provides a value that may be different from the
-value needed by MPI (for example, on some Cray systems).
-</BODY>

@@ -1,1 +1,0 @@
-Benchmarking point to point performance with contention with MPI_Ssend

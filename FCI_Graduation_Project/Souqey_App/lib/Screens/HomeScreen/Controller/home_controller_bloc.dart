@@ -128,10 +128,16 @@ class HomeControllerBloc extends Bloc<HomeControllerEvent, HomeControllerState> 
   }
 
   void productsFilter() {
-    if (isSuccessFilter) {
+    if (!isSuccessFilter) {
       for (var category in categoriesModel!.data!) {
         if (productsModel!.data!.any((categoryData) => categoryData.category!.name == category.name!)) {
-          productsFilterData!.add({category: productsModel!.data!.where((product) => product.category!.name == category.name!).toList()});
+          productsFilterData!.add(
+            Map<Categories.Data, List<Products.Data>>.of(
+              {category: productsModel!.data!.where((product) => product.category!.name == category.name!).toList()},
+            ),
+          );
+          log("Filter Length is: ${productsFilterData!.length}", name: "filter length");
+          isSuccessFilter = true;
         } else {
           continue;
         }

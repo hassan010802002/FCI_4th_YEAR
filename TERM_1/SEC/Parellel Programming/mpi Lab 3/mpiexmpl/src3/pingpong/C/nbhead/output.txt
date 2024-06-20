@@ -1,2 +1,0 @@
-% mpicc -o pingpong -O pingpong.c
-% mpirun -np 2 pingpong 

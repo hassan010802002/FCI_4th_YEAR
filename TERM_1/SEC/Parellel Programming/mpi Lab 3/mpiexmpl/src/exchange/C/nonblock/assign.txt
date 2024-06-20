@@ -1,4 +1,0 @@
-In this exercise, use the non-blocking point-to-point routines instead of the
-blocking routines.  Replace the MPI_Send and MPI_Recv routines with MPI_Isend
-and MPI_Irecv, and use MPI_Wait or MPI_Waitall to test for completion of the
-nonblocking operations.

@@ -1,8 +1,0 @@
-% mpicc -o io io.c
-% mpirun -np 4 io
-Hello from slave 0
-Hello from slave 1
-Hello from slave 2
-Goodbye from slave 0
-Goodbye from slave 1
-Goodbye from slave 2

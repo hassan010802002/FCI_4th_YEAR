@@ -1,8 +1,0 @@
-In the simple Jacobi loop, at the end of each iteration, there is an
-MPI_Allreduce used to test for convergence.  This provides a synchronization
-point in the program.  This example uses that synchronization point to allow
-the use of the MPI_Rsend routine.
-<P>
-To do this, the matching receives (as MPI_Isend) must be posted before the
-synchronization point and the sends (as MPI_Rsend) must be posted after the 
-synchronization point.

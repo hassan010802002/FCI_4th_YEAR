@@ -1,5 +1,0 @@
-MPI_Address
-MPI_Type_struct
-MPI_Type_commit
-MPI_Type_free
-MPI_Bcast
