@@ -3,14 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/ForgetPasswordScreen/Constants/ForgetPasswordConsts.dart';
 
-class ForgetPasswordSubtitleText extends StatefulWidget {
+class ForgetPasswordSubtitleText extends StatelessWidget {
   const ForgetPasswordSubtitleText({super.key});
 
-  @override
-  _ForgetPasswordSubtitleTextState createState() => _ForgetPasswordSubtitleTextState();
-}
-
-class _ForgetPasswordSubtitleTextState extends State<ForgetPasswordSubtitleText> {
   @override
   Widget build(BuildContext context) {
     return Text(

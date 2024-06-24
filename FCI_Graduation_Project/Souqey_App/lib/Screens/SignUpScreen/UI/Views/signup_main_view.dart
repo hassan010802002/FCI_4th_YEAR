@@ -17,16 +17,11 @@ import 'package:souqey/Screens/SignUpScreen/UI/Widgets/SignUpAccountButtonWidget
 import 'package:souqey/Screens/SignUpScreen/UI/Widgets/SignUpTitleTextWidget/sign_up_title_text_widget.dart';
 import 'package:souqey/Screens/SignUpScreen/UI/Widgets/SocialLoginTextWidget/social_login_text_widget.dart';
 
-class SignUpMainView extends StatefulWidget {
+class SignUpMainView extends StatelessWidget {
   final SignUpControllerBloc signUpController;
 
   const SignUpMainView({super.key, required this.signUpController});
 
-  @override
-  State<SignUpMainView> createState() => _SignUpMainViewState();
-}
-
-class _SignUpMainViewState extends State<SignUpMainView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,7 +29,7 @@ class _SignUpMainViewState extends State<SignUpMainView> {
       child: SingleChildScrollView(
         primary: true,
         child: BlocListener<SignUpControllerBloc, SignUpControllerState>(
-          bloc: widget.signUpController,
+          bloc: signUpController,
           listener: (context, state) {
             if (state is SignUpAuthSuccessfulState) {
               SnackBar_Helper.showSuccessToast(context, "Successful SignUp");
@@ -58,15 +53,15 @@ class _SignUpMainViewState extends State<SignUpMainView> {
                   SizedBox(
                     height: MediaQuery_Size_Helper.MAX_HEIGHT(context)! / 15.0.h,
                   ),
-                  NameTextFieldWidget(signUpController: widget.signUpController),
+                  NameTextFieldWidget(signUpController: signUpController),
                   SizedBox(
                     height: 10.0.h,
                   ),
-                  EmailTextFieldWidget(signUpController: widget.signUpController),
+                  EmailTextFieldWidget(signUpController: signUpController),
                   SizedBox(
                     height: 10.0.h,
                   ),
-                  PasswordTextFieldWidget(signUpController: widget.signUpController),
+                  PasswordTextFieldWidget(signUpController: signUpController),
                   SizedBox(
                     height: 8.0.h,
                   ),
@@ -79,7 +74,7 @@ class _SignUpMainViewState extends State<SignUpMainView> {
                   SizedBox(
                     height: 35.0.h,
                   ),
-                  LogInButtonWidget(signUpController: widget.signUpController),
+                  LogInButtonWidget(signUpController: signUpController),
                 ],
               ),
               SizedBox(

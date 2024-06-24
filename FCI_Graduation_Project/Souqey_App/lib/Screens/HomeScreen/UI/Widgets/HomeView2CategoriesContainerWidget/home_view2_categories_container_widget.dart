@@ -8,27 +8,22 @@ import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 
-class HomeView2CategoriesContainerWidget extends StatefulWidget {
+class HomeView2CategoriesContainerWidget extends StatelessWidget {
   final HomeControllerBloc _homeController;
 
   const HomeView2CategoriesContainerWidget({super.key, required final HomeControllerBloc homeController}) : _homeController = homeController;
 
   @override
-  _HomeView2CategoriesContainerWidgetState createState() => _HomeView2CategoriesContainerWidgetState();
-}
-
-class _HomeView2CategoriesContainerWidgetState extends State<HomeView2CategoriesContainerWidget> {
-  @override
   Widget build(BuildContext context) {
     return FadeInDown(
       duration: const Duration(milliseconds: 800),
       onFinish: (direction) {
-        if (widget._homeController.isImageSwitching) {
-          widget._homeController.switchingCurrentImage();
+        if (_homeController.isImageSwitching) {
+          _homeController.switchingCurrentImage();
         }
       },
       child: Container(
-        decoration: HomeConsts.containerStyle1(context, widget._homeController),
+        decoration: HomeConsts.containerStyle1(context, _homeController),
         padding: EdgeInsets.symmetric(
           horizontal: 20.0.w,
           vertical: 30.0.h,

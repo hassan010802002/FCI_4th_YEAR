@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Screens/CategoriesScreen/Controller/categories_controller_bloc.dart';
 import 'package:souqey/Screens/CategoriesScreen/UI/Views/CategoriesView1/categories_view1.dart';
 import 'package:souqey/Screens/CategoriesScreen/UI/Views/CategoriesView2/categories_view2.dart';
+import 'package:souqey/Screens/CategoriesScreen/UI/Views/CategoriesView3/categories_view3.dart';
 
 class CategoriesMainView extends StatelessWidget {
   final CategoriesControllerBloc _categoriesController;
@@ -35,7 +36,7 @@ class CategoriesMainView extends StatelessWidget {
                     ? CategoriesView2(
                         categoriesController: _categoriesController,
                       )
-                    : const SizedBox();
+                    : CategoriesView3(categoriesController: _categoriesController);
           },
         ),
       ),

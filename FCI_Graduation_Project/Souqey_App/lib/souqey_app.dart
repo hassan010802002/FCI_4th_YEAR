@@ -6,7 +6,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Routes/App_Pages.dart';
 import 'package:souqey/Routes/App_Routes.dart';
-import 'package:souqey/Screens/HomeScreen/home_screen.dart';
+import 'package:souqey/Screens/CategoriesScreen/categories_screen.dart';
 
 class SouqeyApp extends StatefulWidget {
   const SouqeyApp({super.key});
@@ -41,7 +41,7 @@ class _SouqeyAppState extends State<SouqeyApp> {
           ],
         ),
         debugShowCheckedModeBanner: false,
-        home: const HomeScreen(baseIndex: 0),
+        home: const CategoriesScreen(baseIndex: 1),
       ),
     );
   }

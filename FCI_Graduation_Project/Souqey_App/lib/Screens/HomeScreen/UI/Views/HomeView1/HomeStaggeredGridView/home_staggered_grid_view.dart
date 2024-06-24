@@ -6,25 +6,20 @@ import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Widgets/HomeStaggeredGridITextTileWidget/home_staggered_grid_i_text_tile_widget.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Widgets/HomeStaggeredGridImageTileWidget/home_staggered_grid_image_tile_widget.dart';
 
-class HomeStaggeredGridView extends StatefulWidget {
+class HomeStaggeredGridView extends StatelessWidget {
   final HomeControllerBloc _homeController;
 
   const HomeStaggeredGridView({super.key, required final HomeControllerBloc homeController}) : _homeController = homeController;
 
   @override
-  _HomeStaggeredGridViewState createState() => _HomeStaggeredGridViewState();
-}
-
-class _HomeStaggeredGridViewState extends State<HomeStaggeredGridView> {
-  @override
   Widget build(BuildContext context) {
     return StaggeredGrid.count(
       crossAxisCount: 2,
       children: [
-        HomeStaggeredGridImageTileWidget(homeController: widget._homeController, crossAxisCellCount: 2, mainAxisCellCount: 2),
+        HomeStaggeredGridImageTileWidget(homeController: _homeController, crossAxisCellCount: 2, mainAxisCellCount: 2),
         const HomeStaggeredGridITextTileWidget(),
-        HomeStaggeredGridImageTileWidget(homeController: widget._homeController, crossAxisCellCount: 1, mainAxisCellCount: 2),
-        HomeStaggeredGridImageTileWidget(homeController: widget._homeController, crossAxisCellCount: 1, mainAxisCellCount: 1),
+        HomeStaggeredGridImageTileWidget(homeController: _homeController, crossAxisCellCount: 1, mainAxisCellCount: 2),
+        HomeStaggeredGridImageTileWidget(homeController: _homeController, crossAxisCellCount: 1, mainAxisCellCount: 1),
       ],
     );
   }

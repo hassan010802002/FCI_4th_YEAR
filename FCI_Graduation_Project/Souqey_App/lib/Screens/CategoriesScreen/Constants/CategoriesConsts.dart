@@ -31,4 +31,6 @@ class CategoriesConsts {
   static final Color color2 = CategoriesColors.color2;
   static final Color color3 = CategoriesColors.color3;
   static final Color color4 = CategoriesColors.color4;
+  static final Color color5 = CategoriesColors.color5;
+  static const Color transparentColor = CategoriesColors.transparentColor;
 }

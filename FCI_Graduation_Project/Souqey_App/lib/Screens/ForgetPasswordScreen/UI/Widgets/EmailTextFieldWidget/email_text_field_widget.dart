@@ -6,17 +6,12 @@ import 'package:souqey/Components/CustomTextField/CustomTextField.dart';
 import 'package:souqey/Screens/ForgetPasswordScreen/Constants/ForgetPasswordConsts.dart';
 import 'package:souqey/Screens/ForgetPasswordScreen/Controller/forget_password_controller_bloc.dart';
 
-class EmailTextFieldWidget extends StatefulWidget {
+class EmailTextFieldWidget extends StatelessWidget {
   final ForgetPasswordControllerBloc _forgetPasswordController;
 
   const EmailTextFieldWidget({super.key, required final ForgetPasswordControllerBloc forgetPasswordController})
       : _forgetPasswordController = forgetPasswordController;
 
-  @override
-  _EmailTextFieldWidgetState createState() => _EmailTextFieldWidgetState();
-}
-
-class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
@@ -35,7 +30,7 @@ class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
         ),
         borderRadius: BorderRadius.circular(8.0.sp),
       ),
-      textEditingController: widget._forgetPasswordController.emailController,
+      textEditingController: _forgetPasswordController.emailController,
       fillColor: ForgetPasswordConsts.color1,
     );
   }

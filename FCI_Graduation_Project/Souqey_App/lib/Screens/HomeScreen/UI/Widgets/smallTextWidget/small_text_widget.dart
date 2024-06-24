@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 
-class SmallTextWidget extends StatefulWidget {
+class SmallTextWidget extends StatelessWidget {
   const SmallTextWidget({super.key});
 
-  @override
-  _SmallTextWidgetState createState() => _SmallTextWidgetState();
-}
-
-class _SmallTextWidgetState extends State<SmallTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(

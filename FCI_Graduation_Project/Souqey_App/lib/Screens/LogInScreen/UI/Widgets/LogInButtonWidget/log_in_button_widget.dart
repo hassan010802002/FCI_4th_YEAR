@@ -7,16 +7,11 @@ import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 import 'package:souqey/Screens/LogInScreen/Controller/log_in_controller_bloc.dart';
 
-class LogInButtonWidget extends StatefulWidget {
+class LogInButtonWidget extends StatelessWidget {
   final LogInControllerBloc logInControllerBloc;
 
   const LogInButtonWidget({super.key, required this.logInControllerBloc});
 
-  @override
-  _LogInButtonWidgetState createState() => _LogInButtonWidgetState();
-}
-
-class _LogInButtonWidgetState extends State<LogInButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomButton(
@@ -28,7 +23,7 @@ class _LogInButtonWidgetState extends State<LogInButtonWidget> {
         borderRadius: BorderRadius.circular(45.0.sp),
       )),
       onPressed: () {
-        widget.logInControllerBloc.logInFunc();
+        logInControllerBloc.logInFunc();
       },
       backgroundColor: MaterialStatePropertyAll(LogInConsts.color2),
       buttonText: "LOGIN",

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 
-class RattingDetailsWidget extends StatefulWidget {
+class RattingDetailsWidget extends StatelessWidget {
   final HomeControllerBloc _homeController;
   final int _categoryViewIdx;
   final int _productViewIdx;
@@ -19,21 +19,16 @@ class RattingDetailsWidget extends StatefulWidget {
         _productViewIdx = productViewIdx;
 
   @override
-  _RattingDetailsWidgetState createState() => _RattingDetailsWidgetState();
-}
-
-class _RattingDetailsWidgetState extends State<RattingDetailsWidget> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         RatingBarIndicator(
-          rating: widget._homeController.productsFilterData!
-              .elementAt(widget._categoryViewIdx)
+          rating: _homeController.productsFilterData!
+              .elementAt(_categoryViewIdx)
               .values
               .toList()
               .elementAt(0)
-              .elementAt(widget._productViewIdx)
+              .elementAt(_productViewIdx)
               .ratingsAverage!
               .toDouble(),
           direction: Axis.horizontal,
@@ -47,7 +42,7 @@ class _RattingDetailsWidgetState extends State<RattingDetailsWidget> {
           },
         ),
         Text(
-          '(${widget._homeController.productsFilterData!.elementAt(widget._categoryViewIdx).values.toList().elementAt(0).elementAt(widget._productViewIdx).ratingsQuantity!.toInt()})',
+          '(${_homeController.productsFilterData!.elementAt(_categoryViewIdx).values.toList().elementAt(0).elementAt(_productViewIdx).ratingsQuantity!.toInt()})',
           softWrap: true,
           textAlign: TextAlign.start,
           style: HomeConsts.style3(context),

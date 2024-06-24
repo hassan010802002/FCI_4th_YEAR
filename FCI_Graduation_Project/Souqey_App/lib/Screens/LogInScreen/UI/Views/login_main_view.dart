@@ -16,16 +16,11 @@ import 'package:souqey/Screens/LogInScreen/UI/Widgets/LogInTitleTextWidget/log_i
 import 'package:souqey/Screens/LogInScreen/UI/Widgets/PasswordTextFieldWidget/password_text_field_widget.dart';
 import 'package:souqey/Screens/LogInScreen/UI/Widgets/SocialLoginTextWidget/social_login_text_widget.dart';
 
-class LogInMainView extends StatefulWidget {
+class LogInMainView extends StatelessWidget {
   final LogInControllerBloc logInControllerBloc;
 
   const LogInMainView({super.key, required this.logInControllerBloc});
 
-  @override
-  State<LogInMainView> createState() => _LogInMainViewState();
-}
-
-class _LogInMainViewState extends State<LogInMainView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,7 +28,7 @@ class _LogInMainViewState extends State<LogInMainView> {
       child: SingleChildScrollView(
         primary: true,
         child: BlocListener<LogInControllerBloc, LogInControllerState>(
-          bloc: widget.logInControllerBloc,
+          bloc: logInControllerBloc,
           listener: (context, state) {
             if (state is LogInAuthSuccessfulState) {
               SnackBar_Helper.showSuccessToast(context, "Successful LogIn");
@@ -57,11 +52,11 @@ class _LogInMainViewState extends State<LogInMainView> {
                   SizedBox(
                     height: MediaQuery_Size_Helper.MAX_HEIGHT(context)! / 15.0.h,
                   ),
-                  EmailTextFieldWidget(logInControllerBloc: widget.logInControllerBloc),
+                  EmailTextFieldWidget(logInControllerBloc: logInControllerBloc),
                   SizedBox(
                     height: 10.0.h,
                   ),
-                  PasswordTextFieldWidget(logInControllerBloc: widget.logInControllerBloc),
+                  PasswordTextFieldWidget(logInControllerBloc: logInControllerBloc),
                   SizedBox(
                     height: 20.0.h,
                   ),
@@ -74,7 +69,7 @@ class _LogInMainViewState extends State<LogInMainView> {
                   SizedBox(
                     height: 35.0.h,
                   ),
-                  LogInButtonWidget(logInControllerBloc: widget.logInControllerBloc),
+                  LogInButtonWidget(logInControllerBloc: logInControllerBloc),
                 ],
               ),
               SizedBox(

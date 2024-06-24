@@ -7,16 +7,11 @@ import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView2/CategoriesListView/categories_list_view.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Widgets/HomeView2CategoriesContainerWidget/home_view2_categories_container_widget.dart';
 
-class HomeView2 extends StatefulWidget {
+class HomeView2 extends StatelessWidget {
   final HomeControllerBloc _homeController;
 
   const HomeView2({super.key, required final HomeControllerBloc homeController}) : _homeController = homeController;
 
-  @override
-  _HomeView2State createState() => _HomeView2State();
-}
-
-class _HomeView2State extends State<HomeView2> {
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -26,11 +21,11 @@ class _HomeView2State extends State<HomeView2> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           BlocBuilder<HomeControllerBloc, HomeControllerState>(
-            bloc: widget._homeController,
+            bloc: _homeController,
             builder: (context, state) {
-              return !widget._homeController.isImageSwitching
+              return !_homeController.isImageSwitching
                   ? HomeView2CategoriesContainerWidget(
-                      homeController: widget._homeController,
+                      homeController: _homeController,
                     )
                   : const SizedBox();
             },
@@ -38,7 +33,7 @@ class _HomeView2State extends State<HomeView2> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 20.0.h),
-              child: CategoriesListView(homeController: widget._homeController),
+              child: CategoriesListView(homeController: _homeController),
             ),
           ),
         ],

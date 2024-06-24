@@ -6,16 +6,11 @@ import 'package:souqey/Components/CustomTextField/CustomTextField.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 import 'package:souqey/Screens/SignUpScreen/Controller/sign_up_controller_bloc.dart';
 
-class NameTextFieldWidget extends StatefulWidget {
+class NameTextFieldWidget extends StatelessWidget {
   final SignUpControllerBloc signUpController;
 
   const NameTextFieldWidget({super.key, required this.signUpController});
 
-  @override
-  _NameTextFieldWidgetState createState() => _NameTextFieldWidgetState();
-}
-
-class _NameTextFieldWidgetState extends State<NameTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
@@ -34,7 +29,7 @@ class _NameTextFieldWidgetState extends State<NameTextFieldWidget> {
         ),
         borderRadius: BorderRadius.circular(8.0.sp),
       ),
-      textEditingController: widget.signUpController.nameController,
+      textEditingController: signUpController.nameController,
       fillColor: SignUpConsts.color1,
     );
   }

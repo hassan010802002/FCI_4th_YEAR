@@ -8,9 +8,11 @@ import 'package:souqey/Models/AllProductsModel/AllProductsModel.dart' as Product
 import 'package:souqey/Models/CategoriesModel/CategoriesModel.dart' as Categories;
 import 'package:souqey/Models/SubCategoriesModel/SubCategoriesModel.dart' as SubCategories;
 import 'package:souqey/Models/SubCategoriesModel/SubCategoriesModel.dart';
+import 'package:souqey/Screens/CategoriesScreen/Repository/GetAllProductsOnCategoryRepo/GetAllProductsOnCategoryRepoImpl.dart';
 import 'package:souqey/Screens/CategoriesScreen/Repository/GetAllProductsRepository/GetAllProductsRepository.dart';
 import 'package:souqey/Screens/CategoriesScreen/Repository/GetAllSubCategoriesOnCategoryRepoImpl/GetAllSubCategoriesOnCategoryRepoImpl.dart';
 import 'package:souqey/Screens/CategoriesScreen/Repository/GetCategoriesRepo/GetCategoriesRepo.dart';
+import 'package:souqey/Screens/CategoriesScreen/Service/GetAllProductsOnCategoryService/GetAllProductsOnCategoryService.dart';
 import 'package:souqey/Screens/CategoriesScreen/Service/GetAllSubCategoriesOnCategoryService/GetAllSubCategoriesOnCategoryService.dart';
 
 part 'categories_controller_event.dart';
@@ -20,21 +22,28 @@ part 'categories_controller_state.dart';
 class CategoriesControllerBloc extends Bloc<CategoriesControllerEvent, CategoriesControllerState> {
   bool isSuccessCategoriesService = false;
   bool isSuccessProductsService = false;
+  bool isSuccessProductsOnCategoryService = false;
   bool isSuccessSubCategoriesService = false;
   int categoryViews = 0;
   int? activeCategoryIdx;
   GetCategoriesRepo? _categoriesRepo;
   GetAllProductsRepository? _productsRepository;
   GetAllSubCategoriesOnCategoryRepoImpl? _subCategoriesOnCategoryRepo;
+  GetAllProductsOnCategoryRepoImpl? _productsOnCategoryRepo;
   Categories.CategoriesModel? categoriesModel;
   Products.AllProductsModel? productsModel;
+  Products.AllProductsModel? productsOnCategoryModel;
   SubCategories.SubCategoriesModel? subCategoriesModel;
 
   CategoriesControllerBloc() : super(CategoriesControllerInitial()) {
     _categoriesRepo = get_Locator_it.get<GetCategoriesRepo>();
     _productsRepository = get_Locator_it.get<GetAllProductsRepository>();
-    _subCategoriesOnCategoryRepo =
-        get_Locator_it.get<GetAllSubCategoriesOnCategoryRepoImpl>(param1: get_Locator_it.get<GetAllSubCategoriesOnCategoryService>());
+    _subCategoriesOnCategoryRepo = get_Locator_it.get<GetAllSubCategoriesOnCategoryRepoImpl>(
+      param1: get_Locator_it.get<GetAllSubCategoriesOnCategoryService>(),
+    );
+    _productsOnCategoryRepo = get_Locator_it.get<GetAllProductsOnCategoryRepoImpl>(
+      param1: get_Locator_it.get<GetAllProductsOnCategoryService>(),
+    );
 
     on<CategoriesGetCategoriesEvent>((event, emit) async {
       isSuccessCategoriesService = false;
@@ -95,6 +104,39 @@ class CategoriesControllerBloc extends Bloc<CategoriesControllerEvent, Categorie
         emit(CategoriesGetProductsState(
           productsModel: Products.AllProductsModel(),
           state: ProductsStates.failure,
+        ).copyWith());
+      }
+    });
+    on<CategoriesGetAllProductsOnCategoryEvent>((event, emit) async {
+      isSuccessProductsOnCategoryService = false;
+      emit(CategoriesGetProductsOnCategoryState(
+        productsOnCategoryModel: Products.AllProductsModel(),
+        state: ProductsOnCategoryStates.loading,
+      ).copyWith());
+      try {
+        if (_productsOnCategoryRepo != null) {
+          productsOnCategoryModel = await _productsOnCategoryRepo!.getAllProductsOnCategory(
+            categoryId: categoriesModel!.data!.elementAt(activeCategoryIdx!).id,
+          );
+          isSuccessProductsOnCategoryService = true;
+          emit(CategoriesGetProductsOnCategoryState(
+            productsOnCategoryModel: productsOnCategoryModel,
+            state: ProductsOnCategoryStates.success,
+          ).copyWith());
+        } else {
+          isSuccessProductsOnCategoryService = false;
+          emit(CategoriesGetProductsOnCategoryState(
+            productsOnCategoryModel: Products.AllProductsModel(),
+            state: ProductsOnCategoryStates.failure,
+          ).copyWith());
+          throw Exception("Products On Category Controller Failure");
+        }
+      } on Exception catch (e) {
+        isSuccessProductsOnCategoryService = false;
+        log(e.toString(), name: "Products On Category Controller Exception");
+        emit(CategoriesGetProductsOnCategoryState(
+          productsOnCategoryModel: Products.AllProductsModel(),
+          state: ProductsOnCategoryStates.failure,
         ).copyWith());
       }
     });

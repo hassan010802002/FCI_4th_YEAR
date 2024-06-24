@@ -8,42 +8,37 @@ import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView1/home_view1.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView2/home_view2.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView3/home_view3.dart';
 
-class HomeMainView extends StatefulWidget {
+class HomeMainView extends StatelessWidget {
   final HomeControllerBloc _homeController;
 
   const HomeMainView({super.key, required final HomeControllerBloc homeController}) : _homeController = homeController;
 
   @override
-  State<HomeMainView> createState() => _HomeMainViewState();
-}
-
-class _HomeMainViewState extends State<HomeMainView> {
-  @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeControllerBloc, HomeControllerState, bool>(
-      bloc: widget._homeController,
+      bloc: _homeController,
       selector: (state) {
-        if (widget._homeController.isSuccessProductsService && widget._homeController.isSuccessCategoriesService) {
-          widget._homeController.productsFilter();
+        if (_homeController.isSuccessProductsService && _homeController.isSuccessCategoriesService) {
+          _homeController.productsFilter();
         }
-        return widget._homeController.isSuccessProductsService && widget._homeController.isSuccessCategoriesService;
+        return _homeController.isSuccessProductsService && _homeController.isSuccessCategoriesService;
       },
       builder: (context, state) {
         return state
             ? GestureDetector(
                 onVerticalDragStart: (details) {
-                  widget._homeController.switchingCurrentView();
+                  _homeController.switchingCurrentView();
                 },
                 child: BlocSelector<HomeControllerBloc, HomeControllerState, int>(
                   selector: (state) {
-                    return widget._homeController.activeCurrentView!;
+                    return _homeController.activeCurrentView!;
                   },
                   builder: (context, state) {
                     return state == 0
-                        ? HomeView1(homeController: widget._homeController)
+                        ? HomeView1(homeController: _homeController)
                         : state == 1
-                            ? HomeView2(homeController: widget._homeController)
-                            : HomeView3(homeController: widget._homeController);
+                            ? HomeView2(homeController: _homeController)
+                            : HomeView3(homeController: _homeController);
                   },
                 ),
               )

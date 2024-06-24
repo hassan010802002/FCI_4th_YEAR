@@ -7,20 +7,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:souqey/Screens/BaseHome/Constants/BaseHomeConsts.dart';
 import 'package:souqey/Screens/BaseHome/Controller/base_cubit.dart';
 
-class ProfileNavBarItem extends StatefulWidget {
+class ProfileNavBarItem extends StatelessWidget {
   BaseCubit cubit;
 
   ProfileNavBarItem({super.key, required this.cubit});
 
   @override
-  _ProfileNavBarItemState createState() => _ProfileNavBarItemState();
-}
-
-class _ProfileNavBarItemState extends State<ProfileNavBarItem> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<BaseCubit, BaseState>(
-      bloc: widget.cubit,
+      bloc: cubit,
       builder: (context, state) {
         return SvgPicture.asset(
           state is ProfileBase ? BaseHomeConsts.image9 : BaseHomeConsts.image10,

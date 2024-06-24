@@ -12,17 +12,12 @@ import 'package:souqey/Screens/ForgetPasswordScreen/UI/Widgets/ForgetPasswordSub
 import 'package:souqey/Screens/ForgetPasswordScreen/UI/Widgets/ForgetPasswordTextWidget/forget_password_title_text_widget.dart';
 import 'package:souqey/Screens/ForgetPasswordScreen/UI/Widgets/ResetForgetPasswordButtonWidget/reset_forget_password_button_widget.dart';
 
-class ForgetPasswordMainView extends StatefulWidget {
+class ForgetPasswordMainView extends StatelessWidget {
   final ForgetPasswordControllerBloc _forgetPasswordController;
 
   const ForgetPasswordMainView({super.key, required final ForgetPasswordControllerBloc forgetPasswordController})
       : _forgetPasswordController = forgetPasswordController;
 
-  @override
-  State<ForgetPasswordMainView> createState() => _ForgetPasswordMainViewState();
-}
-
-class _ForgetPasswordMainViewState extends State<ForgetPasswordMainView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +25,7 @@ class _ForgetPasswordMainViewState extends State<ForgetPasswordMainView> {
       child: SingleChildScrollView(
         primary: true,
         child: BlocListener<ForgetPasswordControllerBloc, ForgetPasswordControllerState>(
-          bloc: widget._forgetPasswordController,
+          bloc: _forgetPasswordController,
           listener: (context, state) {
             if (state is ResetForgetPasswordSuccessfulState) {
               SnackBar_Helper.showSuccessToast(context, "!_Successful Reset Forget Password Request_!");
@@ -54,11 +49,11 @@ class _ForgetPasswordMainViewState extends State<ForgetPasswordMainView> {
               SizedBox(
                 height: 20.0.h,
               ),
-              EmailTextFieldWidget(forgetPasswordController: widget._forgetPasswordController),
+              EmailTextFieldWidget(forgetPasswordController: _forgetPasswordController),
               SizedBox(
                 height: 35.0.h,
               ),
-              ResetForgetPasswordButtonWidget(forgetPasswordController: widget._forgetPasswordController),
+              ResetForgetPasswordButtonWidget(forgetPasswordController: _forgetPasswordController),
             ],
           ),
         ),

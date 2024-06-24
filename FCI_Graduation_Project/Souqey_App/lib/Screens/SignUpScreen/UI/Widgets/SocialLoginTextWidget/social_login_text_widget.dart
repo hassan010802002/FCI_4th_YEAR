@@ -3,14 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 
-class SocialLoginTextWidget extends StatefulWidget {
+class SocialLoginTextWidget extends StatelessWidget {
   const SocialLoginTextWidget({super.key});
 
-  @override
-  _SocialLoginTextWidgetState createState() => _SocialLoginTextWidgetState();
-}
-
-class _SocialLoginTextWidgetState extends State<SocialLoginTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(

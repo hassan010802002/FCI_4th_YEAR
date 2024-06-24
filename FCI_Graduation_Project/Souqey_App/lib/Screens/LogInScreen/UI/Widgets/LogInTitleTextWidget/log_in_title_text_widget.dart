@@ -3,14 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 
-class LogInTitleTextWidget extends StatefulWidget {
+class LogInTitleTextWidget extends StatelessWidget {
   const LogInTitleTextWidget({super.key});
 
-  @override
-  _LogInTitleTextWidgetState createState() => _LogInTitleTextWidgetState();
-}
-
-class _LogInTitleTextWidgetState extends State<LogInTitleTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(

@@ -12,53 +12,48 @@ import 'package:souqey/Screens/BaseHome/UI/Widgets/HomeNavBar_Item/home_nav_bar_
 import 'package:souqey/Screens/BaseHome/UI/Widgets/ProfileNavBar_Item/profile_nav_bar_item.dart';
 import 'package:souqey/Screens/BaseHome/UI/Widgets/ShopNavBar_Item/shop_nav_bar_item.dart';
 
-class BottomNavBarView extends StatefulWidget {
+class BottomNavBarView extends StatelessWidget {
   final BaseCubit cubit;
 
   const BottomNavBarView({super.key, required this.cubit});
 
   @override
-  _BottomNavBarViewState createState() => _BottomNavBarViewState();
-}
-
-class _BottomNavBarViewState extends State<BottomNavBarView> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<BaseCubit, BaseState>(
-      bloc: widget.cubit,
+      bloc: cubit,
       builder: (context, state) {
         return BottomNavigationBar(
           elevation: 0.0,
           items: [
             BottomNavigationBarItem(
-              icon: HomeNavBarItem(cubit: widget.cubit),
+              icon: HomeNavBarItem(cubit: cubit),
               label: BaseHomeConsts.text1,
             ),
             BottomNavigationBarItem(
-              icon: ShopNavBarItem(cubit: widget.cubit),
+              icon: ShopNavBarItem(cubit: cubit),
               label: BaseHomeConsts.text2,
             ),
             BottomNavigationBarItem(
-              icon: BagNavBarItem(cubit: widget.cubit),
+              icon: BagNavBarItem(cubit: cubit),
               label: BaseHomeConsts.text3,
             ),
             BottomNavigationBarItem(
-              icon: FavNavBarItem(cubit: widget.cubit),
+              icon: FavNavBarItem(cubit: cubit),
               label: BaseHomeConsts.text4,
             ),
             BottomNavigationBarItem(
-              icon: ProfileNavBarItem(cubit: widget.cubit),
+              icon: ProfileNavBarItem(cubit: cubit),
               label: BaseHomeConsts.text5,
             ),
           ],
           backgroundColor: BaseHomeConsts.color9,
-          currentIndex: widget.cubit.baseIndex!,
+          currentIndex: cubit.baseIndex!,
           selectedItemColor: BaseHomeConsts.color6,
           unselectedItemColor: BaseHomeConsts.color8,
           selectedFontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 26.0.sp,
           unselectedFontSize: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 26.0.sp,
           onTap: (value) {
-            widget.cubit.ChangeBase(context, value);
+            cubit.ChangeBase(context, value);
           },
           iconSize: 50.0.sp,
           unselectedLabelStyle: BaseHomeConsts.textStyle1(context),

@@ -7,7 +7,7 @@ import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 
-class ProductCoverImage extends StatefulWidget {
+class ProductCoverImage extends StatelessWidget {
   final HomeControllerBloc _homeController;
   final int _categoryViewIdx;
   final int _productViewIdx;
@@ -22,18 +22,13 @@ class ProductCoverImage extends StatefulWidget {
         _productViewIdx = productViewIdx;
 
   @override
-  _ProductCoverImageState createState() => _ProductCoverImageState();
-}
-
-class _ProductCoverImageState extends State<ProductCoverImage> {
-  @override
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints.expand(
         width: MediaQuery_Size_Helper.MAX_WIDTH(context)! / 1.8.w,
         height: MediaQuery_Size_Helper.MAX_HEIGHT(context)! / 2.8.h,
       ),
-      decoration: HomeConsts.containerStyle3(context, widget._homeController, widget._categoryViewIdx, widget._productViewIdx),
+      decoration: HomeConsts.containerStyle3(context, _homeController, _categoryViewIdx, _productViewIdx),
       padding: EdgeInsets.symmetric(
         vertical: 10.0.h,
         horizontal: 15.0.w,

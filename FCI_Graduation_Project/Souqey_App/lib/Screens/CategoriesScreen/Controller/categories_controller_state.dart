@@ -38,6 +38,18 @@ extension ProductsStatesX on ProductsStates {
   bool get isError => this == ProductsStates.failure;
 }
 
+enum ProductsOnCategoryStates { loading, success, failure }
+
+extension ProductsOnCategoryStatesX on ProductsOnCategoryStates {
+  bool get isLoading => this == ProductsOnCategoryStates.loading;
+
+  bool get isSuccess => this == ProductsOnCategoryStates.success;
+
+  bool get isError => this == ProductsOnCategoryStates.failure;
+}
+
+
+
 sealed class CategoriesControllerState extends Equatable {
   const CategoriesControllerState();
 }
@@ -89,6 +101,29 @@ final class CategoriesGetProductsState extends CategoriesControllerState {
 
   const CategoriesGetProductsState({
     this.productsModel,
+    this.state,
+  });
+}
+
+final class CategoriesGetProductsOnCategoryState extends CategoriesControllerState {
+  final Products.AllProductsModel? productsOnCategoryModel;
+  final ProductsOnCategoryStates? state;
+
+  @override
+  List<Object?> get props => [productsOnCategoryModel, state];
+
+  CategoriesGetProductsOnCategoryState copyWith({
+    Products.AllProductsModel? productsOnCategoryModel,
+    ProductsOnCategoryStates? state,
+  }) {
+    return CategoriesGetProductsOnCategoryState(
+      productsOnCategoryModel: productsOnCategoryModel ?? this.productsOnCategoryModel,
+      state: state ?? this.state,
+    );
+  }
+
+  const CategoriesGetProductsOnCategoryState({
+    this.productsOnCategoryModel,
     this.state,
   });
 }

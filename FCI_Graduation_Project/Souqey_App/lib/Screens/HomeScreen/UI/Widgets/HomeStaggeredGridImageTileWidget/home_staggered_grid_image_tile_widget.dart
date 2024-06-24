@@ -9,7 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 
-class HomeStaggeredGridImageTileWidget extends StatefulWidget {
+class HomeStaggeredGridImageTileWidget extends StatelessWidget {
   final HomeControllerBloc _homeController;
   final int crossAxisCellCount;
   final int mainAxisCellCount;
@@ -22,23 +22,18 @@ class HomeStaggeredGridImageTileWidget extends StatefulWidget {
   }) : _homeController = homeController;
 
   @override
-  _HomeStaggeredGridImageTileWidgetState createState() => _HomeStaggeredGridImageTileWidgetState();
-}
-
-class _HomeStaggeredGridImageTileWidgetState extends State<HomeStaggeredGridImageTileWidget> {
-  @override
   Widget build(BuildContext context) {
     return StaggeredGridTile.count(
-      crossAxisCellCount: widget.crossAxisCellCount,
-      mainAxisCellCount: widget.mainAxisCellCount,
+      crossAxisCellCount: crossAxisCellCount,
+      mainAxisCellCount: mainAxisCellCount,
       child: BlocBuilder<HomeControllerBloc, HomeControllerState>(
-        bloc: widget._homeController,
+        bloc: _homeController,
         builder: (context, state) {
-          return !widget._homeController.isImageSwitching
+          return !_homeController.isImageSwitching
               ? FadeInLeft(
                   duration: const Duration(milliseconds: 500),
                   onFinish: (direction) {
-                    widget._homeController.switchingCurrentImage();
+                    _homeController.switchingCurrentImage();
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -49,9 +44,9 @@ class _HomeStaggeredGridImageTileWidgetState extends State<HomeStaggeredGridImag
                       filterQuality: FilterQuality.high,
                       height: MediaQuery_Size_Helper.MAX_HEIGHT(context)!.h,
                       width: MediaQuery_Size_Helper.MAX_WIDTH(context)!.w,
-                      imageUrl: widget._homeController.categoriesModel!.data!
+                      imageUrl: _homeController.categoriesModel!.data!
                           .elementAt(
-                            widget._homeController.activeCurrentIndex!,
+                            _homeController.activeCurrentIndex!,
                           )
                           .image!,
                     ),

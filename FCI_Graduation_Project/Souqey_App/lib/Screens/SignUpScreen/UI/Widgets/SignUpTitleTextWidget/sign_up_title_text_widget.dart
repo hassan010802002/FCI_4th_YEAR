@@ -3,14 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 
-class SignUpTitleTextWidget extends StatefulWidget {
+class SignUpTitleTextWidget extends StatelessWidget {
   const SignUpTitleTextWidget({super.key});
 
-  @override
-  _SignUpTitleTextWidgetState createState() => _SignUpTitleTextWidgetState();
-}
-
-class _SignUpTitleTextWidgetState extends State<SignUpTitleTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(

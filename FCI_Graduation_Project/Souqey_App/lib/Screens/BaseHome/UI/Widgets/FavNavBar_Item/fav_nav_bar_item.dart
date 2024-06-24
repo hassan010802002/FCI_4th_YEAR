@@ -8,20 +8,15 @@ import 'package:souqey/Screens/BaseHome/Constants/BaseHomeConsts.dart';
 
 import '../../../Controller/base_cubit.dart';
 
-class FavNavBarItem extends StatefulWidget {
+class FavNavBarItem extends StatelessWidget {
   BaseCubit cubit;
 
   FavNavBarItem({super.key, required this.cubit});
 
   @override
-  _FavNavBarItemState createState() => _FavNavBarItemState();
-}
-
-class _FavNavBarItemState extends State<FavNavBarItem> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<BaseCubit, BaseState>(
-      bloc: widget.cubit,
+      bloc: cubit,
       builder: (context, state) {
         return SvgPicture.asset(
           state is FavoritesBase ? BaseHomeConsts.image7 : BaseHomeConsts.image8,

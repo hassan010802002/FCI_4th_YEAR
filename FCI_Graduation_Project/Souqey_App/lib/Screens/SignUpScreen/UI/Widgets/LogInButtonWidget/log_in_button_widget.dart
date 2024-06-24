@@ -7,15 +7,10 @@ import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 import 'package:souqey/Screens/SignUpScreen/Controller/sign_up_controller_bloc.dart';
 
-class LogInButtonWidget extends StatefulWidget {
+class LogInButtonWidget extends StatelessWidget {
   final SignUpControllerBloc signUpController;
   const LogInButtonWidget({super.key, required this.signUpController});
 
-  @override
-  _LogInButtonWidgetState createState() => _LogInButtonWidgetState();
-}
-
-class _LogInButtonWidgetState extends State<LogInButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomButton(
@@ -27,7 +22,7 @@ class _LogInButtonWidgetState extends State<LogInButtonWidget> {
         borderRadius: BorderRadius.circular(45.0.sp),
       )),
       onPressed: () {
-        widget.signUpController.signUpFunc();
+        signUpController.signUpFunc();
       },
       backgroundColor: MaterialStatePropertyAll(SignUpConsts.color2),
       buttonText: "SIGN UP",

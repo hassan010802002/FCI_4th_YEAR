@@ -8,20 +8,15 @@ import 'package:souqey/Screens/BaseHome/Constants/BaseHomeConsts.dart';
 
 import '../../../Controller/base_cubit.dart';
 
-class ShopNavBarItem extends StatefulWidget {
+class ShopNavBarItem extends StatelessWidget {
   BaseCubit cubit;
 
   ShopNavBarItem({super.key, required this.cubit});
 
   @override
-  _ShopNavBarItemState createState() => _ShopNavBarItemState();
-}
-
-class _ShopNavBarItemState extends State<ShopNavBarItem> {
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<BaseCubit, BaseState>(
-      bloc: widget.cubit,
+      bloc: cubit,
       builder: (context, state) {
         return SvgPicture.asset(
           state is ShopBase ? BaseHomeConsts.image3 : BaseHomeConsts.image4,

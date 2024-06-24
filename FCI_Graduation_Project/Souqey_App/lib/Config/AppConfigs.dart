@@ -12,6 +12,7 @@ const String resetForgetPasswordAuthEndPoint = "${BaseApiUrl}auth/forgotPassword
 const String categoriesEndPoint = "${BaseApiUrl}categories";
 const String subCategoriesOnCategoryEndPoint = "${BaseApiUrl}categories";
 const String productsEndPoint = "${BaseApiUrl}products";
+const String productsOnCategoryEndPoint = "$productsEndPoint?category[in]=";
 
 ///////////////////////////////////User Profile Data///////////////////////////////////
 const String User_SignUp_Auth_Token = "User_SignUp_Auth_Token";

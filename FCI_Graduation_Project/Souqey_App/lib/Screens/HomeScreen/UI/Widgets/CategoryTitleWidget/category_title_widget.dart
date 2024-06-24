@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 
-class CategoryTitleWidget extends StatefulWidget {
+class CategoryTitleWidget extends StatelessWidget {
   final int _categoryIdx;
   final HomeControllerBloc _homeController;
 
@@ -11,17 +11,12 @@ class CategoryTitleWidget extends StatefulWidget {
         _categoryIdx = categoryIdx;
 
   @override
-  _CategoryTitleWidgetState createState() => _CategoryTitleWidgetState();
-}
-
-class _CategoryTitleWidgetState extends State<CategoryTitleWidget> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          widget._homeController.productsFilterData!.elementAt(widget._categoryIdx).keys.elementAt(0).name!,
+          _homeController.productsFilterData!.elementAt(_categoryIdx).keys.elementAt(0).name!,
           softWrap: true,
           textAlign: TextAlign.start,
           style: HomeConsts.style2(context),

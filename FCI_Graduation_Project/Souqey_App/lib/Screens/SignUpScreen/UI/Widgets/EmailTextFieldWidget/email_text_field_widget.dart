@@ -6,16 +6,11 @@ import 'package:souqey/Components/CustomTextField/CustomTextField.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 import 'package:souqey/Screens/SignUpScreen/Controller/sign_up_controller_bloc.dart';
 
-class EmailTextFieldWidget extends StatefulWidget {
+class EmailTextFieldWidget extends StatelessWidget {
   final SignUpControllerBloc signUpController;
 
   const EmailTextFieldWidget({super.key, required this.signUpController});
 
-  @override
-  _EmailTextFieldWidgetState createState() => _EmailTextFieldWidgetState();
-}
-
-class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
@@ -34,7 +29,7 @@ class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
         ),
         borderRadius: BorderRadius.circular(8.0.sp),
       ),
-      textEditingController: widget.signUpController.emailController,
+      textEditingController: signUpController.emailController,
       fillColor: SignUpConsts.color1,
     );
   }

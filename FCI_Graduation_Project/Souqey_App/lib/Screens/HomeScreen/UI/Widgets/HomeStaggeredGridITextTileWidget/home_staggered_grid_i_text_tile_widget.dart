@@ -4,14 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:souqey/Screens/HomeScreen/Constants/HomeConsts.dart';
 
-class HomeStaggeredGridITextTileWidget extends StatefulWidget {
+class HomeStaggeredGridITextTileWidget extends StatelessWidget {
   const HomeStaggeredGridITextTileWidget({super.key});
 
-  @override
-  _HomeStaggeredGridITextTileWidgetState createState() => _HomeStaggeredGridITextTileWidgetState();
-}
-
-class _HomeStaggeredGridITextTileWidgetState extends State<HomeStaggeredGridITextTileWidget> {
   @override
   Widget build(BuildContext context) {
     return StaggeredGridTile.count(

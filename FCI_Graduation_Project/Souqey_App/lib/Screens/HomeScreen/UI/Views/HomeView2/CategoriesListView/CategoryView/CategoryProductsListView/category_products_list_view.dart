@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Screens/HomeScreen/Controller/home_controller_bloc.dart';
 import 'package:souqey/Screens/HomeScreen/UI/Views/HomeView2/CategoriesListView/CategoryView/CategoryProductsListView/CategoryProductView/category_product_view.dart';
 
-class CategoryProductsListView extends StatefulWidget {
+class CategoryProductsListView extends StatelessWidget {
   final HomeControllerBloc _homeController;
   final int _categoryViewIdx;
 
@@ -12,22 +12,17 @@ class CategoryProductsListView extends StatefulWidget {
         _categoryViewIdx = categoryViewIdx;
 
   @override
-  _CategoryProductsListViewState createState() => _CategoryProductsListViewState();
-}
-
-class _CategoryProductsListViewState extends State<CategoryProductsListView> {
-  @override
   Widget build(BuildContext context) {
     return ListView.separated(
       primary: true,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, productIdx) => CategoryProductView(
-        homeController: widget._homeController,
-        categoryViewIdx: widget._categoryViewIdx,
+        homeController: _homeController,
+        categoryViewIdx: _categoryViewIdx,
         productViewIdx: productIdx,
       ),
-      itemCount: widget._homeController.productsFilterData!.elementAt(widget._categoryViewIdx).values.elementAt(0).length,
+      itemCount: _homeController.productsFilterData!.elementAt(_categoryViewIdx).values.elementAt(0).length,
       separatorBuilder: (BuildContext context, int index) {
         return SizedBox(
           width: 20.0.w,

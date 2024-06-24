@@ -24,3 +24,14 @@ final class CategoriesGetSubCategoriesEvent extends CategoriesControllerEvent {
     required this.categoryId,
   });
 }
+
+final class CategoriesGetAllProductsOnCategoryEvent extends CategoriesControllerEvent {
+  String? categoryId;
+
+  @override
+  List<Object?> get props => [categoryId];
+
+  CategoriesGetAllProductsOnCategoryEvent({
+    required this.categoryId,
+  });
+}

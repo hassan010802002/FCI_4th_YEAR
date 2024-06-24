@@ -18,7 +18,7 @@ class CategoriesView2 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ViewAllCategoryProductsButton(),
+        ViewAllCategoryProductsButton(categoriesController: _categoriesController),
         SizedBox(
           height: 20.0.h,
         ),

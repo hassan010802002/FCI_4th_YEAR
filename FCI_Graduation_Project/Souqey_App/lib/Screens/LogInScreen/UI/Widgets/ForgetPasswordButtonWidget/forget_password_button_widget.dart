@@ -4,14 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 
-class ForgetPasswordButtonWidget extends StatefulWidget {
+class ForgetPasswordButtonWidget extends StatelessWidget {
   const ForgetPasswordButtonWidget({super.key});
 
-  @override
-  _ForgetPassworButtonWidgetState createState() => _ForgetPassworButtonWidgetState();
-}
-
-class _ForgetPassworButtonWidgetState extends State<ForgetPasswordButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(

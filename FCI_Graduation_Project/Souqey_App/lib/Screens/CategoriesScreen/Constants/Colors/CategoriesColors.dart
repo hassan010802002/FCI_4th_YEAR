@@ -8,5 +8,7 @@ class CategoriesColors {
   static final Color color2 = Color(AppColors.myColors("login_title_color")!);
   static final Color color3 = Color(AppColors.myColors("login_forget_password_icon_color")!);
   static final Color color4 = Color(AppColors.myColors("login_email_label_color")!);
+  static final Color color5 = Color(AppColors.myColors('unselected_base_item_color')!);
   static const Color color1 = Colors.white;
+  static const Color transparentColor = Colors.transparent;
 }
