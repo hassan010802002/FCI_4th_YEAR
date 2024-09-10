@@ -1,11 +1,15 @@
 // ignore_for_file: camel_case_types, must_be_immutable
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:souqey/Components/CustomBackButton/CustomBackButton.dart';
+import 'package:souqey/Helpers/Navigator_Helper/Navigator_Helper.dart';
 import 'package:souqey/Helpers/Size_Helper/MediaQuery_Size_Helper.dart';
 import 'package:souqey/Helpers/SnackBar_Helper/SnackBar_helper.dart';
+import 'package:souqey/Routes/App_Routes.dart';
 import 'package:souqey/Screens/LogInScreen/Controller/log_in_controller_bloc.dart';
 import 'package:souqey/Screens/LogInScreen/UI/Widgets/EmailTextFieldWidget/email_text_field_widget.dart';
 import 'package:souqey/Screens/LogInScreen/UI/Widgets/FacebookLoginButton/facebook_login_button.dart';
@@ -32,8 +36,12 @@ class LogInMainView extends StatelessWidget {
           listener: (context, state) {
             if (state is LogInAuthSuccessfulState) {
               SnackBar_Helper.showSuccessToast(context, "Successful LogIn");
+              Timer(const Duration(seconds: 2), () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                NavigatorHelper(context, AppRoutes.homeScreen);
+              });
             } else if (state is LogInAuthFailureState) {
-              SnackBar_Helper.showErrorToast(context, "SignUp Auth Failure");
+              SnackBar_Helper.showErrorToast(context, "LogIn Auth Failure");
             }
           },
           child: Column(

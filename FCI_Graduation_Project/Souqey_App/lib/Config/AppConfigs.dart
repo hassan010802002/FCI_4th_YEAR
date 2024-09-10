@@ -1,7 +1,13 @@
 // ignore_for_file: file_names, constant_identifier_names, non_constant_identifier_names
 
+import 'package:souqey/Helpers/Local_DB_Helper/Locale_DB_Helper.dart';
+
 const String TextFontFamily = "Metropolis";
 const String BoldTextFontFamily = "BoldMetropolis";
+
+FavoriteDbHelper? _FavDB;
+set FavDB(FavoriteDbHelper? db) => _FavDB = db;
+FavoriteDbHelper? get FavDB => _FavDB;
 
 ////////////////////////////////////API Data///////////////////////////////////////////
 //Api BaseUrl: =>  https://ecommerce.routemisr.com/api/v1/

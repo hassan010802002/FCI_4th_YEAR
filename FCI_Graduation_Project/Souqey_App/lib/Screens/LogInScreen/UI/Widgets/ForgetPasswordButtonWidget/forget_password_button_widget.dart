@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:souqey/Helpers/Navigator_Helper/Navigator_Helper.dart';
+import 'package:souqey/Routes/App_Routes.dart';
 import 'package:souqey/Screens/LogInScreen/Constants/LogInConsts.dart';
 
 class ForgetPasswordButtonWidget extends StatelessWidget {
@@ -10,7 +12,9 @@ class ForgetPasswordButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      onPressed: () {},
+      onPressed: () {
+        NavigatorHelper(context, AppRoutes.forgetPasswordScreen);
+      },
       style: LogInConsts.style3(context),
       icon: Text(
         LogInConsts.forgetPasswordText,

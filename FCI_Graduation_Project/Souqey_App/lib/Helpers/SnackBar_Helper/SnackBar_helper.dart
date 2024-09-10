@@ -1,11 +1,16 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:async';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SnackBar_Helper {
-
-  static void showSuccessToast(BuildContext context,String? message,) {
+  static void showSuccessToast(
+    BuildContext context,
+    String? message,
+  ) {
     final snackBar = SnackBar(
       elevation: 0.0,
       behavior: SnackBarBehavior.floating,
@@ -26,7 +31,40 @@ class SnackBar_Helper {
       ..showSnackBar(snackBar);
   }
 
-  static void showGeneralToast(BuildContext context, String? message,) {
+  static void showSuccessBanner(
+    BuildContext context,
+    String? message,
+  ) {
+    ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    final snackBar = MaterialBanner(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: 'On Snap!',
+        message: message!,
+        contentType: ContentType.success,
+        titleFontSize: 24.0,
+        messageFontSize: 18.0,
+        inMaterialBanner: true,
+      ),
+      margin: EdgeInsets.only(
+        top: 20.0.h,
+      ),
+      padding: EdgeInsets.all(15.0.sp),
+      actions: const [SizedBox.shrink()],
+    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentMaterialBanner()
+      ..showMaterialBanner(snackBar);
+    Timer(const Duration(seconds: 2), () {
+      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+    });
+  }
+
+  static void showGeneralToast(
+    BuildContext context,
+    String? message,
+  ) {
     final snackBar = SnackBar(
       elevation: 0.0,
       behavior: SnackBarBehavior.floating,
@@ -47,7 +85,10 @@ class SnackBar_Helper {
       ..showSnackBar(snackBar);
   }
 
-  static void showErrorToast(BuildContext context, String? message,) {
+  static void showErrorToast(
+    BuildContext context,
+    String? message,
+  ) {
     final snackBar = SnackBar(
       elevation: 0.0,
       behavior: SnackBarBehavior.floating,

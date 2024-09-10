@@ -21,7 +21,9 @@ class SubCategoryListTileDemo extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 15.0.w),
       leadingAndTrailingTextStyle: CategoriesConsts.textStyle4(context),
       style: ListTileStyle.drawer,
-      onTap: () {},
+      onTap: () {
+        _categoriesController.changeCategoryView();
+      },
       leading: Text(
         _categoriesController.subCategoriesModel!.data!.elementAt(_subCategoryIdx!).name!,
       ),

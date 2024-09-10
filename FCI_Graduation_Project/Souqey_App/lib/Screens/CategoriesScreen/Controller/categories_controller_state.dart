@@ -10,11 +10,29 @@ extension CategoriesViewsStatesX on CategoriesViewsStates {
   bool get isThird => this == CategoriesViewsStates.third;
 }
 
+enum CategoriesFavoriteProductsStates { favorite, unFavorite }
+
+extension CategoriesFavoriteProductsStatesX on CategoriesFavoriteProductsStates {
+  bool get isFavorite => this == CategoriesFavoriteProductsStates.favorite;
+
+  bool get isUnFavorite => this == CategoriesFavoriteProductsStates.unFavorite;
+}
+
+enum ProductsLayoutViewsStates { single, multi }
+
+extension ProductsLayoutViewsStatesX on ProductsLayoutViewsStates {
+  bool get isMultiLayoutView => this == ProductsLayoutViewsStates.single;
+
+  bool get isSingleLayoutView => this == ProductsLayoutViewsStates.multi;
+}
+
 enum SubCategoriesStates { loading, success, failure }
 
 extension SubCategoriesStatesX on SubCategoriesStates {
   bool get isLoading => this == SubCategoriesStates.loading;
+
   bool get isSuccess => this == SubCategoriesStates.success;
+
   bool get isFailure => this == SubCategoriesStates.failure;
 }
 
@@ -47,8 +65,6 @@ extension ProductsOnCategoryStatesX on ProductsOnCategoryStates {
 
   bool get isError => this == ProductsOnCategoryStates.failure;
 }
-
-
 
 sealed class CategoriesControllerState extends Equatable {
   const CategoriesControllerState();
@@ -130,6 +146,7 @@ final class CategoriesGetProductsOnCategoryState extends CategoriesControllerSta
 
 final class CategoriesChangeViewState extends CategoriesControllerState {
   final CategoriesViewsStates? state;
+
   @override
   List<Object?> get props => [state];
 
@@ -146,9 +163,29 @@ final class CategoriesChangeViewState extends CategoriesControllerState {
   });
 }
 
+final class ProductsLayoutViewState extends CategoriesControllerState {
+  final ProductsLayoutViewsStates? state;
+
+  @override
+  List<Object?> get props => [state];
+
+  ProductsLayoutViewState copyWith({
+    ProductsLayoutViewsStates? state,
+  }) {
+    return ProductsLayoutViewState(
+      state: state ?? this.state,
+    );
+  }
+
+  const ProductsLayoutViewState({
+    this.state,
+  });
+}
+
 final class CategoriesGetSubCategoriesState extends CategoriesControllerState {
   final SubCategoriesModel? subCategoriesModel;
   final SubCategoriesStates? state;
+
   @override
   List<Object?> get props => [subCategoriesModel, state];
 
@@ -162,5 +199,28 @@ final class CategoriesGetSubCategoriesState extends CategoriesControllerState {
   const CategoriesGetSubCategoriesState({
     this.state,
     this.subCategoriesModel,
+  });
+}
+
+final class CategoriesMyFavoriteProductsState extends CategoriesControllerState {
+  final CategoriesFavoriteProductsStates? state;
+  final int? favoriteProductIdx;
+
+  @override
+  List<Object?> get props => [state, favoriteProductIdx];
+
+  CategoriesMyFavoriteProductsState copyWith({
+    CategoriesFavoriteProductsStates? state,
+    int? favoriteProductIdx,
+  }) {
+    return CategoriesMyFavoriteProductsState(
+      state: state ?? this.state,
+      favoriteProductIdx: favoriteProductIdx ?? this.favoriteProductIdx,
+    );
+  }
+
+  const CategoriesMyFavoriteProductsState({
+    this.state,
+    required this.favoriteProductIdx,
   });
 }

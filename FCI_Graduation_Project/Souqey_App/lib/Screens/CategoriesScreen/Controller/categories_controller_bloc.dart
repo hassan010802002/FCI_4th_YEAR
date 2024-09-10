@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:souqey/Config/AppConfigs.dart';
+import 'package:souqey/Helpers/SnackBar_Helper/SnackBar_helper.dart';
 import 'package:souqey/Injections/Base_Injection.dart';
 import 'package:souqey/Models/AllProductsModel/AllProductsModel.dart' as Products;
 import 'package:souqey/Models/CategoriesModel/CategoriesModel.dart' as Categories;
@@ -24,8 +27,13 @@ class CategoriesControllerBloc extends Bloc<CategoriesControllerEvent, Categorie
   bool isSuccessProductsService = false;
   bool isSuccessProductsOnCategoryService = false;
   bool isSuccessSubCategoriesService = false;
+  bool isMultiLayoutView = false;
+  List<int> favoriteProductsIdx = <int>[];
+  Key? key = UniqueKey();
+
   int categoryViews = 0;
   int? activeCategoryIdx;
+  int? activeProductIdx = 0;
   GetCategoriesRepo? _categoriesRepo;
   GetAllProductsRepository? _productsRepository;
   GetAllSubCategoriesOnCategoryRepoImpl? _subCategoriesOnCategoryRepo;
@@ -119,6 +127,9 @@ class CategoriesControllerBloc extends Bloc<CategoriesControllerEvent, Categorie
             categoryId: categoriesModel!.data!.elementAt(activeCategoryIdx!).id,
           );
           isSuccessProductsOnCategoryService = true;
+          if (productsOnCategoryModel!.results == 0) {
+            productsOnCategoryModel = productsModel;
+          }
           emit(CategoriesGetProductsOnCategoryState(
             productsOnCategoryModel: productsOnCategoryModel,
             state: ProductsOnCategoryStates.success,
@@ -170,6 +181,46 @@ class CategoriesControllerBloc extends Bloc<CategoriesControllerEvent, Categorie
         ));
       }
     });
+  }
+
+  String? textLengthTest(String? productTitle) {
+    if (productTitle!.length <= 15) {
+      return productTitle;
+    } else {
+      return "${productTitle.substring(0, 12)}...";
+    }
+  }
+
+  void checkFavoriteProduct(BuildContext context, int? productIdx) {
+    activeProductIdx = productIdx;
+    if (productIdx == activeProductIdx) {
+      if (favoriteProductsIdx.contains(productIdx)) {
+        favoriteProductsIdx.remove(activeProductIdx!);
+        FavDB!.deleteDbProduct(productId: productsOnCategoryModel!.data!.elementAt(activeProductIdx!).id);
+        emit(CategoriesMyFavoriteProductsState(
+          state: CategoriesFavoriteProductsStates.unFavorite,
+          favoriteProductIdx: activeProductIdx,
+        ));
+      } else {
+        favoriteProductsIdx.add(activeProductIdx!);
+        FavDB!.insertDbProduct(productId: productsOnCategoryModel!.data!.elementAt(activeProductIdx!).id);
+        emit(CategoriesMyFavoriteProductsState(
+          state: CategoriesFavoriteProductsStates.favorite,
+          favoriteProductIdx: activeProductIdx,
+        ));
+        SnackBar_Helper.showSuccessBanner(context, "Successful Favorite Product");
+      }
+    }
+  }
+
+  void changeProductLayoutView() {
+    if (isMultiLayoutView) {
+      isMultiLayoutView = false;
+      emit(const ProductsLayoutViewState(state: ProductsLayoutViewsStates.single));
+    } else {
+      isMultiLayoutView = true;
+      emit(const ProductsLayoutViewState(state: ProductsLayoutViewsStates.multi));
+    }
   }
 
   void changeCategoryView() {

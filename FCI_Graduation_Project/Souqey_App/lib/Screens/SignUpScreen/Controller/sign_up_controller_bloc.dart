@@ -1,9 +1,13 @@
 // ignore_for_file: unused_catch_clause
 
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:injectable/injectable.dart';
+import 'package:souqey/Config/AppConfigs.dart';
 import 'package:souqey/Injections/Base_Injection.dart';
 import 'package:souqey/Models/CustomUserDataModule/CustomUserDataModule.dart';
 import 'package:souqey/Models/UserProfileModel/UserProfileModel.dart';
@@ -18,10 +22,13 @@ class SignUpControllerBloc extends Bloc<SignUpControllerEvent, SignUpControllerS
   SignUpAuthRepo? _signUpRepo;
   UserProfileModel? userProfileModel;
   bool isSuccessSignUpAuthStatus = false;
+  bool isSuccessUserSignUpToken = false;
+  bool isSuccessUserLogInToken = false;
 
   TextEditingController? emailController;
   TextEditingController? passwordController;
   TextEditingController? nameController;
+  Timer? loadingTimer;
 
   SignUpControllerBloc() : super(SignUpControllerInitial()) {
     _myUserDataModel = get_Locator_it.get<CustomUserDataModule>();
@@ -58,6 +65,34 @@ class SignUpControllerBloc extends Bloc<SignUpControllerEvent, SignUpControllerS
         emit(SignUpAuthFailureState());
       }
     });
+  }
+
+  void checkUserPrefData() async {
+    await EasyLoading.show(
+      dismissOnTap: true,
+      status: "Loading .....",
+    );
+    loadingTimer = Timer(
+      const Duration(seconds: 3),
+      () {
+        isSuccessUserSignUpToken = UserSignUpToken != null;
+        isSuccessUserLogInToken = UserLogInToken != null;
+        if (isSuccessUserSignUpToken && isSuccessUserLogInToken) {
+          emit(UserPrefDataState(
+            userPrefDataState: UserPrefData.successful,
+            userSignUpTokenStatus: isSuccessUserSignUpToken,
+            userLogInTokenStatus: isSuccessUserLogInToken,
+          ));
+        } else {
+          emit(UserPrefDataState(
+            userPrefDataState: UserPrefData.failed,
+            userSignUpTokenStatus: isSuccessUserSignUpToken,
+            userLogInTokenStatus: isSuccessUserLogInToken,
+          ));
+        }
+        EasyLoading.dismiss();
+      },
+    );
   }
 
   void signUpFunc() {

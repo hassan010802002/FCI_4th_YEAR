@@ -56,6 +56,10 @@ dependencies:
   shimmer:
   animate_do:
   flutter_rating_bar:
+  auto_size_text:
+  sqflite:
+  path:
+  flutter_easyloading:
 
 dev_dependencies:
   flutter_test:

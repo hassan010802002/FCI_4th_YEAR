@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:souqey/Helpers/Navigator_Helper/Navigator_Helper.dart';
 import 'package:souqey/Injections/Base_Injection.dart';
+import 'package:souqey/Routes/App_Routes.dart';
 import 'package:souqey/Screens/SignUpScreen/Constants/SignUpConsts.dart';
 import 'package:souqey/Screens/SignUpScreen/Controller/sign_up_controller_bloc.dart';
 import 'package:souqey/Screens/SignUpScreen/UI/Views/signup_main_view.dart';
@@ -20,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     _signUpController = get_Locator_it.get<SignUpControllerBloc>();
+    _signUpController!.checkUserPrefData();
     super.initState();
   }
 
@@ -37,7 +40,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: SignUpConsts.screenBackGroundColor,
         body: BlocProvider(
           create: (context) => _signUpController!,
-          child: SignUpMainView(signUpController: _signUpController!),
+          child: BlocListener<SignUpControllerBloc, SignUpControllerState>(
+            bloc: _signUpController,
+            listener: (context, state) {
+              if (state ==
+                  const UserPrefDataState(
+                    userPrefDataState: UserPrefData.successful,
+                    userSignUpTokenStatus: true,
+                    userLogInTokenStatus: true,
+                  )) {
+                NavigatorHelper(context, AppRoutes.homeScreen);
+              }
+              if (state ==
+                  const UserPrefDataState(
+                    userPrefDataState: UserPrefData.failed,
+                    userSignUpTokenStatus: true,
+                    userLogInTokenStatus: false,
+                  )) {
+                NavigatorHelper(context, AppRoutes.loginScreen);
+              }
+            },
+            child: SignUpMainView(signUpController: _signUpController!),
+          ),
         ),
       ),
     );
